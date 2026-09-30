@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Gallery — Behold</title>
+  <meta name="description" content="Every painting on the site, room by room: the Nativity, the Ministry, the Miracles, the Passion, the Resurrection, the Apostles and Mother Mary." />
+  <meta name="theme-color" content="#0b0a09" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Cpath d='M29 10h6v14h12v6H35v24h-6V30H17v-6h12z' fill='%23d8b56a'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
+</head>
+<body data-page="gallery" class="page-gallery">
+  <header class="nav" id="nav"></header>
+
+  <main>
+    <section class="g-hero" id="top">
+      <div class="g-hero-wall" id="gHeroWall" aria-hidden="true"></div>
+      <div class="g-hero-copy">
+        <p class="eyebrow center" data-t="g.hero.eyebrow">The Museum</p>
+        <h1 data-t="g.hero.title">The Gallery</h1>
+        <p class="g-hero-sub" id="gHeroSub"></p>
+      </div>
+    </section>
+
+    <section class="g-rooms">
+      <div class="g-bar" id="gBar">
+        <div class="segmented g-tabs" id="gTabs" role="tablist"></div>
+        <label class="g-artist">
+          <span data-t="g.artist">Artist</span>
+          <select id="gArtist"></select>
+        </label>
+      </div>
+      <div class="container wide">
+        <header class="g-room-head">
+          <h2 id="gRoomTitle">All rooms</h2>
+          <p id="gRoomNote"></p>
+        </header>
+        <div class="g-wall" id="gWall"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer slim">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand"><span data-site-name>Behold</span></p>
+          <p class="footer-verse" data-t="g.footer.verse">“The heavens declare the glory of God; and the firmament sheweth his handywork.” <cite>Psalm 19:1</cite></p>
+        </div>
+        <p class="footer-dedication" data-site-dedication></p>
+      </div>
+      <p class="footer-fine" data-t="g.footer.fine">All paintings are in the public domain and are served from Wikimedia Commons. © <span data-year></span> <span data-site-name>Behold</span>.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/si/si-core.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mother Mary — Behold</title>
+  <meta name="description" content="The life of the Blessed Virgin Mary: her yes, her sorrows, her words, and the history and prayer of the Rosary." />
+  <meta name="theme-color" content="#eaf2fb" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f3b73'/%3E%3Cpath d='M29 10h6v14h12v6H35v24h-6V30H17v-6h12z' fill='%23f3dca4'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/mary.css" />
+</head>
+<body data-page="mary" class="page-mary">
+  <header class="nav" id="nav"></header>
+
+  <!-- The page's progress, counted on rosary beads -->
+  <aside class="bead-rail" id="beadRail" aria-hidden="true"></aside>
+
+  <main>
+    <!-- Opening -->
+    <section class="mary-hero" id="top">
+      <div class="mh-stage">
+        <div class="mh-media"><img id="mhImg" alt="The Virgin in Prayer by Sassoferrato" /></div>
+        <div class="mh-shade"></div>
+        <canvas class="mh-stars" id="mhStars" aria-hidden="true"></canvas>
+        <div class="mh-copy" id="mhCopy">
+          <p class="eyebrow center" data-t="m.hero.eyebrow">Mother of God · Mother of us all</p>
+          <h1>Ave Maria</h1>
+          <p class="mh-sub" data-t="m.hero.sub">“Behold thy mother!”<cite>John 19:27</cite></p>
+        </div>
+        <p class="mh-hail" id="mhHail" data-t="m.hail">Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus.</p>
+        <div class="scene-veil light"></div>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="section mary-intro">
+      <div class="container narrow">
+        <p class="eyebrow center" data-t="m.intro.eyebrow">Her story</p>
+        <h2 class="section-title center" data-t="m.intro.title">A young woman<br /><span class="soft">said yes to God.</span></h2>
+        <p class="section-lede center" data-t="m.intro.lede">She held Him first, and she held Him last. No one knew Jesus longer, or loved Him more. This is her life — what she said, what she carried, and the prayer that remembers it bead by bead.</p>
+      </div>
+    </section>
+
+    <!-- Her life (chapters are inserted here; the Magnificat follows the Visitation) -->
+    <div id="life"></div>
+
+    <!-- Her words -->
+    <section class="section mary-words" id="words">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.words.eyebrow">Six sayings</p>
+        <h2 class="section-title center" data-t="m.words.title">Her words.</h2>
+        <p class="section-lede center" data-t="m.words.lede">Scripture records only a handful of sentences from Mary. Every one of them is worth keeping.</p>
+        <div class="words-grid" id="wordsGrid"></div>
+      </div>
+    </section>
+
+    <!-- Seven sorrows -->
+    <section class="section sorrows" id="sorrows">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.sorrows.eyebrow">What she endured</p>
+        <h2 class="section-title center" data-t="m.sorrows.title">The Seven Sorrows.</h2>
+        <p class="section-lede center" data-t="m.sorrows.lede">“Yea, a sword shall pierce through thy own soul also.” For centuries the Church has kept these seven moments, pictured as swords in a mother’s heart.</p>
+        <div class="sorrows-grid">
+          <div class="heart-col">
+            <div class="heart-wrap">
+              <svg class="heart" id="heart" viewBox="-40 -40 180 180" aria-hidden="true"></svg>
+              <p class="heart-count" id="heartCount">0 of 7</p>
+            </div>
+          </div>
+          <div class="sorrow-list" id="sorrowList"></div>
+        </div>
+        <div class="hardships">
+          <h3 class="sub-title" data-t="m.hard.title">The quiet hardships</h3>
+          <div class="hard-grid" id="hardGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Rosary: history -->
+    <section class="section rosary-history" id="rosary">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.rosary.eyebrow">A garland of roses</p>
+        <h2 class="section-title center" data-t="m.rosary.title">The story<br /><span class="soft">of the Rosary.</span></h2>
+        <p class="section-lede center" data-t="m.rosary.lede">The word means “rose garden.” It began with pebbles in the desert and became the prayer of saints and grandmothers, soldiers and children, in every language on earth.</p>
+        <div class="rh-art">
+          <figure class="zoomable" data-lb-name="The Rosary"></figure>
+          <figure class="zoomable" data-lb-name="The Rosary"></figure>
+        </div>
+        <ol class="rh-line" id="rhLine"></ol>
+      </div>
+    </section>
+
+    <!-- The Mysteries -->
+    <section class="section mysteries" id="mysteries">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.myst.eyebrow">Twenty windows onto the Gospel</p>
+        <h2 class="section-title center" data-t="m.myst.title">The Mysteries.</h2>
+        <p class="section-lede center" data-t="m.myst.lede">Each decade of the Rosary dwells on one moment in the life of Jesus and Mary. Traditionally a different set is prayed on each day of the week.</p>
+        <div class="segmented myst-tabs" id="mystTabs"></div>
+        <div class="myst-grid" id="mystGrid"></div>
+      </div>
+    </section>
+
+    <!-- Pray the Rosary -->
+    <section class="section pray" id="pray">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.pray.eyebrow">Pray with us</p>
+        <h2 class="section-title center" data-t="m.pray.title">Pray the Rosary.</h2>
+        <p class="section-lede center" data-t="m.pray.lede">Move bead by bead. Tap “Next”, use the arrow keys, or touch a bead. The prayers and the mystery for each decade appear as you go.</p>
+        <div class="pray-shell">
+          <div class="pray-beads">
+            <svg class="rosary" id="rosarySvg" viewBox="0 0 400 600" role="img" aria-label="Rosary"></svg>
+          </div>
+          <div class="pray-panel" id="prayPanel">
+            <div class="pray-top">
+              <label class="pray-set"><span data-t="m.pray.set">Mysteries</span>
+                <select id="praySet"></select>
+              </label>
+              <span class="pray-progress" id="prayProgress"></span>
+            </div>
+            <div class="pray-mystery" id="prayMystery"></div>
+            <p class="pray-name" id="prayName"></p>
+            <p class="pray-text" id="prayText"></p>
+            <p class="pray-count" id="prayCount"></p>
+            <div class="pray-controls">
+              <button class="pill ghost" id="prayPrev" type="button" data-t="m.pray.back">Back</button>
+              <button class="pill blue" id="prayNext" type="button">Next bead</button>
+            </div>
+            <button class="pray-restart" id="prayRestart" type="button" data-t="m.pray.restart">Start again</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shrines -->
+    <section class="section shrines" id="shrines">
+      <div class="container">
+        <p class="eyebrow center" data-t="m.shrines.eyebrow">Where she is honoured</p>
+        <h2 class="section-title center" data-t="m.shrines.title">All generations<br /><span class="soft">shall call me blessed.</span></h2>
+        <div class="shrine-map" id="shrineMap"></div>
+        <div class="shrine-cards" id="shrineCards"></div>
+      </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="mary-close">
+      <div class="container narrow">
+        <p class="eyebrow center" data-t="m.close.eyebrow">The oldest prayer to Mary · c. AD 250</p>
+        <blockquote class="close-prayer" id="subTuum"></blockquote>
+        <p class="close-note" data-t="m.close.note">Found on a fragment of Egyptian papyrus, this prayer was already being said by Christians during the persecutions of the third century.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer slim">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand"><span data-site-name>Behold</span></p>
+          <p class="footer-verse" data-t="m.footer.verse">“For he that is mighty hath done to me great things; and holy is his name.” <cite>Luke 1:49</cite></p>
+        </div>
+        <p class="footer-dedication" data-site-dedication></p>
+      </div>
+      <p class="footer-fine" data-t="m.footer.fine">© <span data-year></span> <span data-site-name>Behold</span>. Paintings: public domain, via Wikimedia Commons. Scripture: KJV. Prayers in their traditional English form. Totus tuus.</p>
+    </div>
+  </footer>
+
+  <template id="tpl-magnificat">
+    <section class="magnificat" id="magnificat">
+      <div class="mg-stage">
+        <p class="eyebrow center" data-t="m.mg.eyebrow">The Song of Mary</p>
+        <h2 class="mg-title">Magnificat</h2>
+        <div class="mg-lines" id="mgLines"></div>
+        <cite class="mg-ref" data-t="m.mg.ref">Luke 1:46–55</cite>
+        <div class="scene-veil light"></div>
+      </div>
+    </section>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/map-data.js"></script>
+  <script src="js/mary-data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/si/si-core.js"></script>
+  <script src="js/si/si-mary.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/mary.js"></script>
+</body>
+</html>

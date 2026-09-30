@@ -1,0 +1,66 @@
+/* ==========================================================================
+   The Gallery — warm museum walls
+   ========================================================================== */
+body.page-gallery { --bg: #0b0a09; --bg-2: #13110f; --gold: #d8b56a; }
+.container.wide { width: min(1500px, 100% - var(--gutter) * 2); margin-inline: auto; }
+
+.g-hero { position: relative; height: 92vh; min-height: 560px; display: grid; place-items: center; overflow: hidden; }
+.g-hero-wall { position: absolute; inset: -4% 0; display: flex; flex-direction: column; justify-content: center; gap: 14px; opacity: .42; transform-origin: center; }
+.g-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 55% at 50% 50%, rgba(11,10,9,.75), rgba(11,10,9,.35) 70%), linear-gradient(180deg, var(--bg) 0%, transparent 18%, transparent 75%, var(--bg) 100%); }
+.gw-row { overflow: hidden; }
+.gw-track { display: flex; gap: 14px; width: max-content; animation: marquee 120s linear infinite; }
+.gw-row.rev .gw-track { animation-direction: reverse; animation-duration: 140s; }
+.gw-track img { height: 30vh; width: auto; border-radius: 10px; filter: saturate(.8); }
+.g-hero-copy { position: relative; z-index: 1; text-align: center; padding: 0 var(--gutter); }
+.g-hero-copy h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(76px, 14vw, 200px); line-height: .9; margin: 0 0 22px; letter-spacing: -.02em; }
+.g-hero-sub { font-size: clamp(17px, 1.6vw, 21px); color: var(--text-2); max-width: 620px; margin: 0 auto; }
+.g-hero-sub span { color: var(--text); font-weight: 600; }
+
+.g-rooms { padding-bottom: 120px; }
+.g-bar { position: sticky; top: 52px; z-index: 30; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px var(--gutter);
+  background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%); border-bottom: 1px solid var(--line); }
+.g-tabs button { display: inline-flex; align-items: center; gap: 7px; }
+.g-tabs button span { font-size: 11px; opacity: .55; font-variant-numeric: tabular-nums; }
+.g-artist { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+.g-artist select { font: inherit; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--text); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.g-artist select option { background: #1a1816; }
+.g-room-head { text-align: center; padding: 60px 0 40px; }
+.g-room-head h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 5vw, 72px); margin: 0 0 8px; }
+.g-room-head p { color: var(--text-2); margin: 0; }
+
+.g-wall { display: flex; gap: 26px; align-items: flex-start; }
+.g-col { flex: 1; min-width: 0; }
+.g-item { margin: 0 0 34px; }
+.g-frame {
+  position: relative; overflow: hidden; background: #1a1714;
+  padding: 10px; border-radius: 4px;
+  background: linear-gradient(145deg, #2a241c, #15120e);
+  box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 50px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(216,181,106,.18);
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+}
+.g-frame::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 60% at 50% -10%, rgba(255,236,200,.14), transparent 60%); z-index: 1; }
+.g-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s var(--ease); }
+.g-frame img.loaded { opacity: 1; }
+.g-item:hover .g-frame { transform: translateY(-5px); box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 40px 60px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(216,181,106,.4), 0 -20px 60px -30px rgba(255,220,160,.25); }
+.g-item figcaption { padding: 14px 4px 0; text-align: center; }
+.g-item figcaption b { display: block; font-family: var(--serif); font-weight: 500; font-size: 19px; line-height: 1.2; }
+.g-item figcaption span { display: block; font-size: 12px; color: var(--text-3); margin-top: 4px; letter-spacing: .02em; }
+
+@media (max-width: 700px) {
+  .g-bar { top: 52px; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+  .g-tabs { flex-wrap: nowrap; flex-shrink: 0; }
+  .g-artist { flex-shrink: 0; }
+  .g-wall { gap: 14px; }
+  .g-item { margin-bottom: 22px; }
+  .g-frame { padding: 6px; }
+  .g-item figcaption b { font-size: 16px; }
+  .gw-track img { height: 22vh; }
+}
+@media (hover: none) {
+  .page-gallery .g-frame.zoomable::after { display: none; }
+}
+
+/* Sinhala */
+html.lang-si .g-hero-copy h1 { font-size: clamp(56px, 10vw, 140px); line-height: 1.2; }
+html.lang-si .g-room-head h2 { font-size: clamp(30px, 4vw, 56px); line-height: 1.3; }
+html.lang-si .g-item figcaption b { font-size: 16px; line-height: 1.45; }

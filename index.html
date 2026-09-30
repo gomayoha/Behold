@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Behold — The Life of Jesus Christ</title>
+  <meta name="description" content="A cinematic journey through the four Gospels — every person Jesus met, every miracle, every healing, from the manger to the empty tomb." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Cpath d='M29 10h6v14h12v6H35v24h-6V30H17v-6h12z' fill='%23d8b56a'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="is-loading" data-page="story">
+
+  <!-- ░░ Opening: a verse to begin ░░ -->
+  <div id="loader" aria-live="polite">
+    <div class="loader-glow"></div>
+    <div class="loader-inner">
+      <p class="loader-greeting" id="loaderGreeting">Peace be with you</p>
+      <blockquote class="loader-verse" id="loaderVerse"></blockquote>
+      <cite class="loader-ref" id="loaderRef"></cite>
+      <button class="loader-enter" id="loaderEnter" type="button">
+        <span data-t="loader.begin">Begin the story</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="loader-lang" id="loaderLang" role="group" aria-label="Language">
+        <button type="button" data-lang="en">English</button><i></i><button type="button" data-lang="si">සිංහල</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav" id="nav"></header>
+
+  <main id="top">
+
+    <!-- ░░ HERO ░░ -->
+    <section class="hero" id="hero">
+      <div class="hero-stage">
+        <div class="hero-media"><img id="heroImg" alt="Christ in the Wilderness by Ivan Kramskoi" /></div>
+        <div class="hero-vignette"></div>
+        <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+
+        <p class="hero-line" id="heroLine" data-t="hero.line" aria-label="In the beginning was the Word, and the Word was with God, and the Word was God.">In the beginning was the Word, and the Word was with God, and the Word was God.</p>
+
+        <div class="hero-brand" id="heroBrand">
+          <p class="eyebrow" data-t="hero.eyebrow">The Four Gospels · One Story</p>
+          <h1 class="hero-title"><span data-site-name>Behold</span></h1>
+          <p class="hero-sub" data-site-tagline>The life of Jesus Christ, told through every soul He touched.</p>
+        </div>
+
+        <div class="scroll-cue" id="scrollCue"><span data-t="hero.scroll">Scroll</span><i></i></div>
+      </div>
+    </section>
+
+    <!-- ░░ VERSE OF THE DAY ░░ -->
+    <section class="votd" id="votd">
+      <div class="container">
+        <p class="eyebrow center" id="votdLabel" data-t="votd.label">Verse of the Day</p>
+        <blockquote class="votd-verse" id="votdVerse"></blockquote>
+        <cite class="votd-ref" id="votdRef"></cite>
+        <div class="votd-actions">
+          <button class="pill" id="votdShuffle" type="button">
+            <svg viewBox="0 0 24 24"><path d="M4 7h3.5c2 0 3.2.9 4.3 2.6l1.4 2.2c1.1 1.7 2.3 2.7 4.3 2.7H20M16.5 11.5l3.5 3-3.5 3M4 17h3.5c1.1 0 2-.3 2.7-.9M13.8 7.9c.7-.6 1.6-.9 2.7-.9H20M16.5 4l3.5 3-3.5 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-t="votd.another">Another verse</span>
+          </button>
+          <button class="pill ghost" id="votdCopy" type="button">
+            <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 8V6.5A2.5 2.5 0 0013.5 4h-7A2.5 2.5 0 004 6.5v7A2.5 2.5 0 006.5 16H8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span data-t="votd.copy">Copy</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ FOUR WITNESSES ░░ -->
+    <section class="gospels" id="gospels">
+      <div class="gospels-pin">
+        <div class="gospels-track" id="gospelsTrack">
+          <div class="gospels-head">
+            <p class="eyebrow" data-t="gospels.eyebrow">Four Witnesses</p>
+            <h2 class="section-title" data-t="gospels.title">One life.<br /><span class="dim">Four portraits.</span></h2>
+            <p class="section-lede" data-t="gospels.lede">Matthew, Mark, Luke and John each saw Him from a different angle. Together they give us the fullest picture of the most important life ever lived.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ NUMBERS ░░ -->
+    <section class="numbers" id="numbers">
+      <div class="container">
+        <div class="numbers-grid">
+          <div class="num"><b data-count="4">0</b><span data-t="num.gospels">Gospels</span></div>
+          <div class="num"><b data-count="89">0</b><span data-t="num.chapters">Chapters</span></div>
+          <div class="num"><b data-count-key="people">0</b><span data-t="num.people">Encounters in this story</span></div>
+          <div class="num"><b data-count-key="miracles">0</b><span data-t="num.miracles">Miracles &amp; healings</span></div>
+          <div class="num"><b data-count="1">0</b><span data-t="num.tomb">Empty tomb</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ THE STORY ░░ -->
+    <section class="story" id="story">
+      <div class="story-intro">
+        <p class="eyebrow center" data-t="story.eyebrow">The Story</p>
+        <h2 class="section-title center" data-t="story.title">From the first to the last.</h2>
+        <p class="section-lede center" data-t="story.lede">Nine acts. Every person He met, every body He healed, every storm He stilled — gathered from all four Gospels in the order they happened.</p>
+        <div class="legend">
+          <span class="badge healing" data-t="type.healing">Healing</span>
+          <span class="badge miracle" data-t="type.miracle">Miracle</span>
+          <span class="badge encounter" data-t="type.encounter">Encounter</span>
+          <span class="badge teaching" data-t="type.teaching">Teaching</span>
+        </div>
+      </div>
+      <div id="acts"></div>
+    </section>
+
+    <!-- ░░ I AM ░░ -->
+    <section class="iam" id="iam">
+      <div class="container">
+        <p class="eyebrow center" data-t="iam.eyebrow">In His own words</p>
+        <h2 class="section-title center" data-t="iam.title">Before Abraham was,<br /><span class="gold">I AM.</span></h2>
+        <p class="section-lede center" data-t="iam.lede">Seven times in John’s Gospel, Jesus takes the sacred name of God and tells us who He is.</p>
+        <div class="iam-grid" id="iamGrid"></div>
+      </div>
+    </section>
+
+    <!-- ░░ PARABLES MARQUEE ░░ -->
+    <section class="parables" aria-label="The parables of Jesus">
+      <p class="eyebrow center" data-t="parables.eyebrow">He spake many things unto them in parables</p>
+      <div class="marquee"><div class="marquee-row" id="marqueeA"></div></div>
+      <div class="marquee reverse"><div class="marquee-row" id="marqueeB"></div></div>
+    </section>
+
+    <!-- ░░ EVERY LIFE (index) ░░ -->
+    <section class="people" id="people">
+      <div class="container">
+        <p class="eyebrow center" data-t="people.eyebrow">The Index</p>
+        <h2 class="section-title center" data-t="people.title">Every life He touched.</h2>
+        <p class="section-lede center" data-t="people.lede">Search the people of the Gospels. Tap anyone to read their story.</p>
+
+        <div class="people-tools">
+          <label class="search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <input id="peopleSearch" type="search" placeholder="Search names, places, words…" data-t-ph="people.search" autocomplete="off" />
+          </label>
+          <div class="segmented" id="peopleFilter" role="tablist">
+            <button class="active" data-filter="all" role="tab" data-t="people.all">All</button>
+            <button data-filter="healing" role="tab" data-t="people.healings">Healings</button>
+            <button data-filter="miracle" role="tab" data-t="people.miracles">Miracles</button>
+            <button data-filter="encounter" role="tab" data-t="people.encounters">Encounters</button>
+            <button data-filter="teaching" role="tab" data-t="people.teachings">Teachings</button>
+          </div>
+          <div class="segmented small" id="gospelFilter">
+            <button class="active" data-gospel="all" data-t="people.allGospels">All Gospels</button>
+            <button data-gospel="mt" data-t="g.mt">Matthew</button>
+            <button data-gospel="mk" data-t="g.mk">Mark</button>
+            <button data-gospel="lk" data-t="g.lk">Luke</button>
+            <button data-gospel="jn" data-t="g.jn">John</button>
+          </div>
+        </div>
+        <p class="people-count" id="peopleCount"></p>
+        <div class="people-grid" id="peopleGrid"></div>
+      </div>
+    </section>
+
+    <!-- ░░ CONTINUE THE JOURNEY ░░ -->
+    <section class="journeys" id="journeys">
+      <div class="container">
+        <p class="eyebrow center" data-t="journeys.eyebrow">Continue the journey</p>
+        <h2 class="section-title center" data-t="journeys.title">The story goes on.</h2>
+        <div class="journey-cards">
+          <a class="jcard" href="apostles.html" data-art-bg="pentecost">
+            <span class="jcard-bg"></span>
+            <span class="jcard-copy" data-t="journeys.apostles"><small>The Twelve &amp; Paul</small><b>The Apostles</b><em>Where they went, what they gave, how they died.</em></span>
+          </a>
+          <a class="jcard" href="mary.html" data-art-bg="sassoferrato">
+            <span class="jcard-bg"></span>
+            <span class="jcard-copy" data-t="journeys.mary"><small>Behold thy mother</small><b>Mother Mary</b><em>Her life, her sorrows, and the Rosary.</em></span>
+          </a>
+          <a class="jcard" href="gallery.html" data-art-bg="taking">
+            <span class="jcard-bg"></span>
+            <span class="jcard-copy" data-t="journeys.gallery"><small>The museum</small><b>The Gallery</b><em>Every painting on this site, room by room.</em></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ LIGHT A CANDLE ░░ -->
+    <section class="candle" id="candle">
+      <div class="container narrow">
+        <p class="eyebrow center" data-t="candle.eyebrow">A quiet moment</p>
+        <h2 class="section-title center" data-t="candle.title">Light a candle.</h2>
+        <p class="section-lede center" data-t="candle.lede">Bring a name, a burden, or a thanksgiving before Him.</p>
+        <blockquote class="candle-verse" data-t="candle.verse">“Let my prayer be set forth before thee as incense.” <cite>Psalm 141:2</cite></blockquote>
+
+        <form class="candle-form" id="candleForm" autocomplete="off">
+          <input id="candleIntent" maxlength="60" placeholder="For whom are you praying? (optional)" data-t-ph="candle.placeholder" />
+          <button class="pill gold" type="submit">
+            <svg viewBox="0 0 24 24"><path d="M12 3c2 3 3.5 4.6 3.5 7a3.5 3.5 0 01-7 0c0-2.4 1.5-4 3.5-7z" fill="currentColor"/><rect x="10" y="14" width="4" height="7" rx="1" fill="currentColor" opacity=".6"/></svg>
+            <span data-t="candle.light">Light</span>
+          </button>
+        </form>
+        <p class="candle-note" data-t="candle.note">Your candles stay on this device only.</p>
+        <div class="altar" id="altar"></div>
+        <p class="candle-count" id="candleCount"></p>
+      </div>
+    </section>
+
+    <!-- ░░ A WORD FOR YOU (verse card maker) ░░ -->
+    <section class="maker" id="verse-maker">
+      <div class="container">
+        <p class="eyebrow center" data-t="maker.eyebrow">Take it with you</p>
+        <h2 class="section-title center" data-t="maker.title">A word for you.</h2>
+        <p class="section-lede center" data-t="maker.lede">Draw a verse. Save it as an image and send it to someone who needs it today.</p>
+
+        <div class="maker-stage">
+          <div class="verse-card" id="verseCard">
+            <div class="verse-card-inner" id="verseCardInner">
+              <div class="vc-face vc-back">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 2h2.8v6.2h5.4V11h-5.4v11h-2.8V11H5.2V8.2h5.4z" fill="currentColor"/></svg>
+                <span data-t="maker.tap">Tap to draw a verse</span>
+              </div>
+              <div class="vc-face vc-front">
+                <p class="vc-verse" id="vcVerse"></p>
+                <p class="vc-ref" id="vcRef"></p>
+                <p class="vc-mark" data-site-name>Behold</p>
+              </div>
+            </div>
+          </div>
+          <div class="maker-controls">
+            <div class="swatches" id="swatches" aria-label="Card style">
+              <button class="swatch active" data-style="night" aria-label="Night"></button>
+              <button class="swatch" data-style="dawn" aria-label="Dawn"></button>
+              <button class="swatch" data-style="passion" aria-label="Passion"></button>
+              <button class="swatch" data-style="linen" aria-label="Linen"></button>
+            </div>
+            <div class="maker-buttons">
+              <button class="pill" id="drawVerse" type="button" data-t="maker.draw">Draw another</button>
+              <button class="pill gold" id="saveVerse" type="button">
+                <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-t="maker.save">Save image</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand"><span data-site-name>Behold</span></p>
+          <p class="footer-verse" data-t="footer.verse">“These are written, that ye might believe that Jesus is the Christ, the Son of God; and that believing ye might have life through his name.” <cite>John 20:31</cite></p>
+        </div>
+        <p class="footer-dedication" data-site-dedication>Made with love, for my mother.</p>
+      </div>
+      <details class="credits">
+        <summary data-t="footer.credits">Paintings &amp; sources</summary>
+        <p data-t="footer.sources">Scripture quotations are from the King James Version (public domain). All artworks are public-domain paintings from Wikimedia Commons.</p>
+        <ul id="creditsList"></ul>
+      </details>
+      <p class="footer-fine">© <span data-year></span> <span data-site-name>Behold</span>. <span data-t="footer.soli">Soli Deo gloria.</span></p>
+    </div>
+  </footer>
+
+  <!-- ░░ Fixed UI ░░ -->
+  <aside class="hud" id="hud" aria-hidden="true">
+    <span class="hud-act" id="hudAct">Act I</span>
+    <span class="hud-sep"></span>
+    <span class="hud-stat"><b id="hudPeople">0</b> <span data-t="hud.lives">lives</span></span>
+    <span class="hud-stat"><b id="hudMiracles">0</b> <span data-t="hud.miracles">miracles</span></span>
+  </aside>
+  <nav class="act-rail" id="actRail" aria-label="Acts"></nav>
+
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-sheet" id="modalSheet">
+      <button class="modal-close" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ░░ Interlude templates (inserted into the story by app.js) ░░ -->
+  <template id="tpl-storm">
+    <section class="interlude storm-scene" data-interlude="storm">
+      <div class="il-stage">
+        <div class="il-media"><img data-art="storm" alt="" /></div>
+        <div class="il-shade"></div>
+        <div class="storm-rain" aria-hidden="true"></div>
+        <div class="il-copy">
+          <p class="storm-text" data-storm data-t="storm.text">And there arose a great storm of wind, and the waves beat into the ship.</p>
+          <p class="calm-text" data-t="storm.calm">Peace, be still.</p>
+          <cite class="calm-ref" data-t="storm.ref">Mark 4:37–39</cite>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-loaves">
+    <section class="interlude loaves-scene" data-interlude="loaves">
+      <div class="il-stage">
+        <canvas class="loaves-canvas" aria-hidden="true"></canvas>
+        <div class="il-copy">
+          <div class="loaves-counter">
+            <span class="lc-num" data-loaves-num>7</span>
+            <span class="lc-label" data-loaves-label>five loaves · two fishes</span>
+          </div>
+          <p class="loaves-foot" data-t="loaves.foot">“And they did all eat, and were filled.” <cite>Matthew 14:20</cite></p>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-light">
+    <section class="interlude light-scene" data-interlude="light">
+      <div class="il-stage">
+        <div class="il-media reveal"><img data-art="light-world" alt="" /></div>
+        <div class="light-mask"></div>
+        <div class="il-copy">
+          <p class="eyebrow center" data-t="light.eyebrow">Move your light across the darkness</p>
+          <h3 class="light-title" data-t="light.title">I am the light of the world.</h3>
+          <cite class="calm-ref" data-t="light.ref">John 9:5</cite>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-golgotha">
+    <section class="interlude golgotha" data-interlude="golgotha">
+      <div class="il-stage">
+        <div class="il-media"><img data-art="crucified" alt="" /></div>
+        <div class="il-shade red"></div>
+        <div class="gol-words" data-words></div>
+        <div class="gol-dark" data-t="gol.dark">
+          <p>Now from the sixth hour there was darkness over all the land unto the ninth hour.</p>
+          <cite>Matthew 27:45</cite>
+        </div>
+        <div class="gol-death" data-t="gol.death">
+          <p>And having said thus, he gave up the ghost.</p>
+          <cite>Luke 23:46</cite>
+        </div>
+        <div class="veil-behind" data-t="gol.veil">
+          <p>And, behold, the veil of the temple was rent in twain from the top to the bottom; and the earth did quake, and the rocks rent.</p>
+          <cite>Matthew 27:51</cite>
+        </div>
+        <div class="veil">
+          <div class="veil-half left"></div>
+          <div class="veil-half right"></div>
+          <svg class="veil-tear" preserveAspectRatio="none" viewBox="0 0 100 100"><path data-tear d="" /></svg>
+        </div>
+        <div class="gol-counter" data-word-counter></div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-dawn">
+    <section class="interlude dawn" data-interlude="dawn">
+      <div class="il-stage">
+        <div class="dawn-sky"></div>
+        <div class="dawn-days">
+          <span data-t="dawn.fri">Friday.</span><span data-t="dawn.sat">Saturday.</span><span data-t="dawn.sun">Sunday.</span>
+        </div>
+        <div class="tomb">
+          <div class="tomb-rock"></div>
+          <div class="tomb-mouth"><div class="tomb-light"></div></div>
+          <div class="tomb-stone"><i></i></div>
+        </div>
+        <div class="dawn-flash"></div>
+        <div class="dawn-copy">
+          <p class="eyebrow center" data-t="dawn.eyebrow">The first day of the week, very early in the morning</p>
+          <h2 class="risen" data-t="dawn.risen">He is risen.</h2>
+          <p class="risen-sub" data-t="dawn.sub">“Why seek ye the living among the dead? He is not here, but is risen.” <cite>Luke 24:5–6</cite></p>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/si/si-core.js"></script>
+  <script src="js/si/si-story.js"></script>
+  <script src="js/si/si-story2.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

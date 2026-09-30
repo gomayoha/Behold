@@ -1,0 +1,282 @@
+/* ==========================================================================
+   Mother Mary — Marian blue and white, soft as morning
+   ========================================================================== */
+body.page-mary {
+  --bg: #eef4fb;
+  --bg-2: #e2ecf8;
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-2: rgba(255, 255, 255, 0.85);
+  --line: rgba(31, 59, 115, 0.13);
+  --text: #13233f;
+  --text-2: #4a5d7c;
+  --text-3: #7d8ca6;
+  --gold: #b08a3e;
+  --gold-2: #f3dca4;
+  --blue: #2a4f93;
+  --blue-2: #5b86c9;
+  --sky: #cfe0f5;
+  background:
+    radial-gradient(120% 60% at 50% 0%, #f7fbff 0%, transparent 60%),
+    var(--bg);
+}
+.page-mary .nav { background: color-mix(in srgb, #eef4fb 70%, transparent); }
+.page-mary .eyebrow { color: var(--blue-2); }
+.page-mary .section-title { color: var(--text); font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; }
+.page-mary .section-title .soft { color: var(--blue-2); font-style: italic; }
+.page-mary .pill.blue { background: var(--blue); color: #fff; }
+.page-mary .pill.ghost { background: rgba(255,255,255,.7); color: var(--text); border-color: var(--line); }
+.page-mary ::selection { background: var(--blue-2); color: #fff; }
+.scene-veil.light { background: var(--bg); }
+
+/* Opening */
+.mary-hero { position: relative; }
+.mh-stage { position: relative; height: 100vh; overflow: hidden; display: grid; place-items: center; background: #0d1a33; color: #fff; }
+.mh-media { position: absolute; inset: 0; }
+.mh-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
+.mh-shade { position: absolute; inset: 0; background: radial-gradient(80% 70% at 50% 40%, rgba(10,24,56,.2), rgba(8,18,44,.82)); opacity: .75; }
+.mh-stars { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mh-copy { position: relative; text-align: center; padding: 0 var(--gutter); }
+.mh-copy .eyebrow { color: #cfe0f5; }
+.mh-copy h1 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(80px, 15vw, 220px); line-height: .9; margin: 0 0 20px; letter-spacing: -.02em; text-shadow: 0 10px 60px rgba(0,0,0,.5); }
+.mh-sub { font-family: var(--serif); font-size: clamp(24px, 2.8vw, 36px); margin: 0; }
+.mh-sub cite { display: block; font-family: var(--sans); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-2); margin-top: 12px; }
+.mh-hail { position: absolute; width: min(1000px, 100% - var(--gutter) * 2); text-align: center; margin: 0; font-family: var(--serif); font-size: clamp(32px, 4.8vw, 70px); line-height: 1.15; opacity: 0; }
+.mh-hail .w { display: inline-block; opacity: .15; color: #cfe0f5; }
+
+/* Bead rail */
+.bead-rail { position: fixed; right: 22px; top: 50%; z-index: 40; display: flex; flex-direction: column; align-items: center; gap: 3px; transform: translate(160%, -50%); transition: transform .8s var(--ease); }
+.bead-rail.show { transform: translate(0, -50%); }
+.br-bead { width: 5px; height: 5px; border-radius: 50%; background: rgba(31,59,115,.18); transition: background-color .4s, box-shadow .4s; }
+.br-bead.big { width: 8px; height: 8px; margin: 2px 0; }
+.br-bead.lit { background: var(--blue); box-shadow: 0 0 6px rgba(42,79,147,.5); }
+.br-cross { order: 99; width: 10px; height: 14px; margin-top: 6px; background: linear-gradient(var(--gold), var(--gold)) center / 2px 100% no-repeat, linear-gradient(var(--gold), var(--gold)) center 30% / 100% 2px no-repeat; }
+
+/* Intro */
+.mary-intro { text-align: center; }
+
+/* Life chapters */
+.life-ch { width: min(1200px, 100% - var(--gutter) * 2); margin: 0 auto; padding: clamp(60px, 10vh, 110px) 0; display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(30px, 6vw, 90px); align-items: center; }
+.life-ch.flip .life-art { order: 2; }
+.life-art { position: relative; margin: 0; aspect-ratio: 4 / 5; border-radius: 30px; overflow: hidden; background: var(--sky); box-shadow: 0 50px 100px -50px rgba(19,35,63,.45); }
+.life-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; opacity: 0; transition: opacity 1s var(--ease); }
+.life-art img.loaded { opacity: 1; }
+.life-art figcaption { position: absolute; left: 18px; right: 60px; bottom: 14px; font-size: 11px; color: rgba(255,255,255,.9); text-shadow: 0 1px 10px rgba(0,0,0,.8); z-index: 2; }
+.life-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,.45)); pointer-events: none; }
+.life-n { font-family: var(--serif); font-size: 64px; line-height: 1; color: var(--blue-2); opacity: .45; }
+.life-tag { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 16px 0 10px; }
+.life-title { font-family: var(--serif); font-weight: 500; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.02; margin: 0 0 20px; letter-spacing: -.01em; }
+.life-text { font-size: 18px; line-height: 1.7; color: var(--text); margin: 0 0 16px; }
+.life-note { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--text-2); margin: 0 0 14px; padding-left: 14px; border-left: 2px solid var(--sky); }
+.life-ref { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-2); }
+.life-more { display: flex; gap: 10px; margin-top: 26px; }
+.life-more figure { position: relative; margin: 0; width: 76px; height: 76px; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px -12px rgba(19,35,63,.4); transition: transform .5s var(--ease); }
+.life-more figure:hover { transform: translateY(-3px); }
+.life-more img { width: 100%; height: 100%; object-fit: cover; }
+.life-more .zoomable::after { width: 24px; height: 24px; top: 6px; right: 6px; background-size: 11px; }
+
+/* Magnificat */
+.magnificat { position: relative; }
+.mg-stage { position: relative; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px var(--gutter) 30px; text-align: center; color: #fff;
+  background: radial-gradient(90% 70% at 50% 30%, #3f6fb8 0%, #1f3b73 55%, #0f2148 100%); }
+.mg-stage .eyebrow { color: var(--gold-2); }
+.mg-title { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(44px, 6vw, 86px); margin: 0 0 16px; line-height: 1; }
+.mg-lines { max-width: 900px; }
+.mg-line { font-family: var(--serif); font-size: clamp(17px, min(1.9vw, 2.9vh), 26px); line-height: 1.32; margin: 0 0 3px; color: rgba(255,255,255,.22); }
+.mg-ref { margin-top: 20px; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-2); }
+
+/* Words */
+.words-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.word-card { margin: 0; padding: 34px 30px 28px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 60px -40px rgba(19,35,63,.35); display: flex; flex-direction: column; gap: 18px; backdrop-filter: blur(10px); }
+.word-n { font-family: var(--serif); font-size: 28px; color: var(--blue-2); }
+.word-card blockquote { margin: 0; font-family: var(--serif); font-size: clamp(24px, 2.2vw, 30px); line-height: 1.25; color: var(--text); flex: 1; }
+.word-card figcaption { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; letter-spacing: .06em; border-top: 1px solid var(--line); padding-top: 14px; }
+.word-card figcaption b { font-weight: 600; color: var(--text-2); }
+.word-card figcaption span { color: var(--blue-2); }
+
+/* Sorrows */
+.sorrows { background: linear-gradient(180deg, transparent, rgba(31,59,115,.05) 20%, rgba(31,59,115,.05) 80%, transparent); }
+.sorrows-grid { display: grid; grid-template-columns: minmax(260px, 420px) 1fr; gap: clamp(30px, 6vw, 90px); margin-top: 30px; }
+.heart-col { position: relative; }
+.heart-wrap { position: sticky; top: 16vh; text-align: center; }
+.heart { width: 100%; max-width: 380px; overflow: visible; filter: drop-shadow(0 30px 40px rgba(124,15,34,.25)); }
+.heart .heart-shine { fill: none; stroke: rgba(255,255,255,.5); stroke-width: 2; stroke-linecap: round; }
+.heart .flame { transform-origin: 50px 14px; animation: flicker 2.4s ease-in-out infinite; }
+.sword .blade { fill: #dfe6ef; stroke: #8b97a8; stroke-width: .6; }
+.sword .guard, .sword .grip { fill: none; stroke: var(--gold); stroke-width: 2.6; stroke-linecap: round; }
+.sword .pommel { fill: var(--gold); }
+.sword { opacity: 0; }
+.sword > * { transition: transform 1s var(--ease); transform: translateX(46px); }
+.sword { transition: opacity .6s var(--ease); }
+.sword.in { opacity: 1; }
+.sword.in > * { transform: none; }
+.heart .roses circle { fill: #f6f1f4; stroke: #e07b8e; stroke-width: 1.2; transform: scale(0); transform-box: fill-box; transform-origin: center; transition: transform .8s var(--ease); }
+.heart.roses .roses circle { transform: scale(1); }
+.heart-count { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--text-3); margin-top: 18px; }
+.sorrow-list { display: flex; flex-direction: column; gap: 22px; }
+.sorrow { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 20px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); transition: border-color .6s, box-shadow .6s, background-color .6s; }
+.sorrow.on { border-color: rgba(200,40,59,.28); box-shadow: 0 30px 60px -40px rgba(124,15,34,.35); background: rgba(255,255,255,.8); }
+.sorrow figure { position: relative; margin: 0; aspect-ratio: 3 / 4; border-radius: 16px; overflow: hidden; background: var(--sky); }
+.sorrow img { width: 100%; height: 100%; object-fit: cover; }
+.sorrow-n { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #c8283b; font-weight: 600; }
+.sorrow h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; margin: 8px 0 14px; }
+.sorrow blockquote { margin: 0 0 12px; font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--text); }
+.sorrow blockquote cite { display: block; font-family: var(--sans); font-style: normal; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-2); margin-top: 6px; }
+.sorrow p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
+.hardships { margin-top: clamp(80px, 12vh, 130px); }
+.sub-title { text-align: center; font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.4vw, 46px); margin: 0 0 30px; }
+.hard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.hard { padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); }
+.hard b { font-size: 18px; }
+.hard p { font-size: 15px; line-height: 1.55; color: var(--text-2); margin: 8px 0 10px; }
+.hard cite { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-2); }
+
+/* Rosary history */
+.rh-art { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 10px auto 70px; max-width: 900px; }
+.rh-art figure { position: relative; margin: 0; aspect-ratio: 4 / 5; border-radius: 26px; overflow: hidden; background: var(--sky); box-shadow: 0 40px 80px -45px rgba(19,35,63,.5); }
+.rh-art img { width: 100%; height: 100%; object-fit: cover; }
+.rh-art figcaption, .rh-img figcaption { position: absolute; left: 14px; right: 50px; bottom: 12px; font-size: 11px; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.8); }
+.rh-line { --fill: 0%; list-style: none; padding: 0; margin: 0 auto; max-width: 860px; position: relative; }
+.rh-line::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(31,59,115,.22) 1.6px, transparent 2px) center top / 8px 10px repeat-y; }
+.rh-line::after { content: ""; position: absolute; left: 50%; top: 0; width: 2px; height: var(--fill); transform: translateX(-50%);
+  background: radial-gradient(circle, var(--blue) 1.8px, transparent 2.2px) center top / 8px 10px repeat-y; }
+.rh-item { position: relative; width: calc(50% - 44px); padding: 22px 24px; margin-bottom: 26px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); }
+.rh-item:nth-child(odd) { margin-right: auto; }
+.rh-item:nth-child(even) { margin-left: auto; }
+.rh-bead { position: absolute; top: 26px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid var(--blue-2); transition: background-color .5s, box-shadow .5s; }
+.rh-item:nth-child(odd) .rh-bead { right: -53px; }
+.rh-item:nth-child(even) .rh-bead { left: -53px; }
+.rh-item.lit .rh-bead { background: var(--blue); box-shadow: 0 0 0 6px rgba(42,79,147,.12), 0 0 16px rgba(42,79,147,.5); }
+.rh-when { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 0 0 6px; }
+.rh-item h3 { font-family: var(--serif); font-weight: 500; font-size: 26px; margin: 0 0 8px; line-height: 1.1; }
+.rh-item p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
+.rh-img { position: relative; margin: 16px 0 0; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; }
+.rh-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Mysteries */
+.myst-tabs { display: flex; width: fit-content; margin: 0 auto 30px; background: rgba(255,255,255,.7); }
+.myst-tabs button { display: flex; flex-direction: column; align-items: center; padding: 10px 22px; line-height: 1.2; }
+.myst-tabs button small { font-size: 10.5px; opacity: .7; margin-top: 2px; }
+.myst-tabs button em { font-style: normal; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; background: var(--gold); color: #fff; border-radius: 999px; padding: 1px 7px; margin-top: 3px; order: 3; }
+.page-mary .segmented button.active { background: var(--blue); color: #fff; }
+.myst-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.myst { border-radius: 22px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; }
+.myst figure { position: relative; margin: 0; aspect-ratio: 4 / 5; background: var(--sky); overflow: hidden; }
+.myst img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.myst:hover img { transform: scale(1.05); }
+.myst-copy { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; }
+.myst-n { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-2); font-weight: 600; }
+.myst h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; line-height: 1.12; margin: 2px 0; }
+.myst-ref { font-size: 12px; color: var(--text-3); margin: 0; }
+.myst-fruit { font-size: 13.5px; margin: 8px 0 0; color: var(--text); }
+.myst-fruit span { display: inline-block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-right: 6px; }
+
+/* Pray */
+.pray-shell { display: grid; grid-template-columns: minmax(280px, 440px) 1fr; gap: clamp(24px, 5vw, 70px); align-items: center; padding: clamp(20px, 4vw, 50px); border-radius: 34px; background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(226,236,248,.8)); border: 1px solid var(--line); box-shadow: 0 60px 120px -70px rgba(19,35,63,.5); }
+.rosary { width: 100%; height: auto; max-height: 78vh; display: block; margin: 0 auto; }
+.rosary .chain { fill: none; stroke: rgba(176,138,62,.55); stroke-width: 1.2; }
+.rosary .bead { fill: url(#beadG); stroke: rgba(31,59,115,.35); stroke-width: 1; cursor: pointer; transition: fill .4s, stroke .4s, filter .4s; }
+.rosary .bead.big { stroke-width: 1.4; }
+.rosary .bead.prayed, .rosary .bead.prayed path { fill: var(--blue); stroke: var(--blue); }
+.rosary g.bead path { fill: url(#beadG); stroke: var(--gold); stroke-width: 1.4; }
+.rosary g.bead .medal-m { fill: none; stroke: var(--blue); stroke-width: 1.6; }
+.rosary g.bead.prayed .medal-m { stroke: #fff; }
+.rosary .bead.current, .rosary g.bead.current path { fill: #ffd97a; stroke: var(--gold); filter: drop-shadow(0 0 6px rgba(255,190,70,.9)); }
+.rosary g.cross path { fill: var(--gold); stroke: #8a6a2c; }
+.pray-panel { min-height: 460px; display: flex; flex-direction: column; }
+.pray-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; }
+.pray-set { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+.pray-set select { font: inherit; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--text); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.pray-progress { font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.pray-mystery { display: none; grid-template-columns: 70px 1fr; gap: 16px; align-items: center; padding: 12px; border-radius: 18px; background: rgba(255,255,255,.75); border: 1px solid var(--line); margin-bottom: 22px; }
+.pray-mystery.show { display: grid; }
+.pray-mystery:not(:has(figure)) { grid-template-columns: 1fr; }
+.pray-mystery figure { position: relative; margin: 0; width: 70px; height: 86px; border-radius: 12px; overflow: hidden; }
+.pray-mystery img { width: 100%; height: 100%; object-fit: cover; }
+.pray-mystery .zoomable::after { width: 22px; height: 22px; top: 4px; right: 4px; background-size: 10px; }
+.pray-mystery span { display: block; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-2); }
+.pray-mystery b { display: block; font-family: var(--serif); font-weight: 500; font-size: 24px; line-height: 1.1; margin: 2px 0 4px; }
+.pray-mystery em { font-style: normal; font-size: 12.5px; color: var(--text-3); }
+.pray-name { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 0 0 12px; }
+.pray-text { font-family: var(--serif); font-size: clamp(22px, 2.2vw, 30px); line-height: 1.4; color: var(--text); margin: 0 0 14px; flex: 1; }
+.pray-count { font-size: 13px; color: var(--blue-2); font-variant-numeric: tabular-nums; margin: 0 0 18px; min-height: 1.2em; }
+.pray-controls { display: flex; gap: 10px; }
+.pray-controls .pill { flex: 1; justify-content: center; padding: 15px 22px; font-size: 16px; }
+.pray-controls .pill:disabled { opacity: .4; pointer-events: none; }
+.pray-restart { align-self: center; margin-top: 14px; font-size: 13px; color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Shrines */
+.shrine-map { margin: 10px auto 40px; padding: 10px; border-radius: 30px; background: rgba(255,255,255,.55); border: 1px solid var(--line); }
+.shrine-map .pin-dot { fill: var(--blue); stroke: #fff; stroke-width: 1.5; transition: fill .3s; }
+.shrine-map .pin-pulse { fill: none; stroke: var(--blue); stroke-width: 1; animation: pulse 2.6s var(--ease) infinite; transform-box: fill-box; transform-origin: center; }
+.shrine-map .pin text { font: 600 9px var(--sans); fill: var(--text); paint-order: stroke; stroke: #eef4fb; stroke-width: 3px; }
+.shrine-map .pin.on .pin-dot { fill: var(--gold); }
+@keyframes pulse { from { transform: scale(1); opacity: .8; } to { transform: scale(3.6); opacity: 0; } }
+.shrine-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.shrine { position: relative; padding: 24px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); transition: border-color .4s, transform .5s var(--ease); }
+.shrine.on, .shrine:hover { border-color: rgba(42,79,147,.35); transform: translateY(-3px); }
+.shrine figure { position: relative; float: right; margin: 0 0 10px 14px; width: 80px; height: 110px; border-radius: 12px; overflow: hidden; }
+.shrine figure img { width: 100%; height: 100%; object-fit: cover; }
+.shrine-year { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.shrine h3 { font-family: var(--serif); font-weight: 500; font-size: 26px; margin: 6px 0 2px; line-height: 1.1; }
+.shrine-place { font-size: 13px; color: var(--blue-2); margin: 0 0 10px; }
+.shrine p:last-child { font-size: 15px; line-height: 1.55; color: var(--text-2); margin: 0; }
+
+/* Closing */
+.mary-close { padding: clamp(120px, 18vh, 200px) 0; text-align: center; background: radial-gradient(70% 60% at 50% 60%, #dce9f8, transparent 70%); }
+.close-prayer { font-family: var(--serif); font-size: clamp(30px, 3.8vw, 54px); line-height: 1.25; margin: 0 auto 26px; color: var(--text); }
+.close-note { font-size: 15px; color: var(--text-3); max-width: 560px; margin: 0 auto; }
+
+/* Footer stays dark for contrast */
+.page-mary .footer { background: #0f1f3d; }
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .bead-rail { display: none; }
+  .myst-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .life-ch, .life-ch.flip { grid-template-columns: minmax(0, 1fr); }
+  .life-ch.flip .life-art { order: 0; }
+  .life-art { aspect-ratio: 4 / 4.2; }
+  .words-grid, .hard-grid, .shrine-cards { grid-template-columns: minmax(0, 1fr); }
+  .sorrows-grid { grid-template-columns: minmax(0, 1fr); }
+  .heart-col { position: sticky; top: 56px; z-index: 3; }
+  .heart-wrap { position: static; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 8px 0; border-radius: 20px; }
+  .heart { max-width: 170px; }
+  .heart-count { margin-top: 4px; }
+  .sorrow { grid-template-columns: 110px 1fr; gap: 16px; padding: 14px; }
+  .rh-line::before, .rh-line::after { left: 10px; }
+  .rh-item, .rh-item:nth-child(even) { width: auto; margin-left: 34px; }
+  .rh-item:nth-child(odd) .rh-bead, .rh-item:nth-child(even) .rh-bead { left: -32px; right: auto; }
+  .pray-shell { grid-template-columns: minmax(0, 1fr); }
+  .rosary { max-height: 52vh; }
+  .pray-panel { min-height: 0; }
+  .myst-grid { grid-template-columns: repeat(2, 1fr); }
+  .myst-tabs button { padding: 8px 12px; }
+  .myst-tabs button small { display: none; }
+  .rh-art { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+@media (max-width: 520px) {
+  .mg-line { font-size: 17px; }
+  .myst-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .myst h3 { font-size: 18px; }
+}
+
+/* Sinhala */
+html.lang-si .page-mary .section-title .soft, html.lang-si .section-title .soft { font-style: normal; }
+html.lang-si .mh-hail { font-size: clamp(22px, 3.2vw, 44px); line-height: 1.6; }
+html.lang-si .mh-sub, html.lang-si .life-note, html.lang-si .sorrow blockquote, html.lang-si .risen-sub { font-style: normal; }
+html.lang-si .life-title { font-size: clamp(28px, 3.2vw, 46px); line-height: 1.35; }
+html.lang-si .life-text { font-size: 17px; line-height: 1.9; }
+html.lang-si .mg-title { font-style: normal; }
+html.lang-si .mg-line { font-size: clamp(14px, min(1.5vw, 2.1vh), 20px); line-height: 1.5; }
+html.lang-si .mg-title { font-size: clamp(38px, 5vw, 70px); margin-bottom: 10px; }
+html.lang-si .word-card blockquote { font-size: clamp(19px, 1.7vw, 23px); line-height: 1.6; }
+html.lang-si .sorrow h3 { font-size: clamp(21px, 2vw, 27px); line-height: 1.4; }
+html.lang-si .rh-item h3, html.lang-si .shrine h3 { font-size: 21px; line-height: 1.4; }
+html.lang-si .myst h3 { font-size: 18px; line-height: 1.4; }
+html.lang-si .pray-text { font-size: clamp(18px, 1.8vw, 23px); line-height: 1.85; }
+html.lang-si .pray-mystery b { font-size: 20px; line-height: 1.4; }
+html.lang-si .close-prayer { font-size: clamp(22px, 2.8vw, 38px); line-height: 1.7; }
+html.lang-si .myst-tabs button em { letter-spacing: 0; text-transform: none; }

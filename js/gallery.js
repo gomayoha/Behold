@@ -13,7 +13,8 @@
     ["passion", "The Passion", "From the Last Supper to the sealed tomb."],
     ["resurrection", "The Resurrection", "The empty tomb to the Ascension."],
     ["apostles", "The Apostles", "The Twelve and Paul — their missions and their deaths."],
-    ["mary", "Mother Mary", "Her life, her sorrows and her glory."]
+    ["mary", "Mother Mary", "Her life, her sorrows and her glory."],
+    ["saints", "The Saints", "Martyrs, mystics, missionaries — and photographs of the saints of our own times."]
   ].map(([id, name, note]) => [id, T(name), T(note)]);
   const keys = Object.keys(ART);
   const artists = [...new Set(keys.map((k) => ART[k].artist))].sort((a, b) => a.localeCompare(b));

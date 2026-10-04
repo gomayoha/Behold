@@ -119,6 +119,25 @@
     if (window.PRAYERS && m.prayers) Object.keys(PRAYERS).forEach((k) => assign(PRAYERS[k], m.prayers[k]));
     if (window.SHRINES && m.shrines) SHRINES.forEach((s, i) => assign(s, m.shrines[i]));
     if (m.subTuum) window.SUB_TUUM = m.subTuum;
+
+    const sa = S.saints || {};
+    if (window.SAINTS && sa.list) SAINTS.forEach((s) => {
+      const t = sa.list[s.id] || {};
+      assign(s, { name: t.name, full: t.full, title: t.title, lived: t.lived, from: t.from, feast: t.feast, patron: t.patron, story: t.story, lessons: t.lessons, practice: t.practice });
+      s.moments = s.moments.map(([w, x, r], i) => { const m = (t.moments && t.moments[i]) || []; return [m[0] || w, m[1] || x, m[2] || R(r)]; });
+      s.quote = { t: t.quote || s.quote.t, by: t.by || s.quote.by, r: t.quoteRef || R(s.quote.r) };
+      if (t.end) s.end = { ...s.end, ...t.end };
+    });
+    if (window.SAINT_ERAS && sa.eras) SAINT_ERAS.forEach((e, i) => assign(e, sa.eras[i]));
+    if (window.COMPANIONS && sa.companions) COMPANIONS.forEach((c, i) => {
+      const t = sa.companions[i]; if (!t) return;
+      c.label = t.label;
+      c.picks = c.picks.map(([id, why], k) => [id, (t.why && t.why[k]) || why]);
+    });
+    if (window.LANKA && sa.lanka) {
+      LANKA.route.forEach((r, i) => { assign(r, sa.lanka.route && sa.lanka.route[i]); r.place = P(r.place); });
+      LANKA.shrines.forEach((r, i) => assign(r, sa.lanka.shrines && sa.lanka.shrines[i]));
+    }
   }
 
   /* Static text in the HTML: data-t="key" (innerHTML), data-t-ph="key" (placeholder) */

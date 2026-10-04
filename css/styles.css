@@ -910,7 +910,7 @@ img.broken { visibility: hidden; }
 
 /* Continue the journey */
 .journeys { padding: clamp(120px, 16vh, 180px) 0; border-top: 1px solid var(--line); }
-.journey-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+.journey-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }
 .jcard { position: relative; display: block; aspect-ratio: 3 / 4; border-radius: 26px; overflow: hidden; background: #111; color: #fff; isolation: isolate; }
 .jcard-bg { position: absolute; inset: 0; background-size: cover; background-position: center 30%; transform: scale(1.04); transition: transform 1.4s var(--ease); z-index: -1; }
 .jcard::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.05) 30%, rgba(0,0,0,.82)); }
@@ -919,6 +919,7 @@ img.broken { visibility: hidden; }
 .jcard-copy small { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #f3dca4; }
 .jcard-copy b { font-size: clamp(28px, 3vw, 40px); letter-spacing: -.03em; line-height: 1; }
 .jcard-copy em { font-family: var(--serif); font-size: 19px; color: rgba(255,255,255,.8); }
+@media (max-width: 1080px) { .journey-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .journey-cards { grid-template-columns: minmax(0, 1fr); } .jcard { aspect-ratio: 16 / 11; } }
 
 /* Shared page-intro and chapter pieces used by the Apostles, Mary and Gallery pages */

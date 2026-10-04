@@ -29,6 +29,8 @@
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
+    // pages build their content (and pin spacers) after Lenis measures, so measure again on every refresh
+    ScrollTrigger.addEventListener("refresh", () => lenis.resize());
   }
   function scrollToEl(target, offset = 0) {
     const el = typeof target === "string" ? $(target) : target;
@@ -84,6 +86,7 @@
     { href: "index.html", label: "The Story", id: "story" },
     { href: "apostles.html", label: "The Apostles", id: "apostles" },
     { href: "mary.html", label: "Mother Mary", id: "mary" },
+    { href: "saints.html", label: "The Saints", id: "saints" },
     { href: "gallery.html", label: "The Gallery", id: "gallery" },
     { href: "index.html#people", label: "Every Life", id: "people" },
     { href: "index.html#candle", label: "Pray", id: "candle" }

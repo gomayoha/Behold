@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Saints — Behold</title>
+  <meta name="description" content="Nineteen saints across twenty centuries: their stories, how their lives ended, and what we can learn from them today." />
+  <meta name="theme-color" content="#0b0910" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0910'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23e3c27a' stroke-width='4'/%3E%3Cpath d='M29 14h6v12h12v6H35v18h-6V32H17v-6h12z' fill='%23f6e3b0'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/saints.css" />
+</head>
+<body data-page="saints" class="page-saints">
+  <header class="nav" id="nav"></header>
+
+  <!-- Every saint on the page, as a column of small halos -->
+  <nav class="halo-rail" id="haloRail" aria-label="Saints on this page"></nav>
+
+  <main>
+    <!-- Opening: a rose window of saints -->
+    <section class="sx-hero" id="top">
+      <div class="sx-stage">
+        <div class="sx-rays" aria-hidden="true"></div>
+        <canvas class="sx-motes" id="sxMotes" aria-hidden="true"></canvas>
+        <div class="sx-window" id="sxWindow">
+          <svg class="rose" id="rose" viewBox="0 0 1000 1000" role="img" aria-label="A rose window made of the saints"></svg>
+          <div class="sx-sweep" aria-hidden="true"></div>
+        </div>
+        <div class="sx-copy" id="sxCopy">
+          <p class="eyebrow center" data-t="s.hero.eyebrow">A great cloud of witnesses</p>
+          <h1 data-t="s.hero.title">The Saints</h1>
+          <p class="sx-sub" data-t="s.hero.sub">“Seeing we also are compassed about with so great a cloud of witnesses… let us run with patience the race that is set before us.”<cite>Hebrews 12:1</cite></p>
+        </div>
+        <div class="sx-who" id="sxWho" aria-hidden="true">
+          <span data-t="s.who1">A carpenter.</span>
+          <span data-t="s.who2">A soldier.</span>
+          <span data-t="s.who3">A restless sinner.</span>
+          <span data-t="s.who4">A peasant girl of seventeen.</span>
+          <span data-t="s.who5">A priest disguised as a coolie.</span>
+          <span data-t="s.who6">A dying girl of twenty-four.</span>
+          <span data-t="s.who7">Prisoner 16670.</span>
+          <div class="sx-who-end" id="sxWhoEnd" data-t="s.whoEnd">
+            <p>Ordinary people, who let God finish what He began.</p>
+            <cite>Philippians 1:6</cite>
+          </div>
+        </div>
+        <p class="sx-hint" id="sxHint" data-t="s.hero.hint">Scroll</p>
+        <div class="scene-veil"></div>
+      </div>
+    </section>
+
+    <!-- What is a saint? -->
+    <section class="section sx-what" id="what">
+      <div class="container">
+        <p class="eyebrow center" data-t="s.what.eyebrow">What is a saint?</p>
+        <h2 class="section-title center" data-t="s.what.title">Someone the light<br /><span class="soft">shines through.</span></h2>
+        <p class="section-lede center" data-t="s.what.lede">Asked what a saint is, a child once looked up at the stained-glass windows of her church and answered, “Someone the light shines through.” The saints were not born better than us. They let God’s light through — cracks and all.</p>
+        <div class="pillars">
+          <article class="pillar reveal-up" data-t="s.pillar1"><span class="pillar-n">I</span><h3>Forgiven, not flawless</h3><p>Augustine chased pleasure for years. Peter denied Christ. The saints are the proof that your past does not get the last word.</p></article>
+          <article class="pillar reveal-up" data-t="s.pillar2"><span class="pillar-n">II</span><h3>Surrendered, not superhuman</h3><p>They were afraid, ill, tired and misunderstood. What set them apart was the yes they kept saying — on the bad days too.</p></article>
+          <article class="pillar reveal-up" data-t="s.pillar3"><span class="pillar-n">III</span><h3>Called — like you</h3><p>Scripture addresses every believer as “called to be saints.” The canonised are not a separate class; they are the brothers and sisters who went ahead.<cite>Romans 1:7</cite></p></article>
+        </div>
+        <blockquote class="bloy reveal-up" data-t="s.bloy">“There is only one sadness: not to be a saint.”<cite>Léon Bloy</cite></blockquote>
+
+        <div class="canon">
+          <h3 class="sub-title center" data-t="s.canon.title">How the Church names a saint</h3>
+          <ol class="canon-path" id="canonPath">
+            <li data-t="s.canon1"><b>Servant of God</b><span>A cause is opened, usually at least five years after death, and their life and writings are examined.</span></li>
+            <li data-t="s.canon2"><b>Venerable</b><span>The Pope declares that they lived the Christian virtues to a heroic degree.</span></li>
+            <li data-t="s.canon3"><b>Blessed</b><span>A miracle through their prayers is confirmed — or, for a martyr, a death for the faith. They may be honoured locally.</span></li>
+            <li data-t="s.canon4"><b>Saint</b><span>A second miracle, and the Church declares that they are with God. Their name enters the calendar of the whole Church.</span></li>
+          </ol>
+          <p class="canon-note" data-t="s.canon.note">For the first thousand years there was no such process: martyrs and holy men and women were honoured by the people who had known them, with their bishop’s blessing. The first saint proclaimed by a pope was Ulrich of Augsburg, in 993.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Twenty centuries -->
+    <section class="sx-time" id="centuries">
+      <div class="st-stage">
+        <header class="st-head">
+          <p class="eyebrow" data-t="s.time.eyebrow">Twenty centuries</p>
+          <h2 class="section-title" data-t="s.time.title">From Nazareth<br /><span class="soft">to now.</span></h2>
+        </header>
+        <div class="st-viewport"><div class="st-track" id="stTrack"></div></div>
+        <div class="st-progress" aria-hidden="true"><i id="stProg"></i></div>
+      </div>
+      <div class="scene-veil"></div>
+    </section>
+
+    <!-- One chapter for each saint, grouped by era -->
+    <div id="chapters"></div>
+
+    <!-- Walk with a saint -->
+    <section class="section sx-companion" id="companion">
+      <div class="container">
+        <p class="eyebrow center" data-t="s.comp.eyebrow">Walk with a saint</p>
+        <h2 class="section-title center" data-t="s.comp.title">What are you<br /><span class="soft">carrying today?</span></h2>
+        <p class="section-lede center" data-t="s.comp.lede">Choose what is on your heart. Someone has carried it before you — and found God in it.</p>
+        <div class="chips" id="chips" role="tablist"></div>
+        <div class="comp-out" id="compOut" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- The Litany -->
+    <section class="sx-litany" id="litany">
+      <div class="lt-stage">
+        <div class="lt-bg"><img id="ltImg" alt="" /></div>
+        <div class="lt-shade"></div>
+        <canvas class="lt-candles" id="ltCandles" aria-hidden="true"></canvas>
+        <p class="eyebrow center lt-eyebrow" data-t="s.lt.eyebrow">The Litany of the Saints</p>
+        <div class="lt-names" id="ltNames"></div>
+        <div class="lt-end" id="ltEnd">
+          <p class="lt-you" data-t="s.lt.you">And you.</p>
+          <p class="lt-verse" data-t="s.lt.verse">“To all that be in Rome, beloved of God, called to be saints: Grace to you and peace from God our Father, and the Lord Jesus Christ.”<cite>Romans 1:7</cite></p>
+        </div>
+        <div class="scene-veil"></div>
+      </div>
+    </section>
+
+    <!-- A saint for the year -->
+    <section class="section sx-draw" id="draw">
+      <div class="container narrow">
+        <p class="eyebrow center" data-t="s.draw.eyebrow">An old custom</p>
+        <h2 class="section-title center" data-t="s.draw.title">Let a saint<br /><span class="soft">choose you.</span></h2>
+        <p class="section-lede center" data-t="s.draw.lede">Many Christians begin the year by drawing a saint’s name, and asking that saint to walk with them until the next. Pause, say a short prayer, and draw.</p>
+        <div class="draw-table">
+          <div class="draw-deck" id="drawDeck" aria-hidden="true"></div>
+          <div class="draw-card" id="drawCard" aria-live="polite"></div>
+        </div>
+        <div class="draw-actions">
+          <button class="pill gold" id="drawBtn" type="button"></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer slim">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand"><span data-site-name>Behold</span></p>
+          <p class="footer-verse" data-t="s.footer.verse">“And they that be wise shall shine as the brightness of the firmament; and they that turn many to righteousness as the stars for ever and ever.” <cite>Daniel 12:3</cite></p>
+        </div>
+        <p class="footer-dedication" data-site-dedication></p>
+      </div>
+      <p class="footer-fine" data-t="s.footer.fine">© <span data-year></span> <span data-site-name>Behold</span>. Paintings and photographs via Wikimedia Commons: public domain, except the two photographs of Mother Teresa (Manfredo Ferrari, CC BY-SA 4.0; Evert Odekerken, CC BY 2.5). Scripture: KJV. Stories marked “tradition” come from early accounts rather than history. Sancti omnes, orate pro nobis.</p>
+    </div>
+  </footer>
+
+  <!-- Sri Lanka: placed straight after the chapter on Joseph Vaz -->
+  <template id="tpl-lanka">
+    <section class="sx-lanka" id="lanka">
+      <div class="lk-stage">
+        <div class="lk-map" id="lkMap"></div>
+        <div class="lk-panel">
+          <p class="eyebrow" data-t="s.lk.eyebrow">Our island</p>
+          <h2 class="lk-title" data-t="s.lk.title">The road of<br />Joseph Vaz</h2>
+          <div class="lk-steps" id="lkSteps"></div>
+        </div>
+      </div>
+      <div class="scene-veil"></div>
+    </section>
+    <section class="section lk-shrines" id="lanka-shrines">
+      <div class="container">
+        <p class="eyebrow center" data-t="s.lks.eyebrow">Loved on our island</p>
+        <h2 class="section-title center" data-t="s.lks.title">Saints of<br /><span class="soft">Sri Lanka’s shrines.</span></h2>
+        <div class="lk-cards" id="lkCards"></div>
+      </div>
+    </section>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/map-data.js"></script>
+  <script src="js/saints-data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/si/si-core.js"></script>
+  <script src="js/si/si-saints.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/saints.js"></script>
+</body>
+</html>

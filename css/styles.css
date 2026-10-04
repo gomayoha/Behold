@@ -202,7 +202,7 @@ cite { font-style: normal; }
 .snd-on { display: none; }
 #soundToggle[aria-pressed="true"] .snd-on { display: block; color: var(--gold); }
 #soundToggle[aria-pressed="true"] .snd-off { display: none; }
-.nav-menu { display: none; flex-direction: column; gap: 5px; }
+.nav-menu { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
 .nav-menu span { display: block; width: 16px; height: 1.5px; background: currentColor; transition: transform .4s var(--ease); }
 .nav-menu[aria-expanded="true"] span:first-child { transform: translateY(3.25px) rotate(45deg); }
 .nav-menu[aria-expanded="true"] span:last-child { transform: translateY(-3.25px) rotate(-45deg); }

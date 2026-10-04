@@ -181,7 +181,7 @@ body.page-saints {
 /* ==========================================================================
    A saint's chapter
    ========================================================================== */
-.saint { position: relative; padding: clamp(90px, 14vh, 150px) 0; border-top: 1px solid var(--line); }
+.saint { position: relative; padding: clamp(90px, 14vh, 150px) 0; border-top: 1px solid var(--line); overflow-x: clip; }
 .saint::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(55% 40% at 22% 28%, color-mix(in srgb, var(--sc) 9%, transparent), transparent 70%); }
 .s-grid { position: relative; width: min(1240px, 100% - var(--gutter) * 2); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(30px, 5vw, 90px); }
 .s-visual, .s-content { min-width: 0; }
@@ -435,6 +435,7 @@ body.page-saints {
   .halo-rail { display: none; }
 }
 @media (max-width: 600px) {
+  .s-halo { width: 100%; }
   .sx-window { width: 128vmin; }
   .sx-copy { top: 96px; }
   .s-facts { grid-template-columns: minmax(0, 1fr); }

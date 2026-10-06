@@ -9,8 +9,8 @@ The life of Jesus Christ, told through every person He met, plus the Apostles, M
 | `index.html` | **The Story**: 118 encounters across nine acts, the Passion, the Resurrection, the "I AM" sayings, a searchable index, a prayer candle, and a verse-card maker |
 | `apostles.html` | **The Apostles**: the Twelve, Matthias and Paul, each with their calling, journey map, death and legacy; Paul's conversion and missionary journeys |
 | `mary.html` | **Mother Mary**: her life, the Magnificat, her words, the Seven Sorrows, the history of the Rosary, the Mysteries, a pray-along Rosary, and Marian shrines |
-| `saints.html` | **The Saints**: nineteen saints from Joseph to John Paul II, each with their story, how their life ended, and three lessons with one thing to do today; a timeline of twenty centuries, the road of St Joseph Vaz across Sri Lanka and the island's shrines, "What are you carrying today?" (a saint for each struggle), the Litany of the Saints, and a saint for the year |
-| `gallery.html` | **The Gallery**: all 240 paintings and photographs, room by room. Tap any painting on any page to see it closer and browse the others in its set |
+| `saints.html` | **The Saints**: forty-one saints, from the archangel Michael and St Anne to John Paul II, each with their story, how their life ended, and three lessons with one thing to do today; Padre Pio's "Pray, hope, and don't worry" and a place to leave a worry with God; a timeline of twenty centuries, the road of St Joseph Vaz across Sri Lanka and the island's shrines, "What are you carrying today?" (a saint for each struggle), the Litany of the Saints, and a saint for the year |
+| `gallery.html` | **The Gallery**: all 288 paintings and photographs, room by room. Tap any painting on any page to see it closer and browse the others in its set |
 
 ## Run it locally
 

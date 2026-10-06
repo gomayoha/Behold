@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>The Saints — Behold</title>
-  <meta name="description" content="Nineteen saints across twenty centuries: their stories, how their lives ended, and what we can learn from them today." />
+  <meta name="description" content="Forty-one saints across twenty centuries, and the archangel Michael: their stories, how their lives ended, and what we can learn from them today." />
   <meta name="theme-color" content="#0b0910" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0910'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23e3c27a' stroke-width='4'/%3E%3Cpath d='M29 14h6v12h12v6H35v18h-6V32H17v-6h12z' fill='%23f6e3b0'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,6 +41,7 @@
           <span data-t="s.who4">A peasant girl of seventeen.</span>
           <span data-t="s.who5">A priest disguised as a coolie.</span>
           <span data-t="s.who6">A dying girl of twenty-four.</span>
+          <span data-t="s.whoPio">A friar who bore the wounds of Christ.</span>
           <span data-t="s.who7">Prisoner 16670.</span>
           <div class="sx-who-end" id="sxWhoEnd" data-t="s.whoEnd">
             <p>Ordinary people, who let God finish what He began.</p>
@@ -169,6 +170,45 @@
         <p class="eyebrow center" data-t="s.lks.eyebrow">Loved on our island</p>
         <h2 class="section-title center" data-t="s.lks.title">Saints of<br /><span class="soft">Sri Lanka’s shrines.</span></h2>
         <div class="lk-cards" id="lkCards"></div>
+      </div>
+    </section>
+  </template>
+
+  <!-- Padre Pio: placed straight after his chapter -->
+  <template id="tpl-pio">
+    <section class="sx-pio" id="pio-words">
+      <div class="pw-stage">
+        <div class="pw-bg"><img id="pwImg" alt="" /></div>
+        <div class="pw-shade"></div>
+        <p class="eyebrow center pw-eyebrow" data-t="s.pw.eyebrow">What he told everyone who came to him</p>
+        <div class="pw-words">
+          <div class="pw-word"><b data-t="s.pw.w1">Pray.</b><p data-t="s.pw.d1">“Prayer is the best weapon we have. It is the key that opens the heart of God.”</p></div>
+          <div class="pw-word"><b data-t="s.pw.w2">Hope.</b><p data-t="s.pw.d2">“God is merciful, and will hear your prayer.”</p></div>
+          <div class="pw-word"><b data-t="s.pw.w3">Don’t worry.</b><p data-t="s.pw.d3">“Worry is useless.”</p></div>
+        </div>
+        <p class="pw-sign" data-t="s.pw.sign">Saint Pio of Pietrelcina</p>
+        <div class="scene-veil"></div>
+      </div>
+    </section>
+    <section class="section pio-worry" id="pio-worry">
+      <div class="container narrow">
+        <p class="eyebrow center" data-t="s.pv.eyebrow">Leave it with him</p>
+        <h2 class="section-title center" data-t="s.pv.title">Give your worry<br /><span class="soft">to God.</span></h2>
+        <p class="section-lede center" data-t="s.pv.lede">Write down what is weighing on you, and let it go up like a candle flame. It stays on this screen: nothing you write is saved or sent anywhere.</p>
+        <div class="pv-card" id="pioWorry">
+          <div class="pv-light" aria-hidden="true">
+            <svg class="pv-candle" viewBox="0 0 34 44"><g class="flame"><path d="M17 3c3.4 4.2 5.4 7 5.4 10a5.4 5.4 0 01-10.8 0c0-3 2-5.8 5.4-10z" fill="#ffb84d"/><path d="M17 8.6c1.8 2.4 2.8 4 2.8 5.6a2.8 2.8 0 01-5.6 0c0-1.6 1-3.2 2.8-5.6z" fill="#fff4cf"/></g><path d="M17 19.4v2.2" stroke="#3a2c1a" stroke-width="1.2"/><rect x="12.4" y="21.4" width="9.2" height="20" rx="2" fill="#f3e6cf"/></svg>
+          </div>
+          <div class="pv-write">
+            <textarea id="pvText" rows="4" maxlength="280" data-t-ph="s.pv.ph" placeholder="What is worrying you today?" aria-label="What is worrying you today?" data-t-label="s.pv.ph"></textarea>
+            <div class="pv-rise" id="pvRise" aria-hidden="true"></div>
+            <div class="pv-after" id="pvAfter" aria-live="polite">
+              <p class="pv-prayer" data-t="s.pv.prayer">“Stay with me, Lord, for it is necessary to have You present so that I do not forget You. You know how easily I abandon You.”<cite>From Padre Pio’s prayer after Holy Communion</cite></p>
+              <p class="pv-done" data-t="s.pv.done">It is in God’s hands now. When the worry comes back, give it to Him again.</p>
+            </div>
+          </div>
+          <button class="pill gold" id="pvBtn" type="button"></button>
+        </div>
       </div>
     </section>
   </template>

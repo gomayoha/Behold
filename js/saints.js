@@ -45,7 +45,30 @@
     crowns: '<path d="M2.5 10.5l1.6-6 3.3 2.7 2.1-3.7 2.1 3.7 3.3-2.7"/><path d="M2.5 10.5h12.4"/><path d="M9.1 20.5l1.6-6 3.3 2.7 2.1-3.7 2.1 3.7 3.3-2.7-1.6 6z"/>',
     bowl: '<path d="M4 10.5h16l-1.6 7.2a3 3 0 01-2.9 2.3H8.5a3 3 0 01-2.9-2.3z"/><path d="M9 3.5c0 1.4 1.2 1.6 1.2 3M13.6 3.5c0 1.4 1.2 1.6 1.2 3"/>',
     ferula: '<path d="M12 2.5v19"/><path d="M7.5 8h9"/><path d="M9.5 21.5h5"/>',
-    cross: '<path d="M12 2.5v19M7 8h10"/>'
+    cross: '<path d="M12 2.5v19M7 8h10"/>',
+    sword: '<path d="M12 2.5l1.6 2.1v11.9h-3.2V4.6z"/><path d="M7.5 16.5h9M12 16.5v3.4"/><circle cx="12" cy="20.9" r="1"/>',
+    nest: '<path d="M3.5 12.5c1 4.6 4.6 7 8.5 7s7.5-2.4 8.5-7z"/><path d="M5.6 15.6h12.8"/><ellipse cx="9" cy="10.3" rx="1.9" ry="2.2"/><ellipse cx="12.6" cy="9.6" rx="1.9" ry="2.4"/><ellipse cx="16" cy="10.5" rx="1.7" ry="2"/>',
+    etna: '<path d="M2.5 20.5l6.6-10 2 2.6 1.7-2.3 8.7 9.7z"/><path d="M12.4 7.6c-1.4-1.2-1.2-3.1.4-4.3.2 1.2 1.2 1.7 1.2 2.9a1.6 1.6 0 01-1.6 1.4z"/>',
+    wheel: '<circle cx="12" cy="12" r="6.4"/><circle cx="12" cy="12" r="1.4"/><path d="M12 5.6v12.8M5.6 12h12.8M7.5 7.5l9 9M16.5 7.5l-9 9"/><path d="M12 2.4v3.2M12 18.4v3.2M2.4 12h3.2M18.4 12h3.2"/>',
+    crosscrown: '<path d="M12 9.5v12M8 13.2h8"/><path d="M8.2 7.6l.7-4.4 1.8 2 1.3-2.5 1.3 2.5 1.8-2 .7 4.4z"/>',
+    tear: '<path d="M12 3c3.2 4.3 5 7.2 5 10a5 5 0 01-10 0c0-2.8 1.8-5.7 5-10z"/><path d="M9.6 13.4a2.5 2.5 0 002.2 2.4"/>',
+    monstrance: '<circle cx="12" cy="9" r="2.8"/><path d="M12 2.5v2.2M12 13.3v2.2M5.5 9h2.2M16.3 9h2.2M7.4 4.4l1.6 1.6M15 12l1.6 1.6M7.4 13.6L9 12M15 6l1.6-1.6"/><path d="M12 15.5v3.8M8.6 21.5h6.8l-1.4-2.2h-4z"/>',
+    skate: '<path d="M5.5 3.5h4.8v6.3l5.9 2.2c1.5.6 2.3 1.6 2.3 3V16H5.5z"/><path d="M3.5 19.5h15.3a2.2 2.2 0 002.2-2.2"/><path d="M8 16v3.5M15.5 16v3.5"/>',
+    thorn: '<path d="M4 20.5c4-1 8-4 10-8s3.6-6.6 6-8.5"/><path d="M8.4 17.6l-2.6-1.4M11.8 14.8l.1-3M14.5 10.9l-2.7-.7M16.7 7.1l.5-2.9"/><circle cx="18.6" cy="11.6" r="2.1"/>',
+    letter: '<rect x="3.5" y="6" width="17" height="12" rx="1.6"/><path d="M3.8 7.2l8.2 6 8.2-6"/>',
+    sacredheart: '<path d="M12 21s-6.6-4.1-6.6-8.7A3.6 3.6 0 0112 10.1a3.6 3.6 0 016.6 2.2c0 4.6-6.6 8.7-6.6 8.7z"/><path d="M12 2.5v5.8M9.9 4.5h4.2"/><path d="M6.6 14.6c3.4 1 7.4 1 10.8 0"/>',
+    note: '<path d="M9 18V5.6l10-2.1v12.4"/><circle cx="6.8" cy="18" r="2.3"/><circle cx="16.8" cy="15.9" r="2.3"/>',
+    stole: '<path d="M8 3.5c2.8 1.8 5.2 1.8 8 0"/><path d="M8 3.5c.4 6-.5 11.5-2 17h3.6l1-11"/><path d="M16 3.5c-.4 6 .5 11.5 2 17h-3.6l-1-11"/><path d="M6.9 16h2.8M14.3 16h2.8"/>',
+    spring: '<path d="M12 3c2.6 3.4 4 5.8 4 8a4 4 0 01-8 0c0-2.2 1.4-4.6 4-8z"/><path d="M3.5 18.5c2.8 1.6 5.6 1.6 8.5 0s5.7-1.6 8.5 0"/>',
+    juggle: '<circle cx="6" cy="9.5" r="1.9"/><circle cx="12" cy="4.6" r="1.9"/><circle cx="18" cy="9.5" r="1.9"/><path d="M4.5 15c2 3.3 4.6 5 7.5 5s5.5-1.7 7.5-5"/>',
+    palm: '<path d="M6 21.5C9 16 13 9 19.5 3"/><path d="M8.6 17c-2-.4-3.6-1.4-4.6-3M11 13.4c-2.2-.6-3.8-2-4.6-4M13.6 10c-2-.8-3.4-2.4-4-4.6M16.2 6.8c-1.6-.8-2.6-2.2-3-4M10.4 17.4c1.8.4 3.6.2 5.2-.8M12.8 13.8c2 .2 3.8-.4 5.4-1.6M15.2 10.2c1.8 0 3.4-.8 4.6-2"/>',
+    fife: '<path d="M3.6 18.4L17.4 4.6l2 2L5.6 20.4z"/><path d="M9 13.4l.1.1M11.4 11l.1.1M13.8 8.6l.1.1"/>',
+    lamb: '<path d="M7 11.6a3 3 0 013-3 3.2 3.2 0 015.4-.4 3 3 0 013.4 2.9 2.8 2.8 0 01-1.3 5H8.7A2.8 2.8 0 017 11.6z"/><path d="M9.2 16.1v4M15.4 16.1v4"/><path d="M7 11.6c-1.6-.2-3-1.4-3.5-3 1.4-.6 2.8-.4 4 .4"/>',
+    rays: '<circle cx="12" cy="5.8" r="2.6"/><path d="M12 9.2l-6.2 12.3M12 9.2l-2.6 12.3M12 9.2l2.6 12.3M12 9.2l6.2 12.3"/>',
+    school: '<path d="M3.5 10.5L12 4l8.5 6.5"/><path d="M5.6 9v11.5h12.8V9"/><path d="M10 20.5v-5h4v5"/><path d="M12 4V1.8"/>',
+    wound: '<path d="M7.2 21.5v-5.2L4.7 12.4a1.5 1.5 0 012.5-1.7L9 13V4.6a1.5 1.5 0 013 0V11V3.5a1.5 1.5 0 013 0V11V5.2a1.5 1.5 0 013 0v10.4c0 3.4-2.3 5.9-5.7 5.9z"/><circle cx="13.6" cy="15.4" r="1.2"/>',
+    crown: '<path d="M3.5 18l1.4-10 4.4 4.2L12 5.5l2.7 6.7 4.4-4.2 1.4 10z"/><path d="M3.5 21h17"/>',
+    rosary: '<circle cx="12.0" cy="2.8" r="1"/><circle cx="15.2" cy="3.8" r="1"/><circle cx="17.1" cy="6.5" r="1"/><circle cx="17.1" cy="9.9" r="1"/><circle cx="15.2" cy="12.6" r="1"/><circle cx="8.8" cy="12.6" r="1"/><circle cx="6.9" cy="9.9" r="1"/><circle cx="6.9" cy="6.5" r="1"/><circle cx="8.8" cy="3.8" r="1"/><path d="M12 13.6v1.6M12 16.4v5.1M10.2 18.2h3.6"/>'
   };
   const icon = (name, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.cross}</svg>`;
   const CANDLE = '<svg class="t-candle" viewBox="0 0 34 44" aria-hidden="true"><g class="flame"><path d="M17 3c3.4 4.2 5.4 7 5.4 10a5.4 5.4 0 01-10.8 0c0-3 2-5.8 5.4-10z" fill="#ffb84d"/><path d="M17 8.6c1.8 2.4 2.8 4 2.8 5.6a2.8 2.8 0 01-5.6 0c0-1.6 1-3.2 2.8-5.6z" fill="#fff4cf"/></g><path d="M17 19.4v2.2" stroke="#3a2c1a" stroke-width="1.2"/><rect x="12.4" y="21.4" width="9.2" height="20" rx="2" fill="#f3e6cf"/></svg>';
@@ -53,7 +76,7 @@
   /* ------------------------------------------------------------------------
      Opening: a rose window, every pane a saint, the light behind them Christ's
      ------------------------------------------------------------------------ */
-  const ROSE = ["francis", "therese", "augustine", "joan", "vaz", "mteresa", "anthony", "catherine", "xavier", "teresa", "nicholas", "aquinas"];
+  const ROSE = ["francis", "therese", "augustine", "joan", "vaz", "mteresa", "anthony", "catherine", "xavier", "teresa", "nicholas", "pio"];
   (function rose() {
     const C = 500, N = ROSE.length;
     const r0 = 172, r1 = 440, w0 = 62, w1 = 150, archH = 116;
@@ -155,14 +178,7 @@
      ------------------------------------------------------------------------ */
   (function timeline() {
     const cent = (y) => Math.floor(y / 100) + 1;
-    let html = `<div class="st-elsewhere"><a href="mary.html"><b>${T("Before them all")}</b>${T("Mary, the Apostles and the first martyrs have pages of their own.")}</a></div>`;
-    let last = 0, up = true;
-    SAINTS.forEach((s, i) => {
-      const c = cent(s.year);
-      if (last && c - last > 3) html += `<div class="st-gap"><p>${T("Seven centuries pass.")}<small>${esc(SAINT_ERAS[1].also)}</small></p></div>`;
-      if (c !== last) html += `<div class="st-cent"><b>${ROMAN[c - 1]}</b><span>${century(c)}</span></div>`;
-      last = c;
-      html += `
+    const item = (s, up) => `
         <div class="st-item ${up ? "up" : "down"}" style="--sc:${s.color}">
           <span class="st-stem"></span><span class="st-dot"></span>
           <a href="#saint-${s.id}">
@@ -172,8 +188,19 @@
             <span class="st-title">${esc(s.title)}</span>
           </a>
         </div>`;
+    const angels = SAINTS.filter((s) => s.era === "angels"), people = SAINTS.filter((s) => s.era !== "angels");
+    let html = angels.length ? `<div class="st-cent"><b>∞</b><span>${T("Before time")}</span></div>` + angels.map((s) => item(s, true)).join("") : "";
+    html += `<div class="st-elsewhere"><a href="mary.html"><b>${T("Before them all")}</b>${T("Mary, the Apostles and the first martyrs have pages of their own.")}</a></div>`;
+    const middle = SAINT_ERAS.find((e) => e.id === "middle");
+    let last = 0, up = !angels.length;
+    people.forEach((s, i) => {
+      const c = cent(s.year);
+      if (last && c - last > 3) html += `<div class="st-gap"><p>${T("Seven centuries pass.")}<small>${esc(middle.also)}</small></p></div>`;
+      if (c !== last) html += `<div class="st-cent"><b>${ROMAN[c - 1]}</b><span>${century(c)}</span></div>`;
+      last = c;
+      html += item(s, up);
       up = !up;
-      if (i === SAINTS.length - 1) html += `<div class="st-now"><a href="#draw"><span class="st-face"><span>+</span></span><span class="st-year">${T("Today")}</span><span class="st-name">${T("The next saint could be you.")}</span></a></div>`;
+      if (i === people.length - 1) html += `<div class="st-now"><a href="#draw"><span class="st-face"><span>+</span></span><span class="st-year">${T("Today")}</span><span class="st-name">${T("The next saint could be you.")}</span></a></div>`;
     });
     $("#stTrack").innerHTML = html;
   })();
@@ -200,7 +227,7 @@
     const src = { Tradition: T("Early tradition"), Scripture: T("Recorded in Scripture"), History: T("Historical record") }[s.end.source];
     const scenes = s.scenes.filter((k) => ART[k]);
     return `
-    <section class="saint" id="saint-${s.id}" style="--sc:${s.color}" data-saint="${s.id}" data-lb-name="${esc(s.full)}">
+    <section class="saint${s.special ? " special" : ""}" id="saint-${s.id}" style="--sc:${s.color}" data-saint="${s.id}" data-lb-name="${esc(s.full)}">
       <div class="s-grid">
         <div class="s-visual">
           <div class="s-arch">
@@ -220,6 +247,7 @@
             <p class="s-num">${pad(i + 1, 2)} / ${SAINTS.length} · ${esc(s.lived)}</p>
             <h2 class="s-name">${esc(s.name)}</h2>
             <p class="s-title">${esc(s.title)}</p>
+            ${s.stage ? `<a class="s-stage" href="#what">${icon("crown")}<span>${T("{stage} · on the road to sainthood", { stage: T(s.stage) })}</span></a>` : ""}
             <dl class="s-facts">
               <div><dt>${T("Lived")}</dt><dd>${esc(s.lived)}</dd></div>
               <div><dt>${T("From")}</dt><dd>${esc(s.from)}</dd></div>
@@ -258,6 +286,7 @@
 
           ${scenes.length ? `<div class="s-scenes n${Math.min(3, scenes.length)} reveal-up">${scenes.map((k) => `<figure class="zoomable">${artImg(k, { group, caption: s.full })}<figcaption>${credit(k)}</figcaption></figure>`).join("")}</div>` : ""}
           ${s.lanka ? `<a class="s-lanka-link" href="#lanka">${T("Follow his road across Sri Lanka")} <span aria-hidden="true">↓</span></a>` : ""}
+          ${s.special ? `<a class="s-lanka-link" href="#${s.id}-words">${T("Leave your worry with him")} <span aria-hidden="true">↓</span></a>` : ""}
         </div>
       </div>
     </section>`;
@@ -372,6 +401,47 @@
   })();
 
   /* ------------------------------------------------------------------------
+     Padre Pio: "Pray, hope, and don't worry" — then leave the worry with God
+     ------------------------------------------------------------------------ */
+  SAINTS.filter((s) => s.special).forEach((s) => { const tpl = $(`#tpl-${s.id}`); if (tpl) $(`#saint-${s.id}`).after(tpl.content.cloneNode(true)); });
+  (function worry() {
+    const card = $("#pioWorry");
+    if (!card) return;
+    $("#pwImg").src = ART["s-pio-bless"].src;
+    const text = $("#pvText"), btn = $("#pvBtn"), rise = $("#pvRise"), after = $("#pvAfter"), light = $(".pv-light", card);
+    const label = () => (btn.textContent = card.classList.contains("given") ? T("Give another") : T("Pray, hope, and don’t worry"));
+    label();
+    let busy = false;
+    function give() {
+      const v = text.value.trim();
+      if (!v) { text.focus(); card.classList.remove("nudge"); void card.offsetWidth; card.classList.add("nudge"); return; }
+      busy = true;
+      // the words take the textarea's place, then rise into the flame; nothing is kept
+      rise.innerHTML = v.split(/(\s+)/).map((w) => (/\s/.test(w) ? w : `<span>${esc(w)}</span>`)).join("");
+      text.value = "";
+      card.classList.add("given");
+      label();
+      if (!ANIM) { rise.innerHTML = ""; busy = false; return; }
+      const words = $$("span", rise), lift = light.getBoundingClientRect();
+      gsap.timeline({ onComplete: () => { rise.innerHTML = ""; busy = false; } })
+        .set(after, { opacity: 0 })
+        .to(words, {
+          x: (i, el) => { const r = el.getBoundingClientRect(); return lift.left + lift.width / 2 - (r.left + r.width / 2) + (Math.random() - 0.5) * 20; },
+          y: (i, el) => { const r = el.getBoundingClientRect(); return lift.top + lift.height * 0.3 - (r.top + r.height / 2); },
+          scale: 0.2, opacity: 0, filter: "blur(4px)", duration: 1.7, ease: "power2.in", stagger: { each: Math.min(0.08, 1.2 / words.length), from: "start" }
+        })
+        .to(light, { scale: 1.3, duration: 0.45, ease: "power2.out" }, "-=0.5")
+        .to(light, { scale: 1, duration: 1.4, ease: "power2.inOut" })
+        .to(after, { opacity: 1, duration: 1.1, ease: "power2.out" }, "-=1.3");
+    }
+    btn.addEventListener("click", () => {
+      if (busy) return;
+      if (card.classList.contains("given")) { card.classList.remove("given"); after.style.opacity = ""; label(); text.focus(); return; }
+      give();
+    });
+  })();
+
+  /* ------------------------------------------------------------------------
      Walk with a saint
      ------------------------------------------------------------------------ */
   (function companion() {
@@ -403,7 +473,8 @@
      The Litany of the Saints
      ------------------------------------------------------------------------ */
   $("#ltImg").src = ART["s-ghent"].src;
-  const LITANY = [T("Holy Mary, Mother of God"), BY_ID.joseph.full, T("Saint Peter and Saint Paul"), ...SAINTS.slice(1).map((s) => s.full), T("All holy men and women, saints of God")];
+  // only the canonised: anyone still on the road to sainthood is left out of the Litany
+  const LITANY = [T("Holy Mary, Mother of God"), ...SAINTS.filter((s) => !s.stage).flatMap((s) => (s.id === "joseph" ? [s.full, T("Saint Peter and Saint Paul")] : [s.full])), T("All holy men and women, saints of God")];
   $("#ltNames").innerHTML = `<div class="lt-roll" id="ltRoll">${LITANY.map((n) => `<div class="lt-line"><b>${esc(n)}</b><span>${T("pray for us.")}</span></div>`).join("")}</div>`;
 
   (function candles() {
@@ -507,6 +578,7 @@
     $(".sx-time").classList.add("static");
     $(".sx-lanka").classList.add("static");
     $(".sx-litany").classList.add("static");
+    $$(".sx-pio").forEach((el) => el.classList.add("static"));
     $$(".canon-path li").forEach((li) => li.classList.add("lit"));
     $("#canonPath").style.setProperty("--p", 1);
     Core.settleLanguage();
@@ -628,6 +700,24 @@
     tl.to(pins, { opacity: 1, stagger: 0.12, duration: 0.3 }, (n - 1) * per + 0.3).to({}, { duration: 0.5 });
     veil($(".sx-lanka"), $(".sx-lanka .scene-veil"), tl, 0.08);
   })();
+  // Padre Pio: three words, one at a time, in candlelight
+  $$(".sx-pio").forEach((sec) => {
+    const words = $$(".pw-word", sec);
+    const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: "top top", end: "+=" + (words.length * 70 + 60) + "%", ...PIN } });
+    tl.fromTo($(".pw-eyebrow", sec), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 0)
+      .fromTo($(".pw-bg img", sec), { scale: 1.12 }, { scale: 1, duration: words.length + 1, ease: "none" }, 0);
+    words.forEach((w, i) => {
+      const t = 0.3 + i;
+      tl.fromTo($("b", w), { opacity: 0, y: 40, filter: "blur(14px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5 }, t)
+        .fromTo($("p", w), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, t + 0.25);
+      if (i) tl.to(words[i - 1], { opacity: 0.32, duration: 0.4 }, t);
+    });
+    tl.to(words, { opacity: 1, duration: 0.5 }, words.length + 0.2)
+      .fromTo($(".pw-sign", sec), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, words.length + 0.3)
+      .to({}, { duration: 0.6 });
+    veil(sec, $(".scene-veil", sec), tl, 0.08);
+  });
+  gsap.from(".pio-worry .eyebrow, .pio-worry .section-title, .pio-worry .section-lede, .pv-card", { opacity: 0, y: 40, filter: "blur(8px)", stagger: 0.1, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: ".pio-worry", start: "top 75%" } });
   gsap.from("#lanka-shrines .section-title, #lanka-shrines .eyebrow", { opacity: 0, y: 40, filter: "blur(8px)", stagger: 0.1, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: "#lanka-shrines", start: "top 75%" } });
 
   // Walk with a saint
@@ -649,7 +739,7 @@
         l.style.transform = `scale(${(1 - Math.min(0.12, d * 0.3)).toFixed(3)})`;
       });
     };
-    const tl = gsap.timeline({ onUpdate: light, scrollTrigger: { trigger: ".sx-litany", start: "top top", end: "+=" + lines.length * 26 + "%", ...PIN, invalidateOnRefresh: true, onRefresh: light } });
+    const tl = gsap.timeline({ onUpdate: light, scrollTrigger: { trigger: ".sx-litany", start: "top top", end: "+=" + lines.length * 16 + "%", ...PIN, invalidateOnRefresh: true, onRefresh: light } });
     tl.fromTo(".lt-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 0)
       .fromTo(roll, { y: () => centre(lines[0]) }, { y: () => centre(lines[lines.length - 1]), duration: lines.length * 0.5, ease: "none" }, 0)
       .to([box, ".lt-eyebrow"], { opacity: 0, duration: 0.8 })

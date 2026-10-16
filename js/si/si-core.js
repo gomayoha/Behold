@@ -17,6 +17,7 @@ SI.ui = {
   "Mother Mary": "මරිය මෑණියෝ",
   "The Saints": "ශුද්ධවන්තයෝ",
   "The Gallery": "චිත්‍රාගාරය",
+  "The Scarlet Thread": "රතු නූල",
   "Every Life": "සියලු ජීවිත",
   "Pray": "යාච්ඤාව",
   "Language": "භාෂාව",

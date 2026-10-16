@@ -84,6 +84,7 @@
   /* ---------- navigation (shared across pages) ---------- */
   const PAGES = [
     { href: "index.html", label: "The Story", id: "story" },
+    { href: "scarlet-thread/index.html", label: "The Scarlet Thread", id: "thread" },
     { href: "apostles.html", label: "The Apostles", id: "apostles" },
     { href: "mary.html", label: "Mother Mary", id: "mary" },
     { href: "saints.html", label: "The Saints", id: "saints" },
@@ -94,7 +95,7 @@
   const page = document.body.dataset.page || "story";
   const nav = $("#nav");
   if (nav) {
-    const links = PAGES.map((p) => `<a href="${p.href}" data-page-link="${p.id}" class="${p.id === page ? "current" : ""}">${T(p.label)}</a>`).join("");
+    const links = PAGES.map((p) => `<a href="${p.href}" data-page-link="${p.id}" class="${p.id === page ? "current" : ""}${p.id === "thread" ? " nav-thread" : ""}">${T(p.label)}</a>`).join("");
     const lang = (window.I18N && I18N.lang) || "en";
     const langBtn = (id) => `<button class="lang-switch" id="${id}" type="button" data-lang="${lang}" aria-label="Language · භාෂාව" title="${lang === "si" ? "Switch to English" : "සිංහලෙන් කියවන්න"}"><span class="ls-opt" data-v="en">EN</span><span class="ls-opt" data-v="si">සිං</span><i class="ls-knob" aria-hidden="true"></i></button>`;
     nav.innerHTML = `

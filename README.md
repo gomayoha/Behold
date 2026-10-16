@@ -2,6 +2,8 @@
 
 The life of Jesus Christ, told through every person He met, plus the Apostles, Mother Mary, the Saints and a gallery of the paintings. A static website (HTML, CSS, JavaScript) with no build step.
 
+Its companion site, **The Scarlet Thread** (`scarlet-thread/`), tells the whole Bible from Genesis to Revelation as one scrolling story. It has its own tab in Behold's navigation.
+
 ## Pages
 
 | Page | What's on it |
@@ -10,6 +12,7 @@ The life of Jesus Christ, told through every person He met, plus the Apostles, M
 | `apostles.html` | **The Apostles**: the Twelve, Matthias and Paul, each with their calling, journey map, death and legacy; Paul's conversion and missionary journeys |
 | `mary.html` | **Mother Mary**: her life, the Magnificat, her words, the Seven Sorrows, the history of the Rosary, the Mysteries, a pray-along Rosary, and Marian shrines |
 | `saints.html` | **The Saints**: forty-one saints, from the archangel Michael and St Anne to John Paul II, each with their story, how their life ended, and three lessons with one thing to do today; Padre Pio's "Pray, hope, and don't worry" and a place to leave a worry with God; a timeline of twenty centuries, the road of St Joseph Vaz across Sri Lanka and the island's shrines, "What are you carrying today?" (a saint for each struggle), the Litany of the Saints, and a saint for the year |
+| `scarlet-thread/index.html` | **The Scarlet Thread**: the whole Bible as one story. Fifteen ages and 121 scenes from Creation to the New Jerusalem, told in scroll-driven 3D: paintings that open and turn in space, a sculpture of light that changes shape with each event, journey maps, and a scarlet thread running through it all. Covers all 73 books of the Catholic Bible (the seven deuterocanonical books are marked ✦), 168 people, and 26 promises that are each shown being kept. Your place, the books you have opened and the promises you have found are remembered on your device. After the story: a library of every book, the people, the promises, and a daily verse |
 | `gallery.html` | **The Gallery**: all 288 paintings and photographs, room by room. Tap any painting on any page to see it closer and browse the others in its set |
 
 ## Run it locally
@@ -31,6 +34,22 @@ Then open http://localhost:5173.
 | `js/art.js` | Every painting and photograph: image links, title, artist, year, gallery room |
 | `js/map-data.js` | Dotted maps generated from Natural Earth (public domain) |
 | `js/core.js` | Shared pieces: smooth scrolling, navigation, the painting viewer, maps |
+
+### The Scarlet Thread
+
+| File | What's in it |
+| --- | --- |
+| `scarlet-thread/js/story-1.js`, `story-2.js`, `story-3.js` | The fifteen ages and every scene: text, verse, people, painting, staging |
+| `scarlet-thread/js/books.js` | All 73 books, with their section, author and one-line summary |
+| `scarlet-thread/js/threads.js` | The 26 promises and where each one is kept |
+| `scarlet-thread/js/art.js` | Every painting: Wikimedia file, title, artist, year |
+| `scarlet-thread/js/lands.js`, `routes.js` | The dotted maps and the journeys drawn on them |
+| `scarlet-thread/js/st-core.js` | The scroll engine: scenes, timing, remembering your place |
+| `scarlet-thread/js/st-scenes.js`, `st-fx.js` | How each scene moves (the set pieces like the Red Sea, Babel and the Cross are in `st-fx.js`) |
+| `scarlet-thread/js/gl.js` | The 3D light sculpture, stars and the scarlet thread (Three.js) |
+| `scarlet-thread/js/st-ui.js` | Navigation, the year clock, Library, People, Promises and the ending |
+
+The Scarlet Thread is in English. Its scripture is the King James Version, using the 1611 KJV text for the deuterocanonical books.
 
 ## Languages (English · සිංහල)
 

@@ -460,6 +460,8 @@
   });
 
   ScrollTrigger.batch(".reveal-up", { start: "top 88%", onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.08, duration: 1.1, ease: "power3.out", overwrite: true }) });
+  // The Scarlet Thread card draws its thread once it is on screen
+  $$(".jcard-thread").forEach((card) => ScrollTrigger.create({ trigger: card, start: "top 80%", once: true, onEnter: () => card.classList.add("seen") }));
   gsap.from(".story-intro > *", { opacity: 0, y: 40, filter: "blur(8px)", stagger: 0.12, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: ".story-intro", start: "top 70%" } });
   $$(".iam .section-title, .iam .section-lede, .people .container > .eyebrow, .people .section-title, .people .section-lede, .candle .container > *:not(.altar), .maker .container > .eyebrow, .maker .section-title, .maker .section-lede").forEach((el) => {
     gsap.from(el, { opacity: 0, y: 36, filter: "blur(6px)", duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } });

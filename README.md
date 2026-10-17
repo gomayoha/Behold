@@ -48,6 +48,7 @@ Then open http://localhost:5173.
 | `scarlet-thread/js/st-scenes.js`, `st-fx.js` | How each scene moves (the set pieces like the Red Sea, Babel and the Cross are in `st-fx.js`) |
 | `scarlet-thread/js/gl.js` | The 3D light sculpture, stars and the scarlet thread (Three.js) |
 | `scarlet-thread/js/st-ui.js` | Navigation, the year clock, Library, People, Promises and the ending |
+| `scarlet-thread/tools/check.js` | Run `node scarlet-thread/tools/check.js` after editing the story: it checks every scene, book, painting and promise links up |
 
 The Scarlet Thread is in English. Its scripture is the King James Version, using the 1611 KJV text for the deuterocanonical books.
 

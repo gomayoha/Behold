@@ -4,6 +4,8 @@
    Scene fields: t title · k reference · pl place · y year (BC negative) · yl year label
    b books · x story · q/r quote and reference (KJV) · cast · art · lay layout
    th thread planted · kept threads fulfilled · fx set piece · sh 3D shape · h length (screens)
+   Crops: pos focal point · posm on a phone · zoom where the slow zoom centres · zs extra scale on wide
+   screens (e.g. past an arched frame) · liftm phone nudge up (with a 1.2 scale)
    ========================================================================== */
 window.AGES = window.AGES || [];
 

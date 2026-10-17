@@ -11,18 +11,18 @@ window.AGES.push(
   c: "#f7dca6", sh: "star",
   v: "And the Word was made flesh, and dwelt among us, (and we beheld his glory, the glory as of the only begotten of the Father,) full of grace and truth.", r: "John 1:14",
   x: "Every thread leads here. The promise to Eve, to Abraham, to David: God Himself came, and was born in Bethlehem.",
-  behold: { href: "../index.html", label: "The whole life of Jesus, everyone He met, is told in Behold" },
+  behold: { href: "../index.html", label: "The whole life of Jesus, and everyone He met, on Behold" },
   scenes: [
     {
       id: "annunciation", t: "Be it unto me according to thy word.", k: "Luke 1", pl: "Nazareth", y: -6, b: ["luk"],
-      x: "In Nazareth, the angel Gabriel came to a young virgin named Mary: she would conceive and bear a son, and call His name Jesus, and the Lord God would give unto Him the throne of His father David, and of His kingdom there would be no end. Mary gave her answer, and every promise began to come true.",
+      x: "In Nazareth, the angel Gabriel came to a young virgin named Mary: she would conceive and bear a son, and call His name Jesus, and the Lord God would give Him the throne of His father David, and of His kingdom there would be no end. Mary gave her answer, and every promise began to come true.",
       q: "Behold the handmaid of the Lord; be it unto me according to thy word.", r: "Luke 1:38",
       cast: [["Mary", "The Mother of Jesus"], ["Gabriel", "The angel who stands in the presence of God"], ["Zacharias and Elisabeth", "The parents of John the Baptist"], ["Joseph", "Of the house of David, the husband of Mary"]],
-      art: "annunciation", lay: "full", zoom: "60% 36%", kept: ["virgin", "throne"], sh: "star", link: { href: "../mary.html", label: "Mother Mary, on Behold" }
+      art: "annunciation", lay: "full", zoom: "60% 36%", posm: "64% 50%", liftm: "-9%", kept: ["virgin", "throne"], sh: "star", link: { href: "../mary.html", label: "Mother Mary, on Behold" }
     },
     {
       id: "nativity", t: "Unto you is born this day.", k: "Luke 2 · Matthew 1", pl: "Bethlehem", y: -5, b: ["luk", "mat"],
-      x: "There was no room for them in the inn, so Mary laid her firstborn son in a manger. The shepherds came with haste and found Him there. Matthew opens his Gospel with His family line: Abraham, Judah, Rahab, Ruth, David.",
+      x: "There was no room for them in the inn, so Mary laid her firstborn son in a manger. The shepherds came with haste and found Him there. Matthew opens his Gospel with Jesus’ family line: Abraham, Judah, Rahab, Ruth, David.",
       q: "For unto you is born this day in the city of David a Saviour, which is Christ the Lord.", r: "Luke 2:11",
       cast: [["The shepherds", "Who came with haste to the manger"], ["Simeon and Anna", "Who waited in the temple for the consolation of Israel"]],
       art: "shepherds", kept: ["child", "bethlehem", "cord"], sh: "star", h: 8,
@@ -86,7 +86,7 @@ window.AGES.push(
       id: "supper", t: "This is my body.", k: "Luke 22 · John 13", pl: "The upper room", y: 30, b: ["luk", "jhn"],
       x: "On the night He was betrayed, Jesus kept the Passover with His disciples, and washed their feet. Then He took bread, gave thanks, and brake it: this is my body which is given for you. Likewise the cup after supper: the new covenant Jeremiah had promised, sealed in His own blood.",
       q: "This cup is the new testament in my blood, which is shed for you.", r: "Luke 22:20",
-      art: "supper", lay: "full", zoom: "50% 44%", kept: ["newcov"], sh: "ring"
+      art: "supper", lay: "full", zoom: "50% 44%", liftm: "-12%", kept: ["newcov"], sh: "ring"
     },
     {
       id: "gethsemane", t: "Not my will.", k: "Luke 22 · Matthew 26", pl: "Gethsemane · the house of Caiaphas", y: 30, b: ["luk", "mat"],
@@ -114,7 +114,7 @@ window.AGES.push(
       id: "ascension", t: "I am with you alway.", k: "Luke 24 · Acts 1 · Matthew 28", pl: "The Mount of Olives", y: 30, b: ["luk", "act", "mat"],
       x: "For forty days the risen Jesus appeared to His followers: on the road to Emmaus, in a shut room, beside the Sea of Galilee. He sent them to make disciples of all nations, promised the Holy Spirit, and was taken up, and a cloud received Him out of their sight.",
       q: "And, lo, I am with you alway, even unto the end of the world.", r: "Matthew 28:20",
-      art: "ascension", lay: "full", zoom: "50% 30%", sh: "sphere"
+      art: "ascension", lay: "full", zoom: "50% 30%", pos: "50% 18%", sh: "sphere"
     }
   ]
 },
@@ -233,7 +233,7 @@ window.AGES.push(
     },
     {
       id: "lamb", t: "Worthy is the Lamb.", k: "Revelation 4–5", pl: "The throne of heaven", y: 95, b: ["rev"],
-      x: "A door was opened in heaven: a throne, and a rainbow round about the throne like an emerald, and living creatures crying Holy, holy, holy, as Isaiah heard. No one could open the sealed book, and John wept much, until an elder said: the Lion of the tribe of Juda hath prevailed. John turned to see the Lion, and saw a Lamb, as it had been slain.",
+      x: "A door was opened in heaven: a throne, and a rainbow round about the throne like an emerald, and living creatures crying Holy, holy, holy, as Isaiah heard. No one could open the sealed book, and John wept much, until an elder told him that the Lion of the tribe of Juda had prevailed. John turned to see the Lion, and saw a Lamb, as it had been slain.",
       q: "Worthy is the Lamb that was slain to receive power, and riches, and wisdom, and strength, and honour, and glory, and blessing.", r: "Revelation 5:12",
       art: "mystic-lamb", lay: "full", zoom: "50% 48%", kept: ["sceptre"], sh: "rings"
     },

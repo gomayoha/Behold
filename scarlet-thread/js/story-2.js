@@ -118,7 +118,7 @@ window.AGES.push(
     },
     {
       id: "wise", t: "The words of the wise.", k: "Proverbs · Ecclesiastes · Song of Songs · Wisdom · Sirach", yl: "The wisdom of Israel", b: ["pro", "ecc", "sng", "wis", "sir"],
-      x: "Solomon spoke three thousand proverbs, and his songs were a thousand and five. Israel’s wisdom books ask how to live well, why life is so fleeting, and what love is. The Book of Wisdom and Sirach, written centuries later, carry the same tradition on.",
+      x: "Solomon spoke three thousand proverbs, and his songs were a thousand and five. Israel’s wisdom books ask how to live well, why life is so fleeting, and what love is. The Book of Wisdom and Sirach, written centuries later, carry the same tradition forward.",
       fx: { type: "steps", style: "wisdom", steps: [
         { n: "Proverbs", t: "Trust in the LORD with all thine heart; and lean not unto thine own understanding.", r: "Proverbs 3:5", b: "pro" },
         { n: "Ecclesiastes", t: "To every thing there is a season, and a time to every purpose under the heaven.", r: "Ecclesiastes 3:1", b: "ecc" },
@@ -236,7 +236,7 @@ window.AGES.push(
       id: "josiah", t: "The book in the temple.", k: "2 Kings 22–23 · Zephaniah · Nahum", pl: "Jerusalem", y: -622, b: ["2ki", "2ch", "zep", "nam"],
       x: "Manasseh, Hezekiah’s son, reigned fifty-five years and filled Jerusalem with idols. His grandson Josiah became king at eight years old. Repairing the temple, the priests found the book of the law, long forgotten. Josiah tore his clothes, read it to all the people, and swept the idols from the land. Zephaniah prophesied in his days, and Nahum foretold the fall of Nineveh.",
       q: "The LORD thy God in the midst of thee is mighty; he will save, he will rejoice over thee with joy.", r: "Zephaniah 3:17",
-      cast: [["Josiah", "The boy king who found the law"], ["Manasseh", "The longest-reigning king of Judah"], ["Huldah", "The prophetess who read the book’s meaning"]],
+      cast: [["Josiah", "The boy king who found the law"], ["Manasseh", "The longest-reigning king of Judah"], ["Huldah", "The prophetess who declared the book’s meaning"]],
       lay: "word", sh: "scroll"
     }
   ]
@@ -261,7 +261,7 @@ window.AGES.push(
       x: "In 586 BC Nebuchadnezzar’s army broke through the walls. Solomon’s temple was burned, King Zedekiah’s sons were slain before his eyes, and the people were led away to Babylon. Edom gloated, and Obadiah answered: as thou hast done, it shall be done unto thee. Jeremiah wept over the ruins in the five poems of Lamentations, and in the midst of that grief, he wrote this.",
       q: "It is of the LORD’S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", r: "Lamentations 3:22–23",
       cast: [["Nebuchadnezzar", "King of Babylon"], ["Zedekiah", "The last king of Judah"]],
-      art: "exiles", lay: "full", fx: { type: "embers" }, sh: "ash"
+      art: "exiles", lay: "full", pos: "50% 80%", posm: "50% 50%", zoom: "50% 100%", zs: 1.32, fx: { type: "embers" }, sh: "ash"
     },
     {
       id: "bones", t: "Can these bones live?", k: "Ezekiel", pl: "By the river Chebar", y: -585, b: ["ezk"],
@@ -363,7 +363,7 @@ window.AGES.push(
     },
     {
       id: "maccabees", t: "The hammer.", k: "1 & 2 Maccabees", pl: "Modein · Jerusalem", y: -167, b: ["1ma", "2ma"],
-      x: "The Greek king Antiochus Epiphanes banned the law of Moses and set up an altar to Zeus in the temple. An old priest, Mattathias, refused to sacrifice, and his sons took to the hills. Judas, called Maccabeus, the hammer, drove out his armies. The temple was cleansed and dedicated again, and the feast that remembers it, the Feast of Dedication, is the one Jesus kept in Jerusalem, in winter. After one battle, Judas made an offering for the dead.",
+      x: "The Greek king Antiochus Epiphanes banned the law of Moses and set up an altar to Zeus in the temple. An old priest, Mattathias, refused to sacrifice, and his sons took to the hills. Judas, called Maccabeus, the hammer, drove out his armies. The temple was cleansed and dedicated again, and the Feast of Dedication that marks it is the one Jesus kept in Jerusalem, in winter. After one battle, Judas made an offering for the dead.",
       q: "It was an holy and good thought. Whereupon he made a reconciliation for the dead, that they might be delivered from sin.", r: "2 Maccabees 12:45",
       cast: [["Judas Maccabeus", "The hammer of Israel"], ["Mattathias", "The old priest of Modein"], ["Antiochus Epiphanes", "The Seleucid king who defiled the temple"], ["The mother of seven sons", "Martyred with her sons for the law"]],
       art: "maccabeus", lay: "plate", side: "r", sh: "flame"

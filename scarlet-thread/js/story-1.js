@@ -23,10 +23,10 @@ window.AGES.push(
     },
     {
       id: "days", t: "Six days, and a seventh.", k: "Genesis 1:1 – 2:3", yl: "The week of creation", b: ["gen"],
-      x: "Each day, God speaks, and the world takes shape: first the spaces, then what fills them. And again and again, God saw that it was good.",
+      x: "Each day God spoke, and the world took shape: first the spaces, then what filled them. And again and again, God saw that it was good.",
       fx: { type: "steps", style: "days", steps: [
         { n: "Day One", art: "day-light", t: "Light", x: "And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.", r: "Genesis 1:5", sh: "sphere" },
-        { n: "Day Two", art: "day-firmament", pos: "6% 52%", t: "The firmament", x: "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters.", r: "Genesis 1:6", sh: "sea" },
+        { n: "Day Two", art: "day-firmament", pos: "6% 52%", z: 2.1, t: "The firmament", x: "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters.", r: "Genesis 1:6", sh: "sea" },
         { n: "Day Three", art: "day-land", t: "Land and life", x: "And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so.", r: "Genesis 1:9", sh: "globe" },
         { n: "Day Four", art: "day-lights", t: "The lights", x: "And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also.", r: "Genesis 1:16", sh: "galaxy" },
         { n: "Day Five", art: "day-creatures", t: "Sea and sky", x: "And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind.", r: "Genesis 1:21", sh: "swirl" },
@@ -196,10 +196,10 @@ window.AGES.push(
     },
     {
       id: "peniel", t: "I will not let thee go.", k: "Genesis 32–33", pl: "Peniel, by the brook Jabbok", y: -1908, b: ["gen"],
-      x: "Returning home to face Esau, Jacob was left alone at night, and a man wrestled with him until the breaking of the day. Jacob would not let go without a blessing. He walked away limping, with a new name: Israel, for he had striven with God. The next morning, Esau ran to meet him, and fell on his neck, and kissed him.",
+      x: "Returning home to face Esau, Jacob was left alone at night, and a man wrestled with him until the breaking of the day. Jacob would not let go without a blessing. He walked away limping, with a new name: Israel, for he had striven with God. That same morning, Esau ran to meet him, and fell on his neck, and kissed him.",
       q: "I will not let thee go, except thou bless me.", r: "Genesis 32:26",
       cast: [["Israel", "Jacob’s new name: he strives with God"]],
-      art: "jacob-wrestle", lay: "full", pos: "50% 35%", sh: "whirlwind"
+      art: "jacob-wrestle", lay: "full", pos: "42% 84%", posm: "50% 50%", sh: "whirlwind"
     },
     {
       id: "joseph", t: "A coat of many colours.", k: "Genesis 37", pl: "Dothan", y: -1898, b: ["gen"],

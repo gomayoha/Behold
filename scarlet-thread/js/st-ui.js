@@ -127,7 +127,7 @@
   const small = (key) => {
     const a = ART[key];
     if (!a) return "";
-    const u = a.s || a.o || "";
+    const u = a.s || ""; // never the original: some are hundreds of megabytes
     return u.includes("/thumb/") ? u.replace(/\/\d+px-([^/]+)$/, "/330px-$1") : u;
   };
   function buildPeople() {

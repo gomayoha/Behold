@@ -13,7 +13,7 @@ for (const a of AGES) for (const s of a.scenes) {
   scenes++;
   if (ids.has(s.id)) errs.push("dup id " + s.id); ids.add(s.id);
   (s.b || []).forEach(b => { if (!bookIds.has(b)) errs.push("bad book " + b + " in " + s.id); used.add(b); });
-  if (s.fx && s.fx.steps) s.fx.steps.forEach(st => st.b && used.add(st.b));
+  if (s.fx && s.fx.steps) s.fx.steps.forEach(st => [].concat(st.b || []).forEach(b => { if (!bookIds.has(b)) errs.push("bad book " + b + " in a step of " + s.id); used.add(b); }));
   const ak = [s.art, ...((s.fx && s.fx.items) || []).map(i => i[0])].filter(Boolean);
   ak.forEach(k => { if (!ART[k]) errs.push("missing art " + k + " in " + s.id); arts.add(k); });
   const th = [].concat(s.th || []).concat(((s.fx && s.fx.steps) || []).map(x => x.th).filter(Boolean));
@@ -28,5 +28,7 @@ BOOKS.forEach(b => { if (!used.has(b.id)) errs.push("book never in story: " + b.
 Object.keys(THREADS).forEach(t => { if (!planted[t]) errs.push("thread not planted " + t); if (!kept[t]) errs.push("thread not kept " + t); });
 Object.keys(ART).forEach(k => { if (!arts.has(k)) console.log("  (unused art: " + k + ")"); });
 console.log("scenes", scenes, "cast", cast, "arts used", arts.size, "threads", Object.keys(THREADS).length);
+const searched = Object.keys(ART).filter(k => !ART[k].s);
+if (searched.length) console.log(`note: ${searched.length} paintings have no s URL yet and are found by a live Commons search: ${searched.join(", ")}`);
 console.log(errs.length ? "ERRORS:\n" + errs.join("\n") : "ALL GOOD");
 process.exitCode = errs.length ? 1 : 0;

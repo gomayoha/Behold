@@ -3,7 +3,8 @@
    Each painting is tried at its known Wikimedia address first. If that file
    has moved or is smaller than expected, Wikimedia Commons is asked for it by
    name, and failing that, searched for by title and artist. Whatever works is
-   remembered on this device, so the next visit is instant.
+   remembered on this device, so the next visit is instant, until that entry in
+   art.js is edited.
    ========================================================================== */
 window.Paint = (function () {
   "use strict";
@@ -71,17 +72,19 @@ window.Paint = (function () {
     return (jobs[id] = (async () => {
       const a = ART[key];
       if (!a) return null;
+      // a remembered find only counts while the entry in art.js is unchanged
+      const sig = [a.s, a.f, a.q].join("|"), m = memo[key] && memo[key].sig === sig ? memo[key] : null;
       const tries = [];
-      if (memo[key]) tries.push(memo[key].u);
+      if (m) tries.push(m.u);
       if (big && a.l) tries.push(a.l);
       if (a.s) tries.push(a.s);
       // never fall back to an untested original: some are hundreds of megabytes
       for (const u of [...new Set(tries)]) {
-        try { await probe(u); return memo[key] && memo[key].u === u ? memo[key] : { u }; } catch (e) { /* try the next */ }
+        try { await probe(u); return m && m.u === u ? m : { u }; } catch (e) { /* try the next */ }
       }
       try {
         const r = await ask(key, big ? 1920 : 1280);
-        if (r && r.u) { await probe(r.u); memo[key] = r; save(); return r; }
+        if (r && r.u) { await probe(r.u); r.sig = sig; memo[key] = r; save(); return r; }
       } catch (e) { /* offline, or Commons is unreachable */ }
       return null;
     })());

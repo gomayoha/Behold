@@ -48,10 +48,10 @@ window.ST = (function () {
   const BOOK = Object.fromEntries(BOOKS.map((b) => [b.id, b]));
 
   const knotIcon = `<svg class="knot-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 22c6 0 8-12 13-12s5 8 0 8-5-8 0-8 7 12 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-  function knotHTML(id, kept, cn = "") {
+  function knotHTML(id, kept, cn = "", verse = true) {
     const t = THREADS[id];
     if (!t) return "";
-    if (kept) return `<aside class="knot kept rv ${cn}" data-thread="${id}">${knotIcon}<div><p class="knot-e">Promise kept</p><p class="knot-n">${esc(t.name)}</p><p class="knot-v">“${esc(t.bt)}”</p><p class="knot-r">${esc(t.a)} <i>→</i> ${esc(t.b)}</p></div></aside>`;
+    if (kept) return `<aside class="knot kept rv ${cn}" data-thread="${id}">${knotIcon}<div><p class="knot-e">Promise kept</p><p class="knot-n">${esc(t.name)}</p>${verse ? `<p class="knot-v">“${esc(t.bt)}”</p>` : ""}<p class="knot-r">${esc(t.a)} <i>→</i> ${esc(t.b)}</p></div></aside>`;
     return `<aside class="knot rv ${cn}" data-thread="${id}">${knotIcon}<div><p class="knot-e">The scarlet thread · ${esc(t.kind)}</p><p class="knot-n">${esc(t.name)}</p><p class="knot-r">${esc(t.a)}</p></div></aside>`;
   }
   function creditHTML(key) {
@@ -70,6 +70,14 @@ window.ST = (function () {
   function linkHTML(l) {
     return l ? `<a class="behold-link rv" href="${esc(l.href)}"><span>${esc(l.label)}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>` : "";
   }
+  /** Promises kept in a scene: one card with its verse, or a compact row of names when there are several.
+   *  A verse is never repeated if the scene already quotes it. */
+  function keptHTML(s, o = {}) {
+    const ks = s.kept || [];
+    if (!ks.length || o.noKept) return "";
+    const one = ks.length === 1, verse = (id) => one && THREADS[id] && THREADS[id].bt !== s.q;
+    return `<div class="kepts${one ? "" : " row"}">${ks.map((id) => knotHTML(id, true, "", verse(id))).join("")}</div>`;
+  }
   /** The standard text block for a scene. */
   function copyHTML(s, o = {}) {
     const ths = [].concat(s.th || []);
@@ -80,8 +88,8 @@ window.ST = (function () {
         ${s.x && !o.noText ? `<p class="x rv">${esc(s.x)}</p>` : ""}
         ${s.q && !o.noQuote ? `<blockquote class="q rv"><p>“${esc(s.q)}”</p><cite>${esc(s.r)}</cite></blockquote>` : ""}
         ${o.after || ""}
-        ${ths.map((id) => knotHTML(id, false)).join("")}
-        ${(s.kept || []).length && !o.noKept ? `<div class="kepts">${s.kept.map((id) => knotHTML(id, true)).join("")}</div>` : ""}
+        ${ths.length > 1 ? `<div class="kepts row planted">${ths.map((id) => knotHTML(id, false)).join("")}</div>` : ths.map((id) => knotHTML(id, false)).join("")}
+        ${keptHTML(s, o)}
         ${castHTML(s.cast)}
         ${linkHTML(s.link)}
       </div>`;
@@ -144,6 +152,7 @@ window.ST = (function () {
     items.forEach((it) => { it.top = y; it.bottom = y + Math.round(it.h * vh); y = it.bottom; });
     endY = y;
     items.forEach((it) => it.def.measure && it.def.measure(it));
+    items.forEach((it) => { it.fitFor = null; if (it.shown) { it.fitFor = innerWidth + "x" + innerHeight; tidyKickers(it.el); fitPhone(it); fitCopy(it); } });
     return true;
   }
 
@@ -190,7 +199,12 @@ window.ST = (function () {
     const uIn = it.i === 0 ? 1 : clamp((y - (a - T)) / (2 * T));
     const uOut = it.i === items.length - 1 ? clamp((y - (b - T)) / (2 * T)) : clamp((y - (b - T)) / (2 * T));
     const uMid = clamp((y - (a + T * 0.6)) / Math.max(1, b - a - T * 1.6));
-    return { uIn, uOut, uMid, e: ease(uIn), y, vh, vw, mobile: isMobile() };
+    const e = ease(uIn);
+    // One choreography for every hand-off: the leaving scene's words are gone before the next scene's
+    // painting is half in (to), and the arriving words wait until it has nearly settled (ti).
+    // Pictures and diagrams fade a little later (fo), so the screen is never empty.
+    const to = clamp(1 - uOut * 3.2), fo = clamp(1 - uOut * 2.2), ti = it.i === 0 ? 1 : clamp((e - 0.62) / 0.28);
+    return { uIn, uOut, uMid, e, to, fo, ti, tv: ti * to, y, vh, vw, mobile: isMobile() };
   }
 
   const glDefaults = { age: { opacity: 1, scale: 1, y: 0.2, thread: 0.85 }, full: { opacity: 1, scale: 1.05, thread: 0.6 }, plate: { opacity: 0.4, scale: 1.25, thread: 0.45 }, portal: { opacity: 0.5, scale: 1.2, thread: 0.5 }, word: { opacity: 1, scale: 1, thread: 0.8 } };
@@ -221,6 +235,9 @@ window.ST = (function () {
       css(it.el, "--o", f.uOut.toFixed(3));
       css(it.el, "--m", f.uMid.toFixed(3));
       css(it.el, "--e", f.e.toFixed(3));
+      css(it.el, "--tv", f.tv.toFixed(3));
+      css(it.el, "--to", f.to.toFixed(3));
+      css(it.el, "--fo", f.fo.toFixed(3));
       it.def.update(it, f);
       vis.push(it);
       if (f.uIn < 1 && it.i > 0) entering = it;
@@ -272,7 +289,59 @@ window.ST = (function () {
     return g;
   }
 
-  function show(it) { it.shown = true; it.el.classList.add("on"); it.el.removeAttribute("aria-hidden"); if (it.def.show) it.def.show(it); }
+  /** Kickers wrap on narrow screens: never leave a separator dot dangling at either end of a line. */
+  function tidyKickers(el) {
+    el.querySelectorAll(".k").forEach((k) => {
+      const kids = Array.from(k.children);
+      kids.forEach((c, i) => {
+        if (!c.classList.contains("k-dot")) return;
+        c.hidden = false; c.style.visibility = "";
+      });
+      kids.forEach((c) => { if (c.tagName === "SPAN") c.style.whiteSpace = c.offsetWidth > k.clientWidth ? "normal" : ""; });
+      // compare the middle of each line box: a 3px dot and a line of text share a line when their centres are close
+      const mid = (el) => el.offsetTop + el.offsetHeight / 2;
+      kids.forEach((c, i) => {
+        if (!c.classList.contains("k-dot")) return;
+        const a = kids[i - 1], b = kids[i + 1];
+        if (!a || !b) return;
+        if (mid(b) - mid(c) > 6) c.style.visibility = "hidden"; // dot ends a line
+        else if (mid(c) - mid(a) > 6) c.hidden = true; // dot starts a line
+      });
+    });
+  }
+  /** On a phone, the painting above a plate or portal gives way to the words below it, so they never overlap. */
+  function fitPhone(it) {
+    const stage = it.el.querySelector(".pl-stage, .po-stage"), copy = it.el.matches(".plate, .portal") ? it.el.querySelector(":scope > .copy") : null;
+    if (!stage || !copy) return;
+    if (!isMobile()) { stage.style.removeProperty("--sh"); stage.style.removeProperty("height"); return; }
+    const hud = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hud-h")) || 84;
+    const room = innerHeight - (hud + 4) - copy.offsetHeight - 56 - 30;
+    const sh = Math.round(clamp(room, innerHeight * 0.2, innerHeight * 0.4));
+    stage.style.height = sh + "px";
+    stage.style.setProperty("--sh", sh + "px");
+  }
+  /** A scene's words must fit between the top bar and the HUD. If they would not, step down to a denser style
+   *  (smaller title, cast without roles, no repeated verses), and then, if needed, a denser one still. */
+  function fitCopy(it) {
+    const copy = it.el.querySelector(":scope > .copy, :scope > .fx > .copy, :scope .nv-copy, :scope .dw-copy");
+    if (!copy) return;
+    it.el.classList.remove("dense", "denser");
+    if (copy.offsetHeight === 0) return;
+    const hud = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hud-h")) || 84;
+    const kids = Array.from(copy.children).filter((c) => c.offsetHeight > 0);
+    if (!kids.length) return;
+    // the words, not the column: a plate's text column spans the whole screen height
+    const over = () => kids[0].getBoundingClientRect().top < 64 || kids[kids.length - 1].getBoundingClientRect().bottom > innerHeight - hud + 30;
+    if (over()) it.el.classList.add("dense");
+    if (over()) it.el.classList.add("denser");
+  }
+  function show(it) {
+    it.shown = true; it.el.classList.add("on"); it.el.removeAttribute("aria-hidden");
+    // layout is measured once per screen size, not every time a scene comes back into view
+    const size = innerWidth + "x" + innerHeight;
+    if (it.fitFor !== size) { it.fitFor = size; tidyKickers(it.el); fitPhone(it); fitCopy(it); }
+    if (it.def.show) it.def.show(it);
+  }
   function hide(it) {
     it.shown = false; it.el.classList.remove("on"); it.el.setAttribute("aria-hidden", "true");
     if (it.isIn) { it.isIn = false; it.el.classList.remove("in"); }
@@ -302,7 +371,15 @@ window.ST = (function () {
       // frames take the true shape of each painting once it arrives
       img.addEventListener("load", () => {
         const fr = img.closest(".pl, .po, .cx-art");
-        if (fr && img.naturalWidth) fr.style.setProperty("--ar", (img.naturalWidth / img.naturalHeight).toFixed(4));
+        if (fr && img.naturalWidth) {
+          const ar = (img.naturalWidth / img.naturalHeight).toFixed(4);
+          fr.style.setProperty("--ar", ar);
+          // the stage knows the shape too, so the credit can sit right under the frame
+          if (fr.parentElement) fr.parentElement.style.setProperty("--ar", ar);
+          const it = items.find((x) => x.el === img.closest(".sc"));
+          if (it && it.shown) fitPhone(it);
+          if (fr.classList.contains("pl")) glowFrom(img, fr.parentElement.querySelector(".pl-glow canvas"));
+        }
       });
     }
     window.Paint.into(img, key, big, (found) => {
@@ -311,6 +388,17 @@ window.ST = (function () {
         if (cr) { const c = window.Paint.credit(key, found); cr.innerHTML = `<i>${esc(c.t)}</i> · ${esc(c.a)}${c.y ? ", " + esc(c.y) : ""}`; }
       }
     });
+  }
+  /** The coloured glow behind a plate: the painting shrunk to 6×6 pixels and smoothly enlarged. Drawn once; no blur filter at all. */
+  function glowFrom(img, c) {
+    if (!c) return;
+    try {
+      const t = document.createElement("canvas"); t.width = t.height = 6;
+      t.getContext("2d").drawImage(img, 0, 0, 6, 6);
+      const g = c.getContext("2d"); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high";
+      g.clearRect(0, 0, c.width, c.height); g.drawImage(t, 0, 0, c.width, c.height);
+      c.classList.add("loaded");
+    } catch (e) { /* a glow is a nicety */ }
   }
   const imgTag = (key, o = {}) => key ? `<img data-art="${key}" alt="${esc(ART[key] ? ART[key].t + " by " + ART[key].a : "")}" ${o.big ? "data-big" : ""} class="${o.cls || "im"}" decoding="async" draggable="false" />` : "";
 

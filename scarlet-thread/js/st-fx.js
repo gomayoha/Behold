@@ -20,6 +20,7 @@
   /* ════════════════ Steps: the days, the plagues, the tablets, wisdom, the voice ════════════════ */
   function stepsType(style, opts) {
     ST.type("steps-" + style, {
+      lead: opts.lead == null ? 0.1 : opts.lead,
       build(it) {
         const s = it.s, st = s.fx.steps;
         return h(`
@@ -39,7 +40,7 @@
       },
       update(it, f) {
         const lead = opts.lead == null ? 0.1 : opts.lead;
-        const p = range(f.uMid, lead, 0.96), go = f.uMid > lead * 0.7 && it.isIn;
+        const p = range(f.uMid, lead, 0.96), go = f.uMid > lead * 0.85 && it.isIn;
         const { i, l } = stepAt(p, it.n);
         cls(it.el, "go", go);
         if (go !== it.wasGo || i !== it.step) {
@@ -59,12 +60,23 @@
     });
   }
 
-  // The seven days of creation
+  // The seven days of creation: each day opens a window onto an image of what God made that day,
+  // paintings and photographs from space, with the particles of the sculpture drifting round its edge
   stepsType("days", {
+    lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="dz-n">${esc(x.n)}</p><h4 class="dz-t">${esc(x.t)}</h4><p class="dz-x">${esc(x.x)}</p><cite>${esc(x.r)}</cite></article>`,
-    extra: () => `<div class="dz-big" aria-hidden="true"><span>1</span></div>`,
-    init(it) { it.big = $(".dz-big span", it.el); },
-    update(it, f, i) { if (it.bigI !== i) { it.big.textContent = i + 1; it.bigI = i; } },
+    extra: (it) => `<div class="dz-big" aria-hidden="true"><span>1</span></div><div class="dz-gal" aria-hidden="true">${it.s.fx.steps.map((x, i) => x.art ? `<div class="dz-im" data-i="${i}" style="${x.pos ? `--pos:${esc(x.pos)};` : ""}${x.z ? `--z:${x.z};` : ""}">${imgTag(x.art, { big: true })}</div>` : "").join("")}</div>${it.s.fx.steps.map((x) => x.art ? `<p class="cr dz-cr" data-credit="${x.art}">${creditHTML(x.art)}</p>` : "").join("")}`,
+    init(it) { it.big = $(".dz-big span", it.el); it.ims = $$(".dz-im", it.el); it.crs = $$(".dz-cr", it.el); },
+    update(it, f, i, l, go) {
+      if (it.bigI !== i) { it.big.textContent = i + 1; it.bigI = i; }
+      it.ims.forEach((im, k) => {
+        const on = go && k === i;
+        cls(im, "on", on);
+        // the image settles as the day is read: a slow push-in, transforms only
+        if (on || im.classList.contains("on")) css(im, "transform", `scale(${(1.1 - clamp(l) * 0.07).toFixed(4)})`);
+      });
+      it.crs.forEach((c, k) => cls(c, "on", go && k === i));
+    },
     gl: (it, f) => ({ opacity: 1, scale: f.mobile ? 0.9 : 1.05, x: f.mobile ? 0 : 2.4, y: f.mobile ? 1.2 : 0, thread: 0.5 })
   });
 
@@ -101,6 +113,7 @@
 
   // Words of the wise
   stepsType("wisdom", {
+    lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="wz-n">${esc(x.n)}</p><blockquote><p>“${esc(x.t)}”</p><cite>${esc(x.r)}</cite></blockquote></article>`,
     gl: (it, f) => ({ opacity: 0.85, scale: 1.1, thread: 0.6 })
   });
@@ -112,9 +125,10 @@
     lead: 0.12,
     step: (x, i) => `<article class="st-step s-${x.t}" data-i="${i}"><p class="wh-word">${esc(x.t === "voice" ? "a still small voice" : x.t).split("").map((c, k) => `<span style="--k:${k}">${c === " " ? "&nbsp;" : esc(c)}</span>`).join("")}</p><p class="wh-x">${esc(x.x)}</p></article>`,
     foot: (it) => `<cite class="wh-ref">${esc(it.s.fx.r)}</cite>`,
-    init(it) { it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.bgEl = $(".fx-bg", it.el); it.cr = $(".cr", it.el); },
     update(it, f, i, l, go) {
       css(it.bgEl, "opacity", go && i === 3 ? (0.15 + l * 0.35).toFixed(3) : "0");
+      css(it.cr, "opacity", go && i === 3 ? (f.to * 0.9).toFixed(3) : "0");
       cls(it.el, "quake", go && i === 1);
     },
     gl: (it, f, i) => {
@@ -132,7 +146,7 @@
       it.steps.forEach((c, k) => {
         const d = k - p, a = clamp(Math.abs(d), 0, 2);
         css(c, "transform", `translate3d(${(d * (f.mobile ? 80 : 46)).toFixed(2)}vw, 0, ${(-a * 480).toFixed(1)}px) rotateY(${(-d * 34).toFixed(2)}deg)`);
-        css(c, "opacity", go ? clamp(1 - a * 0.85).toFixed(3) : "0");
+        css(c, "opacity", go ? (clamp(1 - a * 0.85) * f.to).toFixed(3) : "0");
       });
     },
     gl: () => ({ opacity: 0.9, thread: 0.6 })
@@ -154,7 +168,7 @@
       const d = 1 + Math.floor(p * 39.999);
       if (d !== it.d) { it.num.textContent = d; it.unit.textContent = d === 1 ? "day" : "days"; it.d = d; }
       css(it.bgEl, "transform", `scale(${(1.25 - f.e * 0.15 - p * 0.05).toFixed(4)})`);
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ opacity: 1 - f.e, visible: f.e < 0.99 })
   });
@@ -173,25 +187,30 @@
       return h(`<div class="fx tongues ${mode}">${bg(s.art, "dim")}
         <div class="tg-field">${it.spans.map((x) => `<span lang="${x.lang}" dir="${x.lang === "he" || x.lang === "ar" ? "rtl" : "ltr"}"${x.lang === "en" ? ' class="en"' : ""}>${esc(x.t)}</span>`).join("")}</div>
         <p class="tg-center">${esc(center)}</p>
-        <p class="tg-note">${mode === "scatter" ? "At Babel, one language became many." : "At Pentecost, every language heard one message."}</p>
+        <p class="tg-note">${mode === "scatter" ? "At Babel, one language became many." : "At Pentecost, one message was heard in every language."}</p>
         ${copyHTML(s, { cls: "bottom" })}</div>`);
     },
     init(it) { it.els = $$(".tg-field span", it.el); it.center = $(".tg-center", it.el); it.note = $(".tg-note", it.el); it.bgEl = $(".fx-bg", it.el); },
     update(it, f) {
       const scatter = it.s.fx.mode === "scatter";
-      const p = easeIO(range(f.uMid, 0.08, 0.72));
+      // Babel scatters slowly; at Pentecost the tongues settle into one calm column early, then hold
+      const p = easeIO(range(f.uMid, 0.08, scatter ? 0.72 : 0.48));
       it.els.forEach((el, k) => {
         const x = it.spans[k];
-        let tx, ty, tz, rot, op, blur;
-        if (scatter) { tx = x.sx * p; ty = x.sy * p; tz = x.sz * p; rot = x.rot * p; op = clamp(p * 3) * (1 - p * 0.45); blur = p * 3; }
-        else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); blur = q * 4; }
+        let tx, ty, tz, rot, op;
+        const sk = f.mobile ? 0.42 : 1;
+        if (scatter) { tx = (f.mobile ? x.sx * sk : x.sx * 0.35 + 4) * p; ty = x.sy * p * (f.mobile ? 0.4 : 0.7); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); }
+        else {
+          // at Pentecost each tongue arrives in turn, like voices joining a choir
+          const q = 1 - easeIO(range(f.uMid, 0.06 + k * 0.022, 0.16 + k * 0.022)), ry = f.mobile ? x.ry * 0.55 : x.ry;
+          tx = lerp(x.rx, x.sx * 0.4, q); ty = lerp(ry, ry + x.sy * 0.3, q); tz = x.sz * q * 0.5; rot = x.rot * q * 0.5; op = clamp(1 - q * 1.6) * clamp(f.e * 2);
+        }
         css(el, "transform", `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotate(${rot.toFixed(2)}deg)`);
-        css(el, "opacity", op.toFixed(3));
-        css(el, "filter", blur > 0.2 && !f.mobile ? `blur(${blur.toFixed(1)}px)` : "none");
+        css(el, "opacity", (op * f.fo).toFixed(3));
       });
-      css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0)).toFixed(3) : "0");
-      css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * (1 - f.uOut) : 0).toFixed(3));
-      css(it.bgEl, "opacity", (f.e * (scatter ? 1 - p * 0.55 : 0.4 + p * 0.3)).toFixed(3));
+      css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0) * f.to).toFixed(3) : "0");
+      css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * f.to : 0).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (scatter ? 1 - p * 0.55 : 0.4 + p * 0.3) * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.2 - f.uMid * 0.12).toFixed(4)})`);
     },
     gl: (it, f) => ({ opacity: 0.9, thread: 0.5 })
@@ -218,6 +237,21 @@
     }
     return d;
   }
+  /** Map labels sit up and to the right of their dot, unless that would cover another label: then try the other corners. */
+  function placeLabels(el) {
+    const placed = [], hit = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+    $$(".mp-c text, .mp-mark text", el).forEach((t) => {
+      const c = t.parentNode.querySelector("circle"), cx = +c.getAttribute("cx"), cy = +c.getAttribute("cy"), fs = parseFloat(t.getAttribute("font-size"));
+      const spots = [[0.45, -0.35, "start"], [0.45, 1.0, "start"], [-0.45, -0.35, "end"], [-0.45, 1.0, "end"]];
+      let box = null;
+      for (const [dx, dy, anchor] of spots) {
+        t.setAttribute("x", (cx + dx * fs).toFixed(1)); t.setAttribute("y", (cy + dy * fs).toFixed(1)); t.setAttribute("text-anchor", anchor);
+        box = t.getBBox();
+        if (!placed.some((p) => hit(p, box))) break;
+      }
+      placed.push(box);
+    });
+  }
   ST.type("map", {
     build(it) {
       const s = it.s, R = window.ROUTES[s.fx.route], L = window.LANDS;
@@ -230,7 +264,8 @@
       const ratio = 1.5;
       if (w / hh > ratio) { const n = w / ratio; y0 -= (n - hh) / 2; hh = n; } else { const n = hh * ratio; x0 -= (n - w) / 2; w = n; }
       it.vb = [x0, y0, w, hh];
-      const fs = w / 52;
+      // on a phone the map is small: larger dots, lines and labels keep it readable
+      const fs = (w / 52) * (ST.isMobile() ? 1.65 : 1);
       const cities = [];
       R.legs.forEach((leg, li) => leg.pts.forEach((p, pi) => { if (p[2] && !cities.some((c) => c.name === p[2])) cities.push({ name: p[2], show: p[3], li, pi, xy: proj(p[0], p[1]) }); }));
       const marks = (R.marks || []).map((m) => ({ name: m[2], xy: proj(m[0], m[1]) }));
@@ -248,6 +283,7 @@
     init(it) { it.stage = $(".mp-stage", it.el); it.paths = $$(".mp-r", it.el); it.cities = $$(".mp-c", it.el); it.head = $(".mp-head", it.el); it.legsEl = $$(".mp-legs li", it.el); },
     show(it) {
       if (it.lens) return;
+      placeLabels(it.el);
       const R = window.ROUTES[it.s.fx.route];
       it.lens = it.paths.map((p) => p.getTotalLength() || 1);
       it.paths.forEach((p, i) => { p.style.strokeDasharray = `${it.lens[i]} ${it.lens[i]}`; p.style.strokeDashoffset = it.lens[i]; });
@@ -277,7 +313,7 @@
       it.cities.forEach((c, i) => cls(c, "on", drawn >= it.cityAt[i] - 0.5));
       it.legsEl.forEach((li, i) => { cls(li, "on", drawn > 0 && i === active); cls(li, "past", i < active); });
       css(it.stage, "transform", `perspective(1400px) rotateX(${(lerp(56, 16, f.e) - p * 6).toFixed(2)}deg) scale(${(lerp(0.8, 1, f.e) + p * 0.04).toFixed(4)}) translateZ(${(f.uOut * 300).toFixed(1)}px)`);
-      css(it.stage, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.stage, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.45, scale: 1.4, thread: 0.3 })
   });
@@ -287,12 +323,16 @@
   ST.type("stars", {
     build(it) {
       const r = rnd(41), s = it.s;
+      const taken = [[50, 12]]; // names keep their distance, so none sits on another
       const names = LINE.map((n, i) => {
         const last = i === LINE.length - 1;
-        let x, y;
-        do { x = 5 + r() * 90; y = 10 + r() * 44; } while (!last && x > 24 && x < 76 && y > 26);
+        let x, y, tries = 0;
+        do { x = 5 + r() * 90; y = 10 + r() * 44; tries++; }
+        while (!last && tries < 400 && ((x > 22 && x < 78 && y > 24) || taken.some((p) => Math.abs(p[0] - x) < 9 && Math.abs(p[1] - y) < 4.5)));
         if (last) { x = 50; y = 12; }
-        return `<span class="${last ? "last" : ""}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%">${esc(n)}</span>`;
+        taken.push([x, y]);
+        const key = last || ["Isaac", "Jacob", "Judas", "Booz", "David", "Solomon", "Josias", "Zorobabel", "Joseph"].includes(n) && !(n === "Jacob" && i > 30);
+        return `<span class="${last ? "last" : key ? "key" : "minor"}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%">${esc(n)}</span>`;
       });
       return h(`<div class="fx stars"><div class="sr-sky">${names.join("")}</div>
         <div class="sr-count"><b>1</b><span>Look now toward heaven, and tell the stars, if thou be able to number them.</span></div>
@@ -330,9 +370,9 @@
       const p = range(f.uMid, 0.05, 0.6);
       it.blood.forEach((b, i) => css(b, "strokeDashoffset", (1 - clamp(p * 3 - i)).toFixed(4)));
       css(it.svg, "transform", `translate(-50%, -50%) perspective(900px) rotateY(${lerp(-24, -8, f.e).toFixed(2)}deg) scale(${lerp(0.9, 1, f.e).toFixed(4)})`);
-      css(it.svg, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.svg, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.v, "on", it.isIn && f.uMid < 0.55);
-      css(it.bgEl, "opacity", (f.e * 0.9).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * 0.9 * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.3, visible: false })
   });
@@ -375,27 +415,31 @@
       }
       return h(`<div class="fx jericho">${bg(s.art, "dim")}
         <div class="jr-wall" aria-hidden="true">${html}</div>
-        <div class="jr-day"><span class="jr-l">Day</span><b>1</b><span class="jr-laps">${"<i></i>".repeat(7)}</span></div>
+        <div class="jr-day"><span class="jr-l">Day</span><b>1</b><span class="jr-laps">${"<i></i>".repeat(7)}</span><span class="jr-n">once around the city</span></div>
         <p class="jr-shout">“Shout; for the LORD hath given you the city.” <cite>Joshua 6:16</cite></p>
         ${copyHTML(s, { cls: "top" })}</div>`);
     },
-    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.lapN = $(".jr-n", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); it.copy = $(".copy", it.el); },
     update(it, f) {
       const days = range(f.uMid, 0.04, 0.6) * 7, day = Math.min(7, Math.floor(days) + 1), laps = day === 7 ? Math.min(7, Math.floor((days - 6) * 7.999) + 1) : 1;
       if (day !== it.d) { it.day.textContent = day; it.d = day; }
-      it.laps.forEach((l, i) => cls(l, "on", (day === 7 ? i < laps : i < 1) && days > 0));
+      it.laps.forEach((l, i) => cls(l, "on", (day === 7 ? i < laps : i < day) && days > 0));
+      cls(it.dayBox, "seventh", day === 7);
+      if (it.lapN) it.lapN.textContent = day === 7 ? `${laps} of 7 times around` : "once around the city";
       const fall = ease(range(f.uMid, 0.66, 0.88));
       it.fall = fall;
       cls(it.dayBox, "on", it.isIn && f.uMid < 0.7);
-      cls(it.shout, "on", it.isIn && f.uMid > 0.58 && f.uMid < 0.8);
+      const shout = it.isIn && f.uMid > 0.58 && f.uMid < 0.8;
+      cls(it.shout, "on", shout);
+      cls(it.copy, "away", shout); // the story steps aside while the shout fills the screen
       it.bEls.forEach((el, i) => {
         const b = it.bricks[i], q = clamp((fall - b.d) / 0.6);
         css(el, "transform", q > 0 ? `translate3d(${(b.rx * q * 10).toFixed(2)}vw, ${(q * q * (70 + b.ry * 40)).toFixed(2)}vh, ${(b.rz * q * 200).toFixed(1)}px) rotate(${(b.rot * q).toFixed(1)}deg)` : "none");
       });
       css(it.wall, "transform", `perspective(1000px) rotateX(${lerp(30, 8, f.e).toFixed(2)}deg) translateY(${lerp(30, 0, f.e).toFixed(2)}vh)`);
-      css(it.wall, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.wall, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.el, "fallen", fall > 0.6);
-      css(it.bgEl, "opacity", (f.e * (0.45 + fall * 0.4)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.45 + fall * 0.4) * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ a: "walls", b: "rubble", t: it.fall || 0, in: "walls", out: "rubble", opacity: 0.8, scale: 1.2, y: -0.6, thread: 0.4 })
   });
@@ -407,7 +451,7 @@
       return h(`<div class="fx cycle">
         <div class="cy-stage">
           <svg class="cy-ring" viewBox="-110 -110 220 220" aria-hidden="true"><circle r="88" /><circle class="cy-trace" r="88" pathLength="1" /></svg>
-          ${st.map((t, i) => { const a = (i / st.length) * Math.PI * 2 - Math.PI / 2; return `<p class="cy-st" style="left:${(50 + Math.cos(a) * 40).toFixed(2)}%;top:${(50 + Math.sin(a) * 40).toFixed(2)}%">${esc(t)}</p>`; }).join("")}
+          ${st.map((t, i) => { const a = (i / st.length) * Math.PI * 2 - Math.PI / 2; return `<p class="cy-st" style="left:${(50 + Math.cos(a) * 52).toFixed(2)}%;top:${(50 + Math.sin(a) * 51).toFixed(2)}%">${esc(t)}</p>`; }).join("")}
           <i class="cy-dot"></i>
           <div class="cy-center"><span>Raised up by God</span><b>Othniel</b><em>1 of 12</em></div>
         </div>
@@ -424,7 +468,7 @@
       const j = Math.min(11, Math.floor(p * 12));
       if (j !== it.j) { it.cname.textContent = it.s.fx.judges[j]; it.cnum.textContent = `${j + 1} of 12`; it.names.forEach((n, k) => { cls(n, "on", k === j); cls(n, "past", k < j); }); it.j = j; }
       css(it.stage, "transform", `perspective(1200px) rotateX(${lerp(40, 0, f.e).toFixed(2)}deg) scale(${(lerp(0.8, 1, f.e) + f.uOut * 0.3).toFixed(4)})`);
-      css(it.stage, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.stage, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.55, scale: 1.3, thread: 0.5 })
   });
@@ -446,7 +490,7 @@
     init(it) { it.scale = $(".go-scale", it.el); it.giant = $(".go-fig.giant", it.el); it.stone = $(".go-stone", it.el); it.shade = $(".go-shade", it.el); it.bgEl = $(".fx-bg", it.el); it.david = $(".go-fig.david", it.el); },
     update(it, f) {
       const m = f.uMid, rise = ease(range(m, 0.22, 0.42)), grow = ease(range(m, 0.3, 0.5)), fly = range(m, 0.52, 0.7), fall = ease(range(m, 0.7, 0.84));
-      css(it.scale, "opacity", (rise * (1 - f.uOut)).toFixed(3));
+      css(it.scale, "opacity", (rise * f.fo).toFixed(3));
       css(it.scale, "transform", `translateY(${lerp(8, 0, rise).toFixed(2)}vh)`);
       css(it.giant, "height", `${lerp(56, 97.5, grow).toFixed(2)}%`);
       css(it.giant, "transform", `rotate(${(fall * 72).toFixed(2)}deg)`);
@@ -456,7 +500,7 @@
       css(it.stone, "left", `calc(var(--sx) + (var(--ex) - var(--sx)) * ${x.toFixed(4)})`);
       css(it.stone, "bottom", `calc(var(--sy) + (var(--ey) - var(--sy)) * ${x.toFixed(4)} + ${(-y * 100).toFixed(2)}%)`);
       css(it.shade, "opacity", (0.35 + rise * 0.45).toFixed(3));
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.22 - f.e * 0.14 - m * 0.06).toFixed(4)})`);
     },
     gl: (it, f) => ({ opacity: 1 - f.e, visible: f.e < 0.99 })
@@ -483,12 +527,12 @@
       it.lines.forEach((L, j) => {
         const d = j - (p - 0.5);
         css(L.el, "transform", `translate3d(0, calc(-50% + ${(d * (f.mobile ? 30 : 24)).toFixed(2)}vh), ${(-Math.abs(d) * 160).toFixed(1)}px)`);
-        css(L.el, "opacity", go ? clamp(1 - Math.abs(d) * 1.15).toFixed(3) : "0");
+        css(L.el, "opacity", go ? (clamp(1 - Math.abs(d) * 1.15) * f.to).toFixed(3) : "0");
         const lit = Math.floor(clamp(p - j) * L.ws.length * 1.15);
         if (lit !== L.lit) { L.ws.forEach((w, k) => cls(w, "on", k < lit)); L.lit = lit; }
       });
       if (it.knotsEl) cls(it.knotsEl, "on", it.isIn && f.uMid > 0.86);
-      css(it.bgEl, "opacity", (f.e * 0.4).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * 0.4 * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ opacity: 0.8, thread: it.s.fx.style === "scarlet" ? 1 : 0.6 })
   });
@@ -500,17 +544,18 @@
       return h(`<div class="fx divide">
         <div class="dv-half n"><p class="dv-k">The northern kingdom</p><h4>Israel</h4><ul><li>Ten tribes</li><li>Capital: Samaria</li><li>Nineteen kings, none faithful to God</li><li>Fell to Assyria, 722 BC</li></ul></div>
         <i class="dv-crack"></i>
-        <div class="dv-half s"><p class="dv-k">The southern kingdom</p><h4>Judah</h4><ul><li>Judah and Benjamin</li><li>Capital: Jerusalem</li><li>Twenty rulers of David’s line; eight who followed God</li><li>Fell to Babylon, 586 BC</li></ul></div>
+        <div class="dv-half s"><p class="dv-k">The southern kingdom</p><h4>Judah</h4><ul><li>Judah and Benjamin</li><li>Capital: Jerusalem</li><li>Twenty rulers, nineteen of David’s line; eight who followed God</li><li>Fell to Babylon, 586 BC</li></ul></div>
         ${copyHTML(s, { cls: "top center" })}</div>`);
     },
     init(it) { it.n = $(".dv-half.n", it.el); it.sEl = $(".dv-half.s", it.el); it.crack = $(".dv-crack", it.el); },
     update(it, f) {
       const p = easeIO(range(f.uMid, 0.25, 0.6));
-      css(it.n, "transform", `translate3d(${(-p * 6).toFixed(2)}vw, 0, 0) rotateY(${(p * 8).toFixed(2)}deg)`);
-      css(it.sEl, "transform", `translate3d(${(p * 6).toFixed(2)}vw, 0, 0) rotateY(${(-p * 8).toFixed(2)}deg)`);
-      css(it.n, "opacity", (p * (1 - f.uOut)).toFixed(3)); css(it.sEl, "opacity", (p * (1 - f.uOut)).toFixed(3));
+      const dx = f.mobile ? 0 : 6;
+      css(it.n, "transform", `translate3d(${(-p * dx).toFixed(2)}vw, 0, 0) rotateY(${(p * 8).toFixed(2)}deg)`);
+      css(it.sEl, "transform", `translate3d(${(p * dx).toFixed(2)}vw, 0, 0) rotateY(${(-p * 8).toFixed(2)}deg)`);
+      css(it.n, "opacity", (p * f.fo).toFixed(3)); css(it.sEl, "opacity", (p * f.fo).toFixed(3));
       css(it.crack, "transform", `translateX(-50%) scaleY(${ease(range(f.uMid, 0.15, 0.45)).toFixed(4)})`);
-      cls(it.el, "split", p > 0.3);
+      cls(it.el, "split", f.uMid > 0.22);
     },
     gl: (it, f) => ({ opacity: 0.8, scale: 1.1, thread: 0.3 })
   });
@@ -527,10 +572,10 @@
     update(it, f) {
       const m = f.uMid, flash = Math.max(0, 1 - Math.abs(m - 0.45) / 0.06), burn = range(m, 0.42, 0.7);
       css(it.flash, "opacity", flash.toFixed(3));
-      css(it.glow, "opacity", (burn * (1 - f.uOut)).toFixed(3));
+      css(it.glow, "opacity", (burn * f.fo).toFixed(3));
       cls(it.pre, "on", it.isIn && m < 0.42);
       cls(it.el, "burnt", m > 0.47);
-      css(it.bgEl, "opacity", (f.e * (0.55 + burn * 0.35)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.55 + burn * 0.35) * f.fo).toFixed(3));
       it.burn = burn;
     },
     gl: (it, f) => ({ opacity: 0.5 + (it.burn || 0) * 0.5, scale: 1 + (it.burn || 0) * 0.5, color: "#ff7a2c", thread: 0.5 })
@@ -550,7 +595,7 @@
         <div class="dp-lines">${L.map(([t, r]) => `<p class="dp-l">“${esc(t)}”<cite>${r}</cite></p>`).join("")}</div>
         ${copyHTML(s, { cls: "bottom" })}</div>`);
     },
-    init(it) { it.water = $(".dp-water", it.el); it.rays = $(".dp-rays", it.el); it.meter = $(".dp-meter b", it.el); it.meterBox = $(".dp-meter", it.el); it.lines = $$(".dp-l", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.water = $(".dp-water", it.el); it.rays = $(".dp-rays", it.el); it.meter = $(".dp-meter b", it.el); it.meterBox = $(".dp-meter", it.el); it.lines = $$(".dp-l", it.el); it.bgEl = $(".fx-bg", it.el); it.cr = $(".cr", it.el); },
     update(it, f) {
       const m = f.uMid, down = range(m, 0.12, 0.62), up = range(m, 0.7, 0.86);
       it.depth = down * (1 - up);
@@ -561,7 +606,8 @@
       cls(it.meterBox, "on", it.isIn && m > 0.12 && m < 0.72);
       const li = m < 0.22 ? -1 : Math.min(2, Math.floor(range(m, 0.22, 0.7) * 3));
       it.lines.forEach((l, i) => cls(l, "on", it.isIn && i === li));
-      css(it.bgEl, "opacity", (up * 0.85).toFixed(3));
+      css(it.bgEl, "opacity", (up * 0.85 * f.fo).toFixed(3));
+      css(it.cr, "opacity", (up * f.to).toFixed(3));
       cls(it.el, "surface", up > 0.4);
       cls(it.el, "under", m > 0.14 && m < 0.74);
     },
@@ -593,7 +639,7 @@
       const m = f.uMid, li = m < 0.12 ? -1 : Math.min(3, Math.floor(range(m, 0.12, 0.72) * 4));
       it.lines.forEach((l, i) => cls(l, "on", it.isIn && i === li && m < 0.76));
       it.rise = ease(range(m, 0.3, 0.78));
-      css(it.bgEl, "opacity", (f.e * (0.5 - it.rise * 0.35)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.5 - it.rise * 0.35) * f.fo).toFixed(3));
       cls(it.el, "alive", m > 0.76);
       cls(it.el, "mid", m > 0.1 && m < 0.76);
     },
@@ -606,21 +652,21 @@
       const s = it.s;
       const M = [["MENE", "God hath numbered thy kingdom, and finished it."], ["TEKEL", "Thou art weighed in the balances, and art found wanting."], ["PERES", "Thy kingdom is divided, and given to the Medes and Persians."]];
       return h(`<div class="fx wall">${bg(s.art, "")}<div class="wl-dark"></div>
-        <svg class="wl-svg" viewBox="0 0 1000 180" aria-label="MENE, MENE, TEKEL, UPHARSIN"><text class="wl-t" x="500" y="128" text-anchor="middle" direction="rtl">מנא מנא תקל ופרסין</text></svg>
+        <p class="wl-h" dir="rtl" lang="arc" aria-label="MENE, MENE, TEKEL, UPHARSIN">${"מנא מנא תקל ופרסין".split("").map((c) => (c === " " ? " " : `<span>${c}</span>`)).join("")}</p>
         <p class="wl-latin">MENE, MENE, TEKEL, UPHARSIN <cite>Daniel 5:25</cite></p>
         <div class="wl-mean">${M.map(([w, t]) => `<p><b>${w}</b><span>${esc(t)}</span></p>`).join("")}</div>
         ${copyHTML(s, { cls: "bottom", noQuote: true })}</div>`);
     },
-    init(it) { it.t = $(".wl-t", it.el); it.latin = $(".wl-latin", it.el); it.mean = $$(".wl-mean p", it.el); it.dark = $(".wl-dark", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.letters = $$(".wl-h span", it.el); it.latin = $(".wl-latin", it.el); it.mean = $$(".wl-mean p", it.el); it.dark = $(".wl-dark", it.el); it.bgEl = $(".fx-bg", it.el); },
     update(it, f) {
-      const m = f.uMid, draw = range(m, 0.18, 0.5);
-      css(it.t, "strokeDashoffset", ((1 - draw) * 2400).toFixed(1));
-      css(it.t, "fillOpacity", range(m, 0.45, 0.55).toFixed(3));
+      // the hand writes the words letter by letter, right to left (HTML text, so every browser orders Aramaic correctly)
+      const m = f.uMid, n = it.letters.length, lit = Math.floor(range(m, 0.18, 0.5) * n + 0.001);
+      if (lit !== it.lit) { it.letters.forEach((s, i) => cls(s, "on", i < lit)); it.lit = lit; }
       cls(it.latin, "on", it.isIn && m > 0.5);
       const k = m < 0.58 ? -1 : Math.min(2, Math.floor(range(m, 0.58, 0.9) * 3));
       it.mean.forEach((p, i) => cls(p, "on", it.isIn && i <= k));
       css(it.dark, "opacity", (0.35 + range(m, 0.1, 0.3) * 0.4).toFixed(3));
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.2 - f.e * 0.12 - m * 0.05).toFixed(4)})`);
       cls(it.el, "late", m > 0.2);
     },
@@ -669,19 +715,82 @@
     },
     init(it) { it.figs = $$(".tn-f", it.el); it.copy = $(".copy", it.el); it.endEl = $(".tn-end", it.el); },
     update(it, f) {
-      const n = it.figs.length, D = f.mobile ? 1300 : 1500, p = range(f.uMid, 0.12, 0.9), cam = p * (n + 0.6) * D;
+      const n = it.figs.length, D = f.mobile ? 1300 : 1500, p = range(f.uMid, 0.2, 0.9), cam = p * (n + 0.6) * D;
       it.figs.forEach((fig, i) => {
         const z = cam - (i + 1) * D;
         const op = clamp((z + 4200) / 1600) * clamp((420 - z) / 360);
         if (op <= 0.001) { css(fig, "visibility", "hidden"); return; }
         css(fig, "visibility", "visible");
-        css(fig, "transform", `translate(-50%, -50%) translate3d(var(--x), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
-        css(fig, "opacity", op.toFixed(3));
+        css(fig, "transform", `translate(-50%, -50%) translate3d(calc(var(--x) * var(--xs, 1)), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
+        css(fig, "opacity", (op * f.fo * range(f.uMid, 0.17, 0.24)).toFixed(3));
+        cls(fig, "front", z > -1100);
       });
-      cls(it.copy, "away", f.uMid > 0.12);
+      cls(it.copy, "away", f.uMid > 0.2);
       cls(it.endEl, "on", it.isIn && f.uMid > 0.9);
     },
     gl: () => ({ opacity: 0.6, scale: 1.4, thread: 0.4, dust: 1 })
+  });
+
+  /* ════════════════ The Nativity: the promises in the dark, the road, the field, the light ════════════════ */
+  ST.type("nativity", {
+    build(it) {
+      const s = it.s, F = s.fx, B = F.beats;
+      const cap = (b, i) => `<div class="nv-cap" data-i="${i}"><p class="nv-ck">${esc(b.k)}</p><blockquote><p>“${esc(b.q)}”</p></blockquote>${b.x ? `<p class="nv-cx">${esc(b.x)}</p>` : ""}</div>`;
+      return h(`<div class="fx nativity">
+        ${B.map((b, i) => `<div class="nv-art" data-i="${i}">${imgTag(b.art, { big: true })}</div>`).join("")}
+        <div class="nv-art nv-birth">${imgTag(s.art, { big: true })}</div>
+        <div class="nv-shade"></div>
+        <div class="nv-bloom" aria-hidden="true"></div>
+        <div class="nv-pro"><p class="nv-lead">${esc(F.lead)}</p>${F.prophecies.map(([q, r]) => `<blockquote class="nv-pq"><p>“${esc(q)}”</p><cite>${esc(r)}</cite></blockquote>`).join("")}</div>
+        ${B.map(cap).join("")}
+        <blockquote class="nv-glory"><p>“${esc(F.glory[0])}”</p><cite>${esc(F.glory[1])}</cite></blockquote>
+        ${copyHTML(s, { cls: "bottom nv-copy" })}
+        ${B.map((b) => `<p class="cr nv-cr" data-credit="${b.art}">${creditHTML(b.art)}</p>`).join("")}
+        <p class="cr nv-cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
+      </div>`);
+    },
+    init(it) {
+      it.arts = $$(".nv-art", it.el); it.caps = $$(".nv-cap", it.el); it.pqs = $$(".nv-pq", it.el); it.pro = $(".nv-pro", it.el);
+      it.lead = $(".nv-lead", it.el); it.glory = $(".nv-glory", it.el); it.bloom = $(".nv-bloom", it.el); it.shade = $(".nv-shade", it.el);
+      it.crs = $$(".nv-cr", it.el);
+    },
+    update(it, f) {
+      const m = f.uMid, inn = it.isIn;
+      // 0 → .16  the promises, spoken into the dark
+      const pro = 1 - range(m, 0.13, 0.17);
+      css(it.pro, "opacity", (pro * f.ti).toFixed(3));
+      cls(it.lead, "on", f.ti > 0.3 && m < 0.16);
+      it.pqs.forEach((q, i) => cls(q, "on", inn && m > 0.025 + i * 0.03 && m < 0.16));
+      // .15 → .36  the road to Bethlehem   ·   .36 → .6  the shepherds' field   ·   .62 →  the birth
+      const win = [[0.15, 0.36], [0.36, 0.6]];
+      const vis = win.map(([a, b]) => range(m, a, a + 0.05) * (1 - range(m, b, b + 0.05)));
+      const birth = range(m, 0.62, 0.72);
+      it.arts.forEach((el, i) => {
+        const v = i < vis.length ? vis[i] : birth, w = i < vis.length ? win[i] : [0.62, 1];
+        const t = range(m, w[0], w[1]);
+        css(el, "opacity", (v * (i < vis.length ? 1 : f.fo)).toFixed(3));
+        // each painting drifts slowly while it is held, like a camera on a long lens
+        const sc = i < vis.length ? 1.14 - t * 0.08 : lerp(1.16, 1.02, ease(range(m, 0.62, 0.86)));
+        css(el, "transform", `translate3d(${(i === 0 ? (0.5 - t) * 4 : 0).toFixed(2)}%, 0, 0) scale(${sc.toFixed(4)})`);
+      });
+      // each caption leaves before the next words arrive; the angels' song gets the screen to itself
+      it.caps.forEach((c, i) => cls(c, "on", inn && m > win[i][0] + 0.04 && m < (i === win.length - 1 ? 0.48 : win[i][1] - 0.01)));
+      cls(it.glory, "on", inn && m > 0.5 && m < 0.63);
+      // the light of the birth: a warm bloom opens from the manger, then settles into the painting
+      const bl = range(m, 0.55, 0.64) * (1 - range(m, 0.67, 0.76));
+      css(it.bloom, "opacity", bl.toFixed(3));
+      css(it.bloom, "transform", `scale(${lerp(0.15, 1.5, ease(range(m, 0.55, 0.7))).toFixed(4)})`);
+      css(it.shade, "opacity", (m < 0.62 ? 0.75 : lerp(0.75, 1, range(m, 0.72, 0.8))).toFixed(3));
+      cls(it.el, "final", inn && m > 0.74);
+      // the credit follows the painting on screen
+      const show = m < 0.15 ? -1 : m < 0.38 ? 0 : m < 0.63 ? 1 : 2;
+      it.crs.forEach((c, i) => cls(c, "on", i === show));
+      it.light = bl; it.star = range(m, 0.02, 0.14);
+    },
+    gl: (it, f) => {
+      const m = f.uMid, dark = m < 0.17 || m > 0.88;
+      return { a: "chaos", b: "star", t: it.star || 0, in: "chaos", out: "star", opacity: dark ? 1 : 0.2, scale: 1 + (it.star || 0) * 0.1, color: "#fff1cf", dust: 0.6, thread: m > 0.88 ? 1 : 0.5, visible: dark || (it.light || 0) > 0.05 };
+    }
   });
 
   /* ════════════════ The cross ════════════════ */
@@ -732,31 +841,52 @@
   });
 
   /* ════════════════ The first day of the week ════════════════ */
+  // Friday, Saturday, Sunday in the dark; dawn over the empty tomb; then the risen Christ in a column of light.
   ST.type("dawn", {
     build(it) {
-      const s = it.s;
-      return h(`<div class="fx dawn"><div class="dw-sky"></div><div class="dw-sun"></div>${bg(s.art, "late")}
+      const s = it.s, F = s.fx;
+      return h(`<div class="fx dawn"><div class="dw-sky"></div>
+        <div class="dw-art dw-tomb">${imgTag(F.tomb, { big: true })}</div>
+        <div class="dw-shade"></div>
         <div class="dw-days"><span>Friday.</span><span>Saturday.</span><span>Sunday.</span></div>
-        <div class="dw-tomb" aria-hidden="true"><div class="dw-rock"></div><div class="dw-mouth"><i></i></div><div class="dw-stone"></div></div>
-        ${copyHTML(s, { cls: "top center" })}</div>`);
+        <div class="dw-sun" aria-hidden="true"></div>
+        <figure class="dw-risen">${imgTag(s.art)}</figure>
+        <div class="nv-cap dw-cap"><p class="nv-ck">${esc(F.word[1])} · The garden tomb</p><blockquote><p>“${esc(F.word[0])}”</p></blockquote></div>
+        ${copyHTML(s, { cls: "bottom dw-copy" })}
+        <p class="cr dw-cr" data-credit="${F.tomb}">${creditHTML(F.tomb)}</p>
+        <p class="cr dw-cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
+      </div>`);
     },
-    init(it) { it.sky = $(".dw-sky", it.el); it.sun = $(".dw-sun", it.el); it.days = $$(".dw-days span", it.el); it.stone = $(".dw-stone", it.el); it.mouth = $(".dw-mouth i", it.el); it.tomb = $(".dw-tomb", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) {
+      it.sky = $(".dw-sky", it.el); it.sun = $(".dw-sun", it.el); it.days = $$(".dw-days span", it.el); it.daysEl = $(".dw-days", it.el); it.tomb = $(".dw-tomb", it.el);
+      it.shade = $(".dw-shade", it.el); it.risenArt = $(".dw-risen", it.el); it.cap = $(".dw-cap", it.el); it.crs = $$(".dw-cr", it.el);
+    },
     update(it, f) {
-      const m = f.uMid, day = m < 0.04 ? -1 : Math.min(2, Math.floor(range(m, 0.04, 0.3) * 3));
-      it.days.forEach((d, i) => { cls(d, "on", it.isIn && i === day && m < 0.32); });
-      const light = range(m, 0.28, 0.62);
+      const m = f.uMid, inn = it.isIn;
+      const day = m < 0.02 ? -1 : Math.min(2, Math.floor(range(m, 0.02, 0.27) * 3));
+      it.days.forEach((d, i) => cls(d, "on", inn && i === day && m < 0.29));
+      css(it.daysEl, "opacity", (1 - range(m, 0.27, 0.32)).toFixed(3));
+      // dawn: the sky warms, then the tomb in the first light
+      const light = range(m, 0.24, 0.46);
       it.light = light;
-      css(it.sky, "opacity", light.toFixed(3));
-      css(it.sun, "transform", `translate(-50%, ${lerp(60, 0, light).toFixed(2)}vh) scale(${lerp(0.6, 1.2, light).toFixed(3)})`);
-      css(it.sun, "opacity", light.toFixed(3));
-      const roll = ease(range(m, 0.34, 0.56));
-      css(it.stone, "transform", `translateX(${(roll * 120).toFixed(1)}%) rotate(${(roll * 160).toFixed(1)}deg)`);
-      css(it.mouth, "opacity", roll.toFixed(3));
-      css(it.tomb, "opacity", (1 - range(m, 0.7, 0.85)).toFixed(3));
-      css(it.bgEl, "opacity", (range(m, 0.62, 0.82) * 0.7).toFixed(3));
-      cls(it.el, "risen", m > 0.6);
+      css(it.sky, "opacity", (light * (1 - range(m, 0.62, 0.72) * 0.6)).toFixed(3));
+      const tv = range(m, 0.28, 0.36) * (1 - range(m, 0.6, 0.67));
+      css(it.tomb, "opacity", tv.toFixed(3));
+      css(it.tomb, "transform", `scale(${(1.14 - range(m, 0.28, 0.62) * 0.08).toFixed(4)})`);
+      cls(it.cap, "on", inn && m > 0.36 && m < 0.58);
+      // the light grows, and the risen Christ stands in it
+      const sun = range(m, 0.54, 0.7);
+      css(it.sun, "opacity", (sun * f.fo).toFixed(3));
+      css(it.sun, "transform", `translate3d(0, ${lerp(30, 0, ease(sun)).toFixed(2)}vh, 0) scale(${lerp(0.4, 1, ease(sun)).toFixed(4)})`);
+      const rv = ease(range(m, 0.6, 0.74));
+      css(it.risenArt, "opacity", (rv * f.fo).toFixed(3));
+      css(it.risenArt, "transform", `translate3d(0, ${lerp(8, 0, rv).toFixed(2)}vh, 0) scale(${lerp(0.94, 1, rv).toFixed(4)})`);
+      css(it.shade, "opacity", (m < 0.62 ? 0.7 : 0.9).toFixed(3));
+      cls(it.el, "risen", inn && m > 0.68);
+      const show = m < 0.3 ? -1 : m < 0.62 ? 0 : 1;
+      it.crs.forEach((c, i) => cls(c, "on", i === show));
     },
-    gl: (it, f) => ({ opacity: 0.2 + (it.light || 0) * 0.8, color: "#ffd9a0", thread: 0.4 + (it.light || 0) * 0.5 })
+    gl: (it, f) => ({ opacity: 0.2 + (it.light || 0) * 0.8, color: "#ffd9a0", thread: 0.4 + (it.light || 0) * 0.5, visible: f.uMid < 0.32 || f.uMid > 0.6 })
   });
 
   /* ════════════════ Twenty-one letters ════════════════ */
@@ -770,7 +900,9 @@
     },
     init(it) { it.cards = $$(".lt-card", it.el); it.count = $(".lt-count b", it.el); it.ring = $(".lt-ring", it.el); it.stepBooks = it.s.b.map((b) => [b]); },
     update(it, f) {
-      const n = it.n, p = range(f.uMid, 0.1, 0.94) * (n - 1), go = f.uMid > 0.05 && it.isIn;
+      // each letter settles in the centre and holds for a moment before the ring turns to the next
+      const n = it.n, raw = range(f.uMid, 0.1, 0.94) * (n - 1), i0 = Math.min(n - 1, Math.floor(raw));
+      const p = Math.min(n - 1, i0 + easeIO(clamp((raw - i0 - 0.3) / 0.4))), go = f.uMid > 0.05 && it.isIn;
       const cw = f.mobile ? Math.min(f.vw * 0.8, 400) : 400, Rr = (cw * n) / (2 * Math.PI) * 1.12;
       const step = 360 / n;
       cls(it.el, "go", go);
@@ -778,7 +910,7 @@
         const a = (j - p) * step, rad = (a * Math.PI) / 180, front = Math.cos(rad);
         css(c, "transform", `translate(-50%, -50%) rotateY(${a.toFixed(2)}deg) translateZ(${Rr.toFixed(0)}px)`);
         const dd = Math.abs(j - p);
-        css(c, "opacity", go && front > 0 ? clamp(1 - dd * 0.55, 0, 1).toFixed(3) : "0");
+        css(c, "opacity", go && front > 0 ? (clamp(1 - dd * 0.55, 0, 1) * f.to).toFixed(3) : "0");
         cls(c, "front", Math.abs(j - p) < 0.5);
       });
       css(it.ring, "transform", `translateZ(${(-Rr).toFixed(0)}px) rotateX(${lerp(14, 2, f.e).toFixed(2)}deg)`);
@@ -804,16 +936,16 @@
       cls(it.el, "go", go);
       it.cards.forEach((c, j) => {
         const a = (j / n) * Math.PI * 2 - Math.PI / 2;
-        const rx = Math.cos(a) * (f.mobile ? 34 : 40), ry = Math.sin(a) * (f.mobile ? 36 : 34);
+        const rx = Math.cos(a) * (f.mobile ? 30 : 40), ry = Math.sin(a) * (f.mobile ? 30 : 34);
         let x, y, z, s, op, cap;
         const local = p - j;
         if (local < 0) { x = 0; y = 4; z = -1800; s = 1; op = clamp(1 + local * 1.2) * 0.6; cap = 0; }
         else if (local < 1) {
           const out = ease(range(local, 0.62, 1));
-          x = lerp(0, rx, out); y = lerp(0, ry, out); z = lerp(lerp(-900, 0, ease(range(local, 0, 0.3))), -420, out); s = lerp(1, 0.42, out); op = 1 - out * 0.4; cap = local < 0.7 ? 1 : 0;
-        } else { x = rx; y = ry; z = -420; s = 0.42; op = 0.6; cap = 0; }
+          x = lerp(0, rx, out); y = lerp(0, ry, out); z = lerp(lerp(-900, 0, ease(range(local, 0, 0.3))), -420, out); s = lerp(1, f.mobile ? 0.32 : 0.42, out); op = 1 - out * 0.4; cap = local < 0.7 ? 1 : 0;
+        } else { x = rx; y = ry; z = -420; s = f.mobile ? 0.32 : 0.42; op = 0.6; cap = 0; }
         css(c, "transform", `translate(-50%, -50%) translate3d(${x.toFixed(2)}vw, ${y.toFixed(2)}vh, ${z.toFixed(1)}px) scale(${s.toFixed(4)})`);
-        css(c, "opacity", go ? op.toFixed(3) : "0");
+        css(c, "opacity", go ? (op * f.fo).toFixed(3) : "0");
         cls(c, "cap", cap && go);
       });
       cls(it.endEl, "on", it.isIn && f.uMid > 0.88);
@@ -834,7 +966,7 @@
       ];
       return h(`<div class="fx new">${bg(s.art, "")}
         ${copyHTML(s, { cls: "bottom", noQuote: true })}
-        <div class="nw-cube"><p>“The city lieth foursquare … The length and the breadth and the height of it are equal.”<cite>Revelation 21:16</cite></p><span>Like the Most Holy Place, where God dwelt. Now the whole city is His dwelling.</span></div>
+        <div class="nw-cube"><p>“The city lieth foursquare … The length and the breadth and the height of it are equal.”<cite>Revelation 21:16</cite></p><span>Like the Most Holy Place, where God once dwelt; now the whole city is His dwelling.</span></div>
         <div class="nw-book"><p class="nw-h"><span>Genesis</span><span>Revelation</span></p>${P.map(([a, ar, b, br]) => `<div class="nw-row"><p>“${esc(a)}”<cite>${ar}</cite></p><i></i><p>“${esc(b)}”<cite>${br}</cite></p></div>`).join("")}</div>
         <div class="nw-end"><h3>Behold, I make all things new.</h3><cite>Revelation 21:5</cite><blockquote><p>“${esc(s.q)}”</p><cite>${esc(s.r)}</cite></blockquote></div>
       </div>`);
@@ -842,7 +974,7 @@
     init(it) { it.bgEl = $(".fx-bg", it.el); it.copy = $(".copy", it.el); it.cube = $(".nw-cube", it.el); it.book = $(".nw-book", it.el); it.rows = $$(".nw-row", it.el); it.endEl = $(".nw-end", it.el); },
     update(it, f) {
       const m = f.uMid, inn = it.isIn;
-      css(it.bgEl, "opacity", (f.e * (1 - range(m, 0.22, 0.32) * 0.82)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (1 - range(m, 0.22, 0.32) * 0.82) * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.25 - f.e * 0.15 - m * 0.08).toFixed(4)})`);
       cls(it.copy, "away", m > 0.24);
       cls(it.cube, "on", inn && m > 0.28 && m < 0.5);
@@ -862,7 +994,7 @@
       return h(`<div class="fx amen">
         <p class="am-l am-1">“He which testifieth these things saith, Surely I come quickly.”</p>
         <p class="am-l am-2"><span>Amen.</span> <span>Even so, come, Lord Jesus.</span></p>
-        <p class="am-l am-3">“The grace of our Lord Jesus Christ be with you all. Amen.”<cite>Revelation 22:20–21</cite></p>
+        <p class="am-l am-3">“The grace of our Lord Jesus Christ be with you all. Amen.”<cite>Revelation 22:21</cite></p>
         <div class="am-end"><p class="am-k">The end of the story</p><h3>From the garden<br />to the city.</h3><p class="am-x">${esc(s.x)}</p><div class="am-stats"></div></div>
       </div>`);
     },
@@ -879,6 +1011,6 @@
       cls(it.endEl, "on", inn && m > 0.66);
       it.loop = range(m, 0.6, 0.8);
     },
-    gl: (it, f) => ({ opacity: 1, scale: 1 + (it.loop || 0) * 0.12, color: "#ff3a4c", thread: 1, threadY: -2.6 })
+    gl: (it, f) => ({ opacity: 1, scale: (f.mobile ? 0.72 : 1) + (it.loop || 0) * 0.12, color: "#ff3a4c", thread: 1, threadY: -2.6 })
   });
 })();

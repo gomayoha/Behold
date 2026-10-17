@@ -3,7 +3,8 @@
    Each painting is tried at its known Wikimedia address first. If that file
    has moved or is smaller than expected, Wikimedia Commons is asked for it by
    name, and failing that, searched for by title and artist. Whatever works is
-   remembered on this device, so the next visit is instant.
+   remembered on this device, so the next visit is instant, until that entry in
+   art.js is edited.
    ========================================================================== */
 window.Paint = (function () {
   "use strict";
@@ -71,26 +72,30 @@ window.Paint = (function () {
     return (jobs[id] = (async () => {
       const a = ART[key];
       if (!a) return null;
+      // a remembered find only counts while the entry in art.js is unchanged
+      const sig = [a.s, a.f, a.q].join("|"), m = memo[key] && memo[key].sig === sig ? memo[key] : null;
       const tries = [];
-      if (memo[key]) tries.push(memo[key].u);
+      if (m) tries.push(m.u);
       if (big && a.l) tries.push(a.l);
       if (a.s) tries.push(a.s);
       // never fall back to an untested original: some are hundreds of megabytes
       for (const u of [...new Set(tries)]) {
-        try { await probe(u); return memo[key] && memo[key].u === u ? memo[key] : { u }; } catch (e) { /* try the next */ }
+        try { await probe(u); return m && m.u === u ? m : { u }; } catch (e) { /* try the next */ }
       }
       try {
         const r = await ask(key, big ? 1920 : 1280);
-        if (r && r.u) { await probe(r.u); memo[key] = r; save(); return r; }
+        if (r && r.u) { await probe(r.u); r.sig = sig; memo[key] = r; save(); return r; }
       } catch (e) { /* offline, or Commons is unreachable */ }
       return null;
     })());
   }
 
-  /** The credit line for a painting, corrected if a search found a different file. */
+  /** The credit line for a painting, corrected if a search found a different file.
+   *  Commons metadata is often raw Wikidata (multilingual labels, "QS:" codes, scan file names): use it only when it reads cleanly. */
+  const clean = (s, max) => s && s.length <= max && !/QS:|label|title|\(\d{6,}\)|https?:|\bdate\b|\.(jpe?g|png|tiff?)\b/i.test(s);
   function credit(key, found) {
     const a = ART[key] || {};
-    if (found && found.searched && found.t) return { t: found.t, a: found.a || a.a, y: found.y || "" };
+    if (found && found.searched && clean(found.t, 90) && clean(found.a || a.a, 60)) return { t: found.t, a: found.a || a.a, y: /^\d{4}$/.test(found.y) ? found.y : "" };
     return { t: a.t, a: a.a, y: a.y };
   }
 
@@ -101,9 +106,12 @@ window.Paint = (function () {
     get(key, big).then((r) => {
       if (img.dataset.key !== key + (big ? "@l" : "")) return;
       if (r) {
-        img.onload = () => img.classList.add("loaded");
+        // decode before showing, so a large painting never stalls a frame as it fades in
+        const done = () => { if (img.dataset.key === key + (big ? "@l" : "")) img.classList.add("loaded"); };
+        const ready = () => (img.decode ? img.decode().then(done, done) : done());
+        img.onload = ready;
         img.src = r.u;
-        if (img.complete && img.naturalWidth) img.classList.add("loaded");
+        if (img.complete && img.naturalWidth) ready();
       } else img.classList.add("missing");
       if (onDone) onDone(r);
     });

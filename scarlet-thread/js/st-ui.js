@@ -127,7 +127,7 @@
   const small = (key) => {
     const a = ART[key];
     if (!a) return "";
-    const u = a.s || a.o || "";
+    const u = a.s || ""; // never the original: some are hundreds of megabytes
     return u.includes("/thumb/") ? u.replace(/\/\d+px-([^/]+)$/, "/330px-$1") : u;
   };
   function buildPeople() {
@@ -228,24 +228,32 @@
     $$(".prm-r").forEach((r) => { cls(r, "found", c.planted.has(r.dataset.th)); cls(r, "kept", c.kept.has(r.dataset.th)); });
     if (announce) {
       const nb = [...c.books].filter((b) => !last.books.has(b)), np = [...c.planted].filter((t) => !last.planted.has(t) && !c.kept.has(t)), nk = [...c.kept].filter((t) => !last.kept.has(t));
-      nb.slice(0, 3).forEach((b) => pop(`${IC.book}<span>${esc(ST.BOOK[b].n)}</span>`, ""));
-      np.forEach((t) => pop(`${IC.knot}<span>${esc(THREADS[t].name)}</span>`, "scarlet"));
-      nk.slice(0, 3).forEach((t) => pop(`${IC.kept}<span>Kept: ${esc(THREADS[t].name)}</span>`, "gold"));
+      // several books at once become one pill, so the pills never fall behind the story
+      if (nb.length === 1) pop(`${IC.book}<span>${esc(ST.BOOK[nb[0]].n)}</span>`, "");
+      else if (nb.length > 1) pop(`${IC.book}<span>${nb.length} books: ${esc(nb.slice(0, 2).map((b) => ST.BOOK[b].n).join(", "))}${nb.length > 2 ? "…" : ""}</span>`, "");
+      // promises planted and kept already show as cards in the scene, and the thread pulses: no extra pill
       if (np.length || nk.length) { window.GL && window.GL.pulse(); }
       if (nk.length && window.Ambient) window.Ambient.chime();
       if (nb.length || np.length || nk.length) { const hud = $("#hud"); hud.classList.remove("bump"); void hud.offsetWidth; hud.classList.add("bump"); }
     }
     last = c;
   }
-  let popQ = 0;
+  // pills wait their turn, one at a time; if the reader races ahead, only the latest two are kept
+  const popQueue = [];
+  let popBusy = false;
   function pop(html, tone) {
-    const el = h(`<p class="pop ${tone}">${html}</p>`);
-    const box = $("#hudPops");
-    const cap = innerWidth <= 760 ? 0 : 3;
-    while (box.children.length > cap) box.firstElementChild.remove();
-    const slow = innerWidth <= 760 ? 900 : 380;
-    setTimeout(() => { if (innerWidth <= 760) [...box.children].forEach((c) => c.remove()); box.appendChild(el); setTimeout(() => el.classList.add("out"), 2400); setTimeout(() => el.remove(), 3100); }, popQ++ * slow);
-    setTimeout(() => { popQ = Math.max(0, popQ - 1); }, 400);
+    popQueue.push(h(`<p class="pop ${tone}">${html}</p>`));
+    while (popQueue.length > 2) popQueue.shift();
+    if (!popBusy) nextPop();
+  }
+  function nextPop() {
+    const el = popQueue.shift(), box = $("#hudPops");
+    if (!el) { popBusy = false; return; }
+    popBusy = true;
+    [...box.children].forEach((c) => c.remove());
+    box.appendChild(el);
+    setTimeout(() => el.classList.add("out"), 1900);
+    setTimeout(() => { el.remove(); nextPop(); }, 2400);
   }
   ST.on("item", () => refreshCounts(true));
   refreshCounts(false);
@@ -264,7 +272,7 @@
     else if (typeof it.s.y === "number") {
       let nx = null;
       for (let j = it.i + 1; j < items.length && j < it.i + 6; j++) if (typeof items[j].s.y === "number") { nx = items[j]; break; }
-      const p = clamp((y + ST.vh * 0.5 - it.top) / (it.bottom - it.top));
+      const p = clamp((y + ST.vh * 0.5 - (it.bottom - ST.T * 0.4)) / (ST.T * 0.4));
       const yr = nx && nx.s.y !== it.s.y ? Math.round(it.s.y + (nx.s.y - it.s.y) * p * 0.999) : it.s.y;
       label = yearLabel(yr);
     } else label = it.s.yl || it.age.yl;

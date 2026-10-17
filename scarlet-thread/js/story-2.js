@@ -20,14 +20,14 @@ window.AGES.push(
     },
     {
       id: "saul", t: "Give us a king.", k: "1 Samuel 8–15", pl: "Gibeah", y: -1050, b: ["1sa"],
-      x: "When Samuel grew old, the people demanded a king to judge them like all the nations. Samuel anointed Saul, from his shoulders and upward higher than any of the people. But Saul grew impatient, offered the sacrifice himself, spared what God had told him to destroy, and God rejected him as king.",
+      x: "When Samuel grew old, the people demanded a king to judge them like all the nations. Samuel anointed Saul, who stood head and shoulders above all the people. But Saul grew impatient, offered the sacrifice himself, spared what God had told him to destroy, and God rejected him as king.",
       q: "Behold, to obey is better than sacrifice, and to hearken than the fat of rams.", r: "1 Samuel 15:22",
       cast: [["Saul", "Israel’s first king, of the tribe of Benjamin"]],
       lay: "word", sh: "crown"
     },
     {
       id: "anointed", t: "The LORD looketh on the heart.", k: "1 Samuel 16", pl: "Bethlehem", y: -1025, b: ["1sa"],
-      x: "God sent Samuel to Bethlehem, to the house of Jesse. Seven sons passed before him, and none was chosen. Are here all thy children? The youngest was out keeping the sheep. They sent for David, and Samuel anointed him in the midst of his brothers, and the Spirit of the LORD came upon him from that day forward.",
+      x: "God sent Samuel to Bethlehem, to the house of Jesse. Seven sons passed before him, and none was chosen. “Are here all thy children?” Samuel asked. The youngest was out keeping the sheep. They sent for David, and Samuel anointed him in the midst of his brothers, and the Spirit of the LORD came upon him from that day forward.",
       q: "For man looketh on the outward appearance, but the LORD looketh on the heart.", r: "1 Samuel 16:7",
       cast: [["David", "Shepherd, giant-killer, psalmist, king"], ["Jesse", "Of Bethlehem, David’s father"]],
       art: "david-anointed", lay: "plate", side: "r", sh: "crown"
@@ -100,7 +100,7 @@ window.AGES.push(
       id: "solomon", t: "An understanding heart.", k: "1 Kings 3", pl: "Gibeon · Jerusalem", y: -970, b: ["1ki"],
       x: "God appeared to young King Solomon in a dream: Ask what I shall give thee. Solomon asked for an understanding heart. Soon two women came before him, each claiming the same baby. Bring me a sword, said the king, and divide the living child in two. The true mother cried out to save her son, and all Israel saw that the wisdom of God was in him.",
       q: "Give therefore thy servant an understanding heart to judge thy people, that I may discern between good and bad.", r: "1 Kings 3:9",
-      cast: [["Solomon", "Son of David and Bathsheba, the wise king"], ["The two mothers", "Who came to Solomon for judgement"]],
+      cast: [["Solomon", "The wise king, son of David and Bathsheba"], ["The two mothers", "Who came to Solomon for judgement"]],
       art: "judgment-solomon", lay: "full", sh: "temple"
     },
     {
@@ -118,7 +118,7 @@ window.AGES.push(
     },
     {
       id: "wise", t: "The words of the wise.", k: "Proverbs · Ecclesiastes · Song of Songs · Wisdom · Sirach", yl: "The wisdom of Israel", b: ["pro", "ecc", "sng", "wis", "sir"],
-      x: "Solomon spoke three thousand proverbs, and his songs were a thousand and five. Israel’s wisdom books ask how to live well, why life is so fleeting, and what love is. The Book of Wisdom and Sirach, written centuries later, carry the same tradition on.",
+      x: "Solomon spoke three thousand proverbs, and his songs were a thousand and five. Israel’s wisdom books ask how to live well, why life is so fleeting, and what love is. The Book of Wisdom and Sirach, written centuries later, carry the same tradition forward.",
       fx: { type: "steps", style: "wisdom", steps: [
         { n: "Proverbs", t: "Trust in the LORD with all thine heart; and lean not unto thine own understanding.", r: "Proverbs 3:5", b: "pro" },
         { n: "Ecclesiastes", t: "To every thing there is a season, and a time to every purpose under the heaven.", r: "Ecclesiastes 3:1", b: "ecc" },
@@ -147,14 +147,14 @@ window.AGES.push(
   scenes: [
     {
       id: "elijah", t: "Fed by ravens.", k: "1 Kings 16–17", pl: "The brook Cherith · Zarephath", y: -870, b: ["1ki"],
-      x: "Ahab, king of Israel, married Jezebel and built a temple to Baal. The prophet Elijah stood before him: there shall not be dew nor rain these years, but according to my word. For three and a half years the sky was shut. God fed Elijah by ravens at a brook, and then by a widow in Zarephath whose meal and oil never ran out.",
+      x: "Ahab, king of Israel, married Jezebel and built a temple to Baal. The prophet Elijah stood before him: “There shall not be dew nor rain these years, but according to my word.” For three and a half years the sky was shut. God fed Elijah by ravens at a brook, and then by a widow in Zarephath whose meal and oil never ran out.",
       q: "And the ravens brought him bread and flesh in the morning, and bread and flesh in the evening; and he drank of the brook.", r: "1 Kings 17:6",
       cast: [["Elijah", "The Tishbite, prophet of fire"], ["Ahab", "King of Israel"], ["Jezebel", "His queen, a worshipper of Baal"], ["The widow of Zarephath", "Whose son Elijah raised"]],
       art: "elijah-ravens", lay: "plate", side: "l", sh: "dome"
     },
     {
       id: "carmel", t: "The LORD, he is the God.", k: "1 Kings 18", pl: "Mount Carmel", y: -866, b: ["1ki"],
-      x: "On Mount Carmel, Elijah challenged four hundred and fifty prophets of Baal: two altars, two bulls, no fire. The God that answereth by fire, let him be God. They cried to Baal from morning until evening. Elijah drenched his altar with water three times over, and prayed once. The fire of the LORD fell, and consumed the sacrifice, the wood, the stones and the dust.",
+      x: "On Mount Carmel, Elijah challenged four hundred and fifty prophets of Baal: two altars, two bulls, no fire. “The God that answereth by fire, let him be God.” They cried to Baal from morning until evening. Elijah drenched his altar with water three times over, and prayed once. The fire of the LORD fell, and consumed the sacrifice, the wood, the stones and the dust.",
       q: "And when all the people saw it, they fell on their faces: and they said, The LORD, he is the God; the LORD, he is the God.", r: "1 Kings 18:39",
       art: "carmel", fx: { type: "fire" }, sh: "flame", h: 3.2
     },
@@ -174,7 +174,7 @@ window.AGES.push(
       x: "Elisha would not leave his master’s side. As they went on and talked, a chariot of fire and horses of fire parted them, and Elijah went up by a whirlwind into heaven. His mantle fell, and Elisha took it up. He had asked for a double portion of Elijah’s spirit.",
       q: "My father, my father, the chariot of Israel, and the horsemen thereof.", r: "2 Kings 2:12",
       cast: [["Elisha", "Elijah’s successor, with a double portion"]],
-      art: "elijah-chariot", lay: "full", sh: "whirlwind"
+      art: "elijah-chariot", lay: "full", posm: "78% 50%", sh: "whirlwind"
     },
     {
       id: "elisha", t: "Wash, and be clean.", k: "2 Kings 4–6", pl: "Israel · the Jordan", y: -845, b: ["2ki"],
@@ -185,7 +185,7 @@ window.AGES.push(
     },
     {
       id: "jonah", t: "Salvation is of the LORD.", k: "The Book of Jonah", pl: "Joppa · the deep · Nineveh", y: -780, b: ["jon"],
-      x: "God sent Jonah to preach to Nineveh, the capital of Israel’s cruellest enemy. Jonah boarded a ship going the other way. In the storm, the sailors threw him into the sea, and a great fish swallowed him. Three days later he was on dry land. When he finally preached, the whole city repented, from the king to the cattle, and it displeased Jonah exceedingly.",
+      x: "God sent Jonah to preach to Nineveh, the capital of Israel’s cruellest enemy. Jonah boarded a ship going the other way. In the storm, the sailors threw him into the sea, and a great fish swallowed him. Three days later he was on dry land. When he finally preached, the whole city repented, from the king to the cattle. God spared it, and it displeased Jonah exceedingly.",
       q: "And Jonah was in the belly of the fish three days and three nights.", r: "Jonah 1:17",
       cast: [["Jonah", "The reluctant prophet"], ["The king of Nineveh", "Who covered himself with sackcloth"]],
       art: "jonah", fx: { type: "deep" }, th: "jonah", sh: "deep", h: 3.6
@@ -205,7 +205,7 @@ window.AGES.push(
       x: "In the year that King Uzziah died, Isaiah saw the Lord, high and lifted up, and seraphim crying one to another. A live coal touched his lips. For sixty years he spoke to Judah’s kings. When Sennacherib of Assyria besieged Jerusalem, King Hezekiah spread the enemy’s letter before the LORD, and in one night the Assyrian army was struck down.",
       q: "Holy, holy, holy, is the LORD of hosts: the whole earth is full of his glory.", r: "Isaiah 6:3",
       cast: [["Isaiah", "The prophet of Jerusalem"], ["Hezekiah", "A good king of Judah"], ["Sennacherib", "King of Assyria"]],
-      art: "isaiah", lay: "full", sh: "rings"
+      art: "isaiah", lay: "full", pos: "50% 16%", sh: "rings"
     },
     {
       id: "samaria", t: "None left but Judah.", k: "2 Kings 17", pl: "Samaria", y: -722, b: ["2ki"],
@@ -217,7 +217,7 @@ window.AGES.push(
       id: "tobit", t: "Tobias and the angel.", k: "The Book of Tobit", pl: "Nineveh · Ecbatana", y: -710, b: ["tob"],
       x: "Among the exiles in Nineveh lived Tobit, a righteous man who buried the dead at the risk of his life. Blinded and poor, he sent his son Tobias on a long journey, with a companion who was secretly the archangel Raphael. Tobias came home with a bride, Sarah, and a cure for his father’s eyes.",
       q: "I am Raphael, one of the seven holy angels, which present the prayers of the saints.", r: "Tobit 12:15",
-      cast: [["Tobit", "A righteous exile in Nineveh"], ["Tobias", "His son"], ["Raphael", "The archangel, whose name means God heals"], ["Sarah", "The bride of Tobias"]],
+      cast: [["Tobit", "A righteous exile in Nineveh"], ["Tobias", "His son"], ["Raphael", "The archangel, whose name means “God heals”"], ["Sarah", "The bride of Tobias"]],
       art: "tobias", lay: "plate", side: "l", sh: "ring"
     },
     {
@@ -236,7 +236,7 @@ window.AGES.push(
       id: "josiah", t: "The book in the temple.", k: "2 Kings 22–23 · Zephaniah · Nahum", pl: "Jerusalem", y: -622, b: ["2ki", "2ch", "zep", "nam"],
       x: "Manasseh, Hezekiah’s son, reigned fifty-five years and filled Jerusalem with idols. His grandson Josiah became king at eight years old. Repairing the temple, the priests found the book of the law, long forgotten. Josiah tore his clothes, read it to all the people, and swept the idols from the land. Zephaniah prophesied in his days, and Nahum foretold the fall of Nineveh.",
       q: "The LORD thy God in the midst of thee is mighty; he will save, he will rejoice over thee with joy.", r: "Zephaniah 3:17",
-      cast: [["Josiah", "The boy king who found the law"], ["Manasseh", "The longest-reigning king of Judah"], ["Huldah", "The prophetess who read the book’s meaning"]],
+      cast: [["Josiah", "The boy king who found the law"], ["Manasseh", "The longest-reigning king of Judah"], ["Huldah", "The prophetess who declared the book’s meaning"]],
       lay: "word", sh: "scroll"
     }
   ]
@@ -251,17 +251,17 @@ window.AGES.push(
   scenes: [
     {
       id: "jeremiah", t: "The weeping prophet.", k: "Jeremiah · Habakkuk · Baruch", pl: "Jerusalem", y: -605, b: ["jer", "hab", "bar"],
-      x: "Jeremiah was called as a child and preached for forty years to people who would not listen. He was beaten, put in the stocks and let down into a cistern of mire. He watched a potter remake a marred vessel, and saw God’s patience. In his darkest hour he wrote of a new covenant, written not on stone but on the heart. His scribe Baruch wrote his words down; Habakkuk, in the same years, learned that the just shall live by his faith.",
+      x: "Jeremiah was called as a child and preached for forty years to people who would not listen. He was beaten, put in the stocks and let down into a cistern of mire. He watched a potter remake a marred vessel, and saw God’s patience. In his darkest hour he foretold a new covenant, written not on stone but on the heart. His scribe Baruch wrote his words down; Habakkuk, in the same years, learned that the just shall live by his faith.",
       q: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", r: "Jeremiah 29:11",
       cast: [["Jeremiah", "The weeping prophet of Anathoth"], ["Baruch", "Jeremiah’s faithful scribe"], ["Habakkuk", "Who questioned God and waited"]],
       art: "jeremiah", lay: "plate", side: "r", th: "newcov", sh: "ash"
     },
     {
       id: "fall-jerusalem", t: "New every morning.", k: "2 Kings 25 · Lamentations · Obadiah", pl: "Jerusalem · Babylon", y: -586, b: ["2ki", "2ch", "lam", "oba"],
-      x: "In 586 BC Nebuchadnezzar’s army broke through the walls. Solomon’s temple was burned, the king’s sons were slain before his eyes, and the people were led away to Babylon. Edom gloated, and Obadiah answered: as thou hast done, it shall be done unto thee. Jeremiah wept over the ruins in the five poems of Lamentations, and in the middle of the grief, wrote this.",
+      x: "In 586 BC Nebuchadnezzar’s army broke through the walls. Solomon’s temple was burned, King Zedekiah’s sons were slain before his eyes, and the people were led away to Babylon. Edom gloated, and Obadiah answered: as thou hast done, it shall be done unto thee. Jeremiah wept over the ruins in the five poems of Lamentations, and in the midst of that grief, he wrote this.",
       q: "It is of the LORD’S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", r: "Lamentations 3:22–23",
       cast: [["Nebuchadnezzar", "King of Babylon"], ["Zedekiah", "The last king of Judah"]],
-      art: "exiles", lay: "full", fx: { type: "embers" }, sh: "ash"
+      art: "exiles", lay: "full", pos: "50% 80%", posm: "50% 50%", zoom: "50% 100%", zs: 1.32, fx: { type: "embers" }, sh: "ash"
     },
     {
       id: "bones", t: "Can these bones live?", k: "Ezekiel", pl: "By the river Chebar", y: -585, b: ["ezk"],
@@ -299,7 +299,7 @@ window.AGES.push(
     },
     {
       id: "judith", t: "The hand of a woman.", k: "The Book of Judith", pl: "Bethulia", yl: "In the days of Nebuchadnezzar", b: ["jdt"],
-      x: "The Book of Judith tells of a widow of Bethulia whose town was besieged by the general Holofernes. While the elders despaired, Judith prayed, put on her finest garments, walked into the enemy camp, and delivered her people. She came home singing a new song unto the Lord.",
+      x: "The Book of Judith tells of a widow of Bethulia whose town was besieged by the general Holofernes. While the elders despaired, Judith prayed, put on her finest garments, walked into the enemy camp alone, and by her hand God delivered her people. She came home singing a new song unto the Lord.",
       q: "O Lord, thou art great and glorious, wonderful in strength, and invincible.", r: "Judith 16:13",
       cast: [["Judith", "The widow of Bethulia"], ["Holofernes", "General of the Assyrian army"]],
       art: "judith", lay: "plate", side: "l", sh: "dome"
@@ -312,7 +312,7 @@ window.AGES.push(
   id: "return", n: "X", t: "Arise, and Build", s: "The Return", books: "Ezra · Nehemiah · Esther · Haggai · Zechariah · Malachi", yl: "538 – 430 BC",
   c: "#f4b2a6", sh: "walls",
   v: "Not by might, nor by power, but by my spirit, saith the LORD of hosts.", r: "Zechariah 4:6",
-  x: "Seventy years, as Jeremiah had said. Then a Persian king sent them home to rebuild.",
+  x: "Seventy years, as Jeremiah had said. Then a Persian king sent the exiles home to rebuild.",
   scenes: [
     {
       id: "cyrus", t: "Let him go up to Jerusalem.", k: "Ezra 1–6 · Haggai · Zechariah", pl: "Babylon · Jerusalem", y: -538, b: ["ezr", "2ch", "hag", "zec"],
@@ -326,7 +326,7 @@ window.AGES.push(
       x: "In the Persian capital, a Jewish orphan named Esther became queen to King Ahasuerus, keeping her people secret. When the king’s favourite, Haman, plotted to destroy every Jew in the empire, her cousin Mordecai sent her word. To go in to the king unsummoned meant death. If I perish, I perish, said Esther, and went. God’s name is never spoken in the book; His hand is everywhere in it.",
       q: "And who knoweth whether thou art come to the kingdom for such a time as this?", r: "Esther 4:14",
       cast: [["Esther", "The orphan who became queen"], ["Mordecai", "Her cousin, who would not bow"], ["Haman", "The Agagite, who plotted genocide"], ["Ahasuerus", "King of Persia"]],
-      art: "esther", lay: "full", pos: "50% 25%", sh: "crown"
+      art: "esther", lay: "full", zoom: "46% 34%", pos: "50% 25%", sh: "crown"
     },
     {
       id: "nehemiah", t: "The joy of the LORD is your strength.", k: "Ezra 7–10 · Nehemiah", pl: "Jerusalem", y: -445, b: ["ezr", "neh"],
@@ -363,14 +363,14 @@ window.AGES.push(
     },
     {
       id: "maccabees", t: "The hammer.", k: "1 & 2 Maccabees", pl: "Modein · Jerusalem", y: -167, b: ["1ma", "2ma"],
-      x: "The Greek king Antiochus Epiphanes outlawed the law of Moses and set up an altar to Zeus in the temple. An old priest, Mattathias, refused to sacrifice, and his sons took to the hills. Judas, called Maccabeus, the hammer, drove out the armies, and the temple was cleansed and dedicated again: the feast Jesus would keep in Jerusalem, in winter. After one battle, Judas made an offering for the dead.",
+      x: "The Greek king Antiochus Epiphanes banned the law of Moses and set up an altar to Zeus in the temple. An old priest, Mattathias, refused to sacrifice, and his sons took to the hills. Judas, called Maccabeus, the hammer, drove out his armies. The temple was cleansed and dedicated again, and the Feast of Dedication that marks it is the one Jesus kept in Jerusalem, in winter. After one battle, Judas made an offering for the dead.",
       q: "It was an holy and good thought. Whereupon he made a reconciliation for the dead, that they might be delivered from sin.", r: "2 Maccabees 12:45",
       cast: [["Judas Maccabeus", "The hammer of Israel"], ["Mattathias", "The old priest of Modein"], ["Antiochus Epiphanes", "The Seleucid king who defiled the temple"], ["The mother of seven sons", "Martyred with her sons for the law"]],
       art: "maccabeus", lay: "plate", side: "r", sh: "flame"
     },
     {
       id: "waiting", t: "And then, a star.", k: "Between the Testaments", y: -164, b: [],
-      x: "The temple stood again, but the promises were still waiting.",
+      x: "The temple stood again, but the promises were not yet kept.",
       fx: { type: "years", from: -164, to: -6, star: true, marks: [
         [-164, "The temple is rededicated"], [-63, "Rome takes Jerusalem"], [-37, "Herod the Great is made king"], [-20, "Herod begins rebuilding the temple"]
       ], end: "Where is he that is born King of the Jews? for we have seen his star in the east, and are come to worship him.", endr: "Matthew 2:2" },

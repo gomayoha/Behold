@@ -25,11 +25,11 @@ window.AGES.push(
       id: "days", t: "Six days, and a seventh.", k: "Genesis 1:1 – 2:3", yl: "The week of creation", b: ["gen"],
       x: "Each day, God speaks, and the world takes shape: first the spaces, then what fills them. And each day ends the same way: God saw that it was good.",
       fx: { type: "steps", style: "days", steps: [
-        { n: "Day One", t: "Light", x: "Light, divided from the darkness. He called the light Day, and the darkness Night.", r: "Genesis 1:3–5", sh: "sphere" },
-        { n: "Day Two", t: "The firmament", x: "A firmament in the midst of the waters, dividing the waters above from the waters below. He called it Heaven.", r: "Genesis 1:6–8", sh: "sea" },
-        { n: "Day Three", t: "Land and life", x: "The waters gathered into seas, and the dry land appeared. The earth brought forth grass, and herbs, and every tree yielding fruit.", r: "Genesis 1:9–13", sh: "globe" },
-        { n: "Day Four", t: "The lights", x: "Two great lights: the greater to rule the day, the lesser to rule the night. He made the stars also.", r: "Genesis 1:14–19", sh: "galaxy" },
-        { n: "Day Five", t: "Sea and sky", x: "Great whales, and every living creature that moveth in the waters, and every winged fowl after his kind.", r: "Genesis 1:20–23", sh: "swirl" },
+        { n: "Day One", t: "Light", x: "And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.", r: "Genesis 1:5", sh: "sphere" },
+        { n: "Day Two", t: "The firmament", x: "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters.", r: "Genesis 1:6", sh: "sea" },
+        { n: "Day Three", t: "Land and life", x: "And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so.", r: "Genesis 1:9", sh: "globe" },
+        { n: "Day Four", t: "The lights", x: "And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also.", r: "Genesis 1:16", sh: "galaxy" },
+        { n: "Day Five", t: "Sea and sky", x: "And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind.", r: "Genesis 1:21", sh: "swirl" },
         { n: "Day Six", t: "In His image", x: "So God created man in his own image, in the image of God created he him; male and female created he them.", r: "Genesis 1:27", sh: "figure" },
         { n: "Day Seven", t: "Rest", x: "And on the seventh day God ended his work which he had made; and he rested on the seventh day from all his work which he had made.", r: "Genesis 2:2", sh: "ring" }
       ] },
@@ -40,11 +40,11 @@ window.AGES.push(
       x: "God shaped the first man from the dust of the ground and breathed into him His own breath. Of everything He made, only humankind bears His image: made to know Him, to love Him, and to care for His world.",
       q: "And the LORD God formed man of the dust of the ground, and breathed into his nostrils the breath of life; and man became a living soul.", r: "Genesis 2:7",
       cast: [["Adam", "The first man, formed from the dust"]],
-      art: "creation-adam", lay: "full", pos: "50% 50%", sh: "figure"
+      art: "creation-adam", lay: "full", pos: "50% 50%", posm: "40% 50%", sh: "figure"
     },
     {
       id: "eden", t: "A garden eastward in Eden.", k: "Genesis 2:8–25", pl: "Eden", yl: "The beginning", b: ["gen"],
-      x: "God planted a garden and placed the man there to tend it. A river watered it. In the midst stood the tree of life, and the tree of the knowledge of good and evil, the one tree He forbade. Then, seeing it was not good for the man to be alone, God made the woman, and brought her to him.",
+      x: "God planted a garden and placed the man there to tend it. A river watered it. In the midst stood the tree of life, and the tree of the knowledge of good and evil, the one tree whose fruit He forbade. Then, seeing that it was not good for the man to be alone, God made the woman and brought her to him.",
       q: "Therefore shall a man leave his father and his mother, and shall cleave unto his wife: and they shall be one flesh.", r: "Genesis 2:24",
       cast: [["Eve", "The mother of all living"]],
       art: "eden", lay: "plate", side: "l", sh: "tree"
@@ -61,27 +61,27 @@ window.AGES.push(
   scenes: [
     {
       id: "serpent", t: "Yea, hath God said?", k: "Genesis 3:1–8", pl: "Eden", yl: "The ancient world", b: ["gen"],
-      x: "The serpent came with a question, and then a lie: ye shall not surely die. Eve saw that the fruit was pleasant to the eyes. She ate, and gave to Adam, and he ate. Their eyes were opened, and for the first time they were afraid.",
+      x: "The serpent came with a question, and then a lie: “Ye shall not surely die.” Eve saw that the fruit was pleasant to the eyes. She ate, and gave to Adam, and he ate. Their eyes were opened, and for the first time they were afraid.",
       q: "And they heard the voice of the LORD God walking in the garden in the cool of the day: and Adam and his wife hid themselves from the presence of the LORD God amongst the trees of the garden.", r: "Genesis 3:8",
       cast: [["The serpent", "More subtil than any beast of the field"]],
       art: "fall", lay: "plate", side: "r", sh: "tree"
     },
     {
       id: "promise", t: "The first promise.", k: "Genesis 3:9–24", pl: "The gate of Eden", yl: "The ancient world", b: ["gen"],
-      x: "God came looking for them: Where art thou? Even as He spoke the curse, He spoke a promise. One born of the woman would crush the serpent’s head, though the serpent would bruise his heel. God clothed them in coats of skins, and sent them out. Cherubim and a flaming sword kept the way to the tree of life.",
+      x: "God came looking for them: “Where art thou?” Even as He spoke the curse, He spoke a promise. One born of the woman would crush the serpent’s head, though the serpent would bruise his heel. God clothed them in coats of skins, and sent them out. Cherubim and a flaming sword kept the way to the tree of life.",
       q: "And I will put enmity between thee and the woman, and between thy seed and her seed; it shall bruise thy head, and thou shalt bruise his heel.", r: "Genesis 3:15",
       art: "expulsion", lay: "full", pos: "40% 50%", th: "seed", sh: "chaos"
     },
     {
       id: "cain", t: "Am I my brother’s keeper?", k: "Genesis 4", pl: "East of Eden", yl: "The ancient world", b: ["gen"],
-      x: "Adam and Eve’s sons brought offerings to God. He accepted Abel’s, and Cain burned with anger. In the field, Cain rose up against his brother and killed him: the first death in the story was a murder. Yet even Cain, God marked for protection.",
+      x: "Adam and Eve’s sons brought offerings to God. He accepted Abel’s, and Cain burned with anger. In the field, Cain rose up against his brother and killed him: the first death in the story was a murder. Yet God marked even Cain for protection.",
       q: "And the LORD said unto Cain, Where is Abel thy brother? And he said, I know not: Am I my brother’s keeper?", r: "Genesis 4:9",
       cast: [["Cain", "The firstborn, a tiller of the ground"], ["Abel", "A keeper of sheep, the first to die"]],
       art: "cain-abel", lay: "plate", side: "l", sh: "ash"
     },
     {
       id: "enoch", t: "He walked with God.", k: "Genesis 5", yl: "The ancient world", b: ["gen"],
-      x: "Generations passed. Seth was born in Abel’s place. Methuselah lived nine hundred sixty and nine years, the longest life in Scripture. And Enoch walked so closely with God that one day he simply was not there, for God took him.",
+      x: "Generations passed. Seth was born in Abel’s place. Methuselah lived nine hundred and sixty-nine years, the longest life in Scripture. And Enoch walked so closely with God that one day he simply was not there, for God took him.",
       q: "And Enoch walked with God: and he was not; for God took him.", r: "Genesis 5:24",
       cast: [["Seth", "Adam’s son, given in Abel’s place"], ["Enoch", "Who walked with God, and was not"], ["Methuselah", "Nine hundred and sixty-nine years"]],
       lay: "word", sh: "dome"
@@ -135,13 +135,13 @@ window.AGES.push(
     },
     {
       id: "stars", t: "Tell the stars.", k: "Genesis 15", pl: "Canaan", y: -2081, b: ["gen"],
-      x: "Abram was old, and still had no child. God brought him outside under the night sky. Look toward heaven, and count the stars, if you are able. So shall your descendants be. Abram believed.",
+      x: "Abram was old, and still had no child. God brought him outside under the night sky and told him to count the stars, if he could: so many would his descendants be. Abram believed.",
       q: "And he believed in the LORD; and he counted it to him for righteousness.", r: "Genesis 15:6",
       fx: { type: "stars" }, sh: "dome", h: 3
     },
     {
       id: "hagar", t: "The God who sees.", k: "Genesis 16; 21", pl: "The wilderness of Beersheba", y: -2080, b: ["gen"],
-      x: "Impatient for the promise, Sarai gave her Egyptian maid Hagar to Abram, and Hagar bore him Ishmael. Twice Hagar ended up alone in the wilderness, and twice God found her there. She gave Him a name: the God who sees me.",
+      x: "Impatient for the promise, Sarai gave her Egyptian maid Hagar to Abram, and Hagar bore him Ishmael. Twice Hagar found herself alone in the wilderness, and twice God found her there. She gave Him a name: the God who sees me.",
       q: "And she called the name of the LORD that spake unto her, Thou God seest me.", r: "Genesis 16:13",
       cast: [["Hagar", "Sarah’s Egyptian maid"], ["Ishmael", "Abraham’s firstborn son"]],
       art: "hagar", lay: "plate", side: "r", sh: "dome"
@@ -176,7 +176,7 @@ window.AGES.push(
     },
     {
       id: "birthright", t: "The voice is Jacob’s voice.", k: "Genesis 25–27", pl: "Beersheba", y: -1929, b: ["gen"],
-      x: "Rebekah bore twins who struggled even in the womb: Esau, a cunning hunter, and Jacob, born holding his brother’s heel. Esau sold his birthright for a bowl of red stew. Years later, wearing his brother’s clothes, Jacob deceived their blind father and took the blessing too.",
+      x: "Rebekah bore twins who struggled even in the womb: Esau, a skilful hunter, and Jacob, born holding his brother’s heel. Esau sold his birthright for a bowl of red stew. Years later, wearing his brother’s clothes, Jacob deceived their blind father and took the blessing too.",
       q: "The voice is Jacob’s voice, but the hands are the hands of Esau.", r: "Genesis 27:22",
       cast: [["Esau", "The elder twin, father of Edom"], ["Jacob", "The younger twin, later named Israel"]],
       art: "isaac-blessing", lay: "plate", side: "r", sh: "dome"
@@ -248,14 +248,14 @@ window.AGES.push(
     },
     {
       id: "bush", t: "I AM THAT I AM.", k: "Exodus 3–4", pl: "Mount Horeb", y: -1446, b: ["exo"],
-      x: "Moses fled Egypt after killing an Egyptian, and kept sheep in Midian for forty years. On Mount Horeb he saw a bush that burned with fire, and was not consumed. Put off thy shoes: the place is holy ground. God sent him back to Pharaoh, and when Moses asked His name, God answered.",
+      x: "Moses fled Egypt after killing an Egyptian, and kept sheep in Midian for forty years. On Mount Horeb he saw a bush that burned with fire, and was not consumed. “Put off thy shoes from off thy feet, for the place whereon thou standest is holy ground.” God sent him back to Pharaoh, and when Moses asked His name, God answered.",
       q: "And God said unto Moses, I AM THAT I AM.", r: "Exodus 3:14",
       cast: [["Aaron", "Moses’ brother and spokesman"], ["Jethro", "Priest of Midian, Moses’ father-in-law"]],
       art: "burning-bush", lay: "portal", sh: "flame"
     },
     {
       id: "plagues", t: "Ten plagues.", k: "Exodus 5–11", pl: "Egypt", y: -1446, b: ["exo"],
-      x: "Who is the LORD, that I should obey his voice to let Israel go? said Pharaoh. One by one, ten plagues answered him.",
+      x: "“Who is the LORD, that I should obey his voice to let Israel go?” said Pharaoh. One by one, ten plagues answered him.",
       art: "plague",
       fx: { type: "steps", style: "plagues", steps: [
         { n: "I", t: "Blood", x: "All the waters that were in the river were turned to blood.", r: "Exodus 7:20", c: "#a3101c" },
@@ -267,7 +267,7 @@ window.AGES.push(
         { n: "VII", t: "Hail", x: "So there was hail, and fire mingled with the hail, very grievous.", r: "Exodus 9:24", c: "#6f8fb3" },
         { n: "VIII", t: "Locusts", x: "There remained not any green thing in the trees, or in the herbs of the field.", r: "Exodus 10:15", c: "#8a7a2a" },
         { n: "IX", t: "Darkness", x: "Even darkness which may be felt.", r: "Exodus 10:21", c: "#000000" },
-        { n: "X", t: "The firstborn", x: "And at midnight the LORD smote all the firstborn in the land of Egypt.", r: "Exodus 12:29", c: "#3a0006" }
+        { n: "X", t: "The firstborn", x: "At midnight the LORD smote all the firstborn in the land of Egypt.", r: "Exodus 12:29", c: "#3a0006" }
       ] },
       h: 6.5
     },
@@ -324,7 +324,7 @@ window.AGES.push(
     },
     {
       id: "spies", t: "We are well able.", k: "Numbers 13–14", pl: "Kadesh Barnea", y: -1444, b: ["num"],
-      x: "At the edge of Canaan, twelve spies returned with a cluster of grapes so large that two men carried it on a staff. Ten said the giants of the land were too strong. Only Joshua and Caleb said go. The people wept and refused, and so a generation wandered forty years in the wilderness.",
+      x: "At the edge of Canaan, twelve spies returned with a cluster of grapes so large that two men carried it on a staff. Ten said the giants of the land were too strong. Only Joshua and Caleb urged them to go up. The people wept and refused, and so a generation wandered forty years in the wilderness.",
       q: "Let us go up at once, and possess it; for we are well able to overcome it.", r: "Numbers 13:30",
       cast: [["Caleb", "Who wholly followed the LORD"]],
       art: "spies", lay: "plate", side: "l", sh: "dome"
@@ -349,7 +349,7 @@ window.AGES.push(
     },
     {
       id: "nebo", t: "Hear, O Israel.", k: "Deuteronomy", pl: "Mount Nebo", y: -1406, b: ["deu"],
-      x: "On the plains of Moab, Moses gave his last words to a new generation: remember, obey, love. I have set before you life and death; therefore choose life. Then he climbed Mount Nebo, and God showed him all the land he would not enter. Moses died there, a hundred and twenty years old, and God buried him.",
+      x: "On the plains of Moab, Moses gave his last words to a new generation: remember, obey, love. “I have set before you life and death … therefore choose life.” Then he climbed Mount Nebo, and God showed him all the land he would not enter. Moses died there, a hundred and twenty years old, and God buried him.",
       q: "Hear, O Israel: The LORD our God is one LORD: And thou shalt love the LORD thy God with all thine heart, and with all thy soul, and with all thy might.", r: "Deuteronomy 6:4–5",
       art: "nebo", lay: "full", sh: "dome"
     }
@@ -365,9 +365,9 @@ window.AGES.push(
   scenes: [
     {
       id: "rahab", t: "A line of scarlet thread.", k: "Joshua 2", pl: "Jericho", y: -1406, b: ["jos"],
-      x: "Joshua sent two spies into Jericho. Rahab, a woman of the city, hid them on her roof under stalks of flax and let them down the wall by a cord. She had heard what God had done, and she believed. Their promise to her: bind this scarlet cord in your window, and everyone in your house will live. This is the thread that names our story.",
+      x: "Joshua sent two spies into Jericho. Rahab, a woman of the city, hid them on her roof under stalks of flax and let them down the wall by a cord. She had heard what God had done, and she believed. Their promise to her: bind a line of scarlet thread in your window, and everyone in your house will live. This is the thread that names our story.",
       q: "Thou shalt bind this line of scarlet thread in the window which thou didst let us down by.", r: "Joshua 2:18",
-      cast: [["Rahab", "Of Jericho; who hid the spies, and became an ancestor of Jesus"]],
+      cast: [["Rahab", "Of Jericho, who hid the spies and became an ancestor of Jesus"]],
       art: "rahab", lay: "plate", side: "l", th: "cord", sh: "walls"
     },
     {
@@ -378,7 +378,7 @@ window.AGES.push(
     },
     {
       id: "gibeon", t: "Sun, stand thou still.", k: "Joshua 10; 24", pl: "Gibeon · Shechem", y: -1400, b: ["jos"],
-      x: "In battle at Gibeon, Joshua prayed before all Israel, and the sun stood still in the midst of heaven. Over the years the land was taken and divided among the twelve tribes. At the end of his life, Joshua gathered the people at Shechem and set a choice before them.",
+      x: "In the battle at Gibeon, Joshua prayed before all Israel, and the sun stood still in the midst of heaven. Over the years the land was taken and divided among the twelve tribes. At the end of his life, Joshua gathered the people at Shechem and set a choice before them.",
       q: "Choose you this day whom ye will serve … but as for me and my house, we will serve the LORD.", r: "Joshua 24:15",
       cast: [["Joshua", "Moses’ successor, who led Israel into the land"]],
       art: "joshua-sun", lay: "full", sh: "sphere"
@@ -406,7 +406,7 @@ window.AGES.push(
       art: "gideon", lay: "plate", side: "l", sh: "flame"
     },
     {
-      id: "samson", t: "Only this once.", k: "Judges 13–16", pl: "Gaza", yl: "The last of the judges", b: ["jdg"],
+      id: "samson", t: "Only this once.", k: "Judges 13–16", pl: "Gaza", yl: "Last of the twelve judges", b: ["jdg"],
       x: "Samson was set apart from birth: no razor would touch his head. He tore a young lion apart with his bare hands and struck down the Philistines. But Delilah coaxed out his secret. Shorn, blinded and chained, he prayed one last time, and pulled down the pillars of the Philistine temple.",
       q: "O Lord GOD, remember me, I pray thee, and strengthen me, I pray thee, only this once.", r: "Judges 16:28",
       cast: [["Samson", "The Nazarite of great strength"], ["Delilah", "Who betrayed him for silver"]],

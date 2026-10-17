@@ -228,7 +228,9 @@
     $$(".prm-r").forEach((r) => { cls(r, "found", c.planted.has(r.dataset.th)); cls(r, "kept", c.kept.has(r.dataset.th)); });
     if (announce) {
       const nb = [...c.books].filter((b) => !last.books.has(b)), np = [...c.planted].filter((t) => !last.planted.has(t) && !c.kept.has(t)), nk = [...c.kept].filter((t) => !last.kept.has(t));
-      nb.slice(0, 3).forEach((b) => pop(`${IC.book}<span>${esc(ST.BOOK[b].n)}</span>`, ""));
+      // several books at once become one pill, so the pills never fall behind the story
+      if (nb.length === 1) pop(`${IC.book}<span>${esc(ST.BOOK[nb[0]].n)}</span>`, "");
+      else if (nb.length > 1) pop(`${IC.book}<span>${nb.length} books: ${esc(nb.slice(0, 2).map((b) => ST.BOOK[b].n).join(", "))}${nb.length > 2 ? "…" : ""}</span>`, "");
       np.forEach((t) => pop(`${IC.knot}<span>${esc(THREADS[t].name)}</span>`, "scarlet"));
       nk.slice(0, 3).forEach((t) => pop(`${IC.kept}<span>Kept: ${esc(THREADS[t].name)}</span>`, "gold"));
       if (np.length || nk.length) { window.GL && window.GL.pulse(); }
@@ -237,13 +239,22 @@
     }
     last = c;
   }
-  let popQ = 0;
+  // pills wait their turn, one at a time; if the reader races ahead, only the latest two are kept
+  const popQueue = [];
+  let popBusy = false;
   function pop(html, tone) {
-    const el = h(`<p class="pop ${tone}">${html}</p>`);
-    const box = $("#hudPops");
-    const slow = 1100;
-    setTimeout(() => { [...box.children].forEach((c) => c.remove()); box.appendChild(el); setTimeout(() => el.classList.add("out"), 2400); setTimeout(() => el.remove(), 3100); }, popQ++ * slow);
-    setTimeout(() => { popQ = Math.max(0, popQ - 1); }, 400);
+    popQueue.push(h(`<p class="pop ${tone}">${html}</p>`));
+    while (popQueue.length > 2) popQueue.shift();
+    if (!popBusy) nextPop();
+  }
+  function nextPop() {
+    const el = popQueue.shift(), box = $("#hudPops");
+    if (!el) { popBusy = false; return; }
+    popBusy = true;
+    [...box.children].forEach((c) => c.remove());
+    box.appendChild(el);
+    setTimeout(() => el.classList.add("out"), 1900);
+    setTimeout(() => { el.remove(); nextPop(); }, 2400);
   }
   ST.on("item", () => refreshCounts(true));
   refreshCounts(false);

@@ -76,7 +76,7 @@ window.THREADS = {
   },
   psalm22: {
     name: "Pierced hands and feet", kind: "A promise",
-    a: "Psalm 22:16–18", at: "They pierced my hands and my feet. They part my garments among them, and cast lots upon my vesture.",
+    a: "Psalm 22:16–18", at: "They pierced my hands and my feet … They part my garments among them, and cast lots upon my vesture.",
     b: "John 19:24", bt: "They parted my raiment among them, and for my vesture they did cast lots."
   },
   jonah: {
@@ -106,7 +106,7 @@ window.THREADS = {
   },
   bethlehem: {
     name: "Out of Bethlehem", kind: "A promise",
-    a: "Micah 5:2", at: "But thou, Bethlehem Ephratah, though thou be little among the thousands of Judah, yet out of thee shall he come forth unto me that is to be ruler in Israel.",
+    a: "Micah 5:2", at: "But thou, Beth-lehem Ephratah, though thou be little among the thousands of Judah, yet out of thee shall he come forth unto me that is to be ruler in Israel.",
     b: "Matthew 2:1", bt: "Now when Jesus was born in Bethlehem of Judaea in the days of Herod the king."
   },
   newcov: {

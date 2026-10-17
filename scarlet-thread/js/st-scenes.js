@@ -10,6 +10,8 @@
 (function () {
   "use strict";
   const { $, h, esc, css, lerp, clamp, ease, words, copyHTML, imgTag, creditHTML, linkHTML } = ST;
+  /** Where a painting is cropped: pos everywhere, posm on a phone. */
+  const focus = (im, s) => { if (s.pos) im.style.setProperty("--pos", s.pos); if (s.posm) im.style.setProperty("--posm", s.posm); };
   const NUM = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"];
 
   /* ---------- the title card of each age ---------- */
@@ -35,10 +37,10 @@
     update(it, f) {
       const { e, uMid: m, uOut: o } = f;
       css(it.n, "transform", `translate3d(-50%, calc(-50% + ${((0.5 - m) * 10).toFixed(2)}vh), 0) scale(${(lerp(0.7, 1, e) + o * 0.9).toFixed(3)})`);
-      css(it.n, "opacity", (e * (1 - o)).toFixed(3));
-      css(it.inner, "transform", `translate3d(0, ${(lerp(7, 0, e) - m * 5 - o * 6).toFixed(2)}vh, 0) scale(${(lerp(1.05, 1, e) - o * 0.07).toFixed(4)})`);
-      css(it.inner, "opacity", clamp(1 - o * 1.4).toFixed(3));
-      css(it.inner, "filter", o > 0.01 ? `blur(${(o * 10).toFixed(1)}px)` : "none");
+      css(it.n, "opacity", (e * f.fo).toFixed(3));
+      // leaving: a quick, clean fade and a small step back (no blur: blurring a whole text block every frame stutters on phones)
+      css(it.inner, "transform", `translate3d(0, ${(lerp(7, 0, e) - m * 5 - o * 8).toFixed(2)}vh, 0) scale(${(lerp(1.05, 1, e) - o * 0.06).toFixed(4)})`);
+      css(it.inner, "opacity", f.to.toFixed(3));
     },
     gl(it, f) { return { opacity: 1, scale: lerp(0.82, 1.02, f.uMid) + f.uOut * 0.3, y: 0.25, thread: 0.9, threadY: -1.9 }; }
   });
@@ -57,7 +59,7 @@
     },
     init(it) {
       it.fr = $(".fr", it.el); it.im = $(".im", it.el); it.shade = $(".shade", it.el); it.blk = $(".blk", it.el);
-      if (it.s.pos) it.im.style.objectPosition = it.s.pos;
+      focus(it.im, it.s);
     },
     update(it, f) {
       const { e, uMid: m, uOut: o, mobile } = f;
@@ -86,7 +88,7 @@
           ${copyHTML(s)}
         </div>`);
     },
-    init(it) { it.pl = $(".pl", it.el); it.im = $(".pl .im", it.el); it.glow = $(".pl-glow", it.el); if (it.s.pos) it.im.style.objectPosition = it.s.pos; },
+    init(it) { it.pl = $(".pl", it.el); it.im = $(".pl .im", it.el); it.glow = $(".pl-glow", it.el); focus(it.im, it.s); },
     update(it, f) {
       const { e, uMid: m, uOut: o, mobile } = f, g = it.sgn, k = mobile ? 0.45 : 1;
       const ry = g * (lerp(34, 10, e) - 16 * m - 20 * o) * k;
@@ -116,7 +118,7 @@
           ${copyHTML(s)}
         </div>`);
     },
-    init(it) { it.po = $(".po", it.el); it.im = $(".po .im", it.el); it.halo = $(".po-halo", it.el); it.stage = $(".po-stage", it.el); if (it.s.pos) it.im.style.objectPosition = it.s.pos; },
+    init(it) { it.po = $(".po", it.el); it.im = $(".po .im", it.el); it.halo = $(".po-halo", it.el); it.stage = $(".po-stage", it.el); focus(it.im, it.s); },
     update(it, f) {
       const { e, uMid: m, uOut: o } = f;
       const open = lerp(50, 0, ease(f.uIn * 1.1));

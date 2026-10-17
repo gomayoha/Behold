@@ -182,11 +182,13 @@
     init(it) { it.els = $$(".tg-field span", it.el); it.center = $(".tg-center", it.el); it.note = $(".tg-note", it.el); it.bgEl = $(".fx-bg", it.el); },
     update(it, f) {
       const scatter = it.s.fx.mode === "scatter";
-      const p = easeIO(range(f.uMid, 0.08, 0.72));
+      // Babel scatters slowly; at Pentecost the tongues settle into one calm column early, then hold
+      const p = easeIO(range(f.uMid, 0.08, scatter ? 0.72 : 0.48));
       it.els.forEach((el, k) => {
         const x = it.spans[k];
         let tx, ty, tz, rot, op, blur;
-        if (scatter) { tx = x.sx * p; ty = x.sy * p; tz = x.sz * p; rot = x.rot * p; op = clamp(p * 3) * (1 - p * 0.45); blur = p * 3; }
+        const sk = f.mobile ? 0.42 : 1;
+        if (scatter) { tx = x.sx * p * sk; ty = x.sy * p * (f.mobile ? 0.5 : 1); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); blur = p * 3; }
         else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); blur = q * 4; }
         css(el, "transform", `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotate(${rot.toFixed(2)}deg)`);
         css(el, "opacity", (op * f.fo).toFixed(3));
@@ -221,6 +223,21 @@
     }
     return d;
   }
+  /** Map labels sit up and to the right of their dot, unless that would cover another label: then try the other corners. */
+  function placeLabels(el) {
+    const placed = [], hit = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+    $$(".mp-c text, .mp-mark text", el).forEach((t) => {
+      const c = t.parentNode.querySelector("circle"), cx = +c.getAttribute("cx"), cy = +c.getAttribute("cy"), fs = parseFloat(t.getAttribute("font-size"));
+      const spots = [[0.45, -0.35, "start"], [0.45, 1.0, "start"], [-0.45, -0.35, "end"], [-0.45, 1.0, "end"]];
+      let box = null;
+      for (const [dx, dy, anchor] of spots) {
+        t.setAttribute("x", (cx + dx * fs).toFixed(1)); t.setAttribute("y", (cy + dy * fs).toFixed(1)); t.setAttribute("text-anchor", anchor);
+        box = t.getBBox();
+        if (!placed.some((p) => hit(p, box))) break;
+      }
+      placed.push(box);
+    });
+  }
   ST.type("map", {
     build(it) {
       const s = it.s, R = window.ROUTES[s.fx.route], L = window.LANDS;
@@ -233,7 +250,8 @@
       const ratio = 1.5;
       if (w / hh > ratio) { const n = w / ratio; y0 -= (n - hh) / 2; hh = n; } else { const n = hh * ratio; x0 -= (n - w) / 2; w = n; }
       it.vb = [x0, y0, w, hh];
-      const fs = w / 52;
+      // on a phone the map is small: larger dots, lines and labels keep it readable
+      const fs = (w / 52) * (ST.isMobile() ? 1.65 : 1);
       const cities = [];
       R.legs.forEach((leg, li) => leg.pts.forEach((p, pi) => { if (p[2] && !cities.some((c) => c.name === p[2])) cities.push({ name: p[2], show: p[3], li, pi, xy: proj(p[0], p[1]) }); }));
       const marks = (R.marks || []).map((m) => ({ name: m[2], xy: proj(m[0], m[1]) }));
@@ -251,6 +269,7 @@
     init(it) { it.stage = $(".mp-stage", it.el); it.paths = $$(".mp-r", it.el); it.cities = $$(".mp-c", it.el); it.head = $(".mp-head", it.el); it.legsEl = $$(".mp-legs li", it.el); },
     show(it) {
       if (it.lens) return;
+      placeLabels(it.el);
       const R = window.ROUTES[it.s.fx.route];
       it.lens = it.paths.map((p) => p.getTotalLength() || 1);
       it.paths.forEach((p, i) => { p.style.strokeDasharray = `${it.lens[i]} ${it.lens[i]}`; p.style.strokeDashoffset = it.lens[i]; });
@@ -295,7 +314,8 @@
         let x, y;
         do { x = 5 + r() * 90; y = 10 + r() * 44; } while (!last && x > 24 && x < 76 && y > 26);
         if (last) { x = 50; y = 12; }
-        return `<span class="${last ? "last" : ""}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%">${esc(n)}</span>`;
+        const key = last || ["Isaac", "Jacob", "Judas", "Booz", "David", "Solomon", "Josias", "Zorobabel", "Joseph"].includes(n) && !(n === "Jacob" && i > 30);
+        return `<span class="${last ? "last" : key ? "key" : "minor"}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%">${esc(n)}</span>`;
       });
       return h(`<div class="fx stars"><div class="sr-sky">${names.join("")}</div>
         <div class="sr-count"><b>1</b><span>Look now toward heaven, and tell the stars, if thou be able to number them.</span></div>
@@ -378,15 +398,17 @@
       }
       return h(`<div class="fx jericho">${bg(s.art, "dim")}
         <div class="jr-wall" aria-hidden="true">${html}</div>
-        <div class="jr-day"><span class="jr-l">Day</span><b>1</b><span class="jr-laps">${"<i></i>".repeat(7)}</span></div>
+        <div class="jr-day"><span class="jr-l">Day</span><b>1</b><span class="jr-laps">${"<i></i>".repeat(7)}</span><span class="jr-n">once around the city</span></div>
         <p class="jr-shout">“Shout; for the LORD hath given you the city.” <cite>Joshua 6:16</cite></p>
         ${copyHTML(s, { cls: "top" })}</div>`);
     },
-    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.lapN = $(".jr-n", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); },
     update(it, f) {
       const days = range(f.uMid, 0.04, 0.6) * 7, day = Math.min(7, Math.floor(days) + 1), laps = day === 7 ? Math.min(7, Math.floor((days - 6) * 7.999) + 1) : 1;
       if (day !== it.d) { it.day.textContent = day; it.d = day; }
-      it.laps.forEach((l, i) => cls(l, "on", (day === 7 ? i < laps : i < 1) && days > 0));
+      it.laps.forEach((l, i) => cls(l, "on", (day === 7 ? i < laps : i < day) && days > 0));
+      cls(it.dayBox, "seventh", day === 7);
+      if (it.lapN) it.lapN.textContent = day === 7 ? `${laps} of 7 times around` : "once around the city";
       const fall = ease(range(f.uMid, 0.66, 0.88));
       it.fall = fall;
       cls(it.dayBox, "on", it.isIn && f.uMid < 0.7);
@@ -410,7 +432,7 @@
       return h(`<div class="fx cycle">
         <div class="cy-stage">
           <svg class="cy-ring" viewBox="-110 -110 220 220" aria-hidden="true"><circle r="88" /><circle class="cy-trace" r="88" pathLength="1" /></svg>
-          ${st.map((t, i) => { const a = (i / st.length) * Math.PI * 2 - Math.PI / 2; return `<p class="cy-st" style="left:${(50 + Math.cos(a) * 40).toFixed(2)}%;top:${(50 + Math.sin(a) * 40).toFixed(2)}%">${esc(t)}</p>`; }).join("")}
+          ${st.map((t, i) => { const a = (i / st.length) * Math.PI * 2 - Math.PI / 2; return `<p class="cy-st" style="left:${(50 + Math.cos(a) * 52).toFixed(2)}%;top:${(50 + Math.sin(a) * 51).toFixed(2)}%">${esc(t)}</p>`; }).join("")}
           <i class="cy-dot"></i>
           <div class="cy-center"><span>Raised up by God</span><b>Othniel</b><em>1 of 12</em></div>
         </div>
@@ -503,7 +525,7 @@
       return h(`<div class="fx divide">
         <div class="dv-half n"><p class="dv-k">The northern kingdom</p><h4>Israel</h4><ul><li>Ten tribes</li><li>Capital: Samaria</li><li>Nineteen kings, none faithful to God</li><li>Fell to Assyria, 722 BC</li></ul></div>
         <i class="dv-crack"></i>
-        <div class="dv-half s"><p class="dv-k">The southern kingdom</p><h4>Judah</h4><ul><li>Judah and Benjamin</li><li>Capital: Jerusalem</li><li>Twenty rulers of David’s line; eight who followed God</li><li>Fell to Babylon, 586 BC</li></ul></div>
+        <div class="dv-half s"><p class="dv-k">The southern kingdom</p><h4>Judah</h4><ul><li>Judah and Benjamin</li><li>Capital: Jerusalem</li><li>Twenty rulers, nineteen of David’s line; eight who followed God</li><li>Fell to Babylon, 586 BC</li></ul></div>
         ${copyHTML(s, { cls: "top center" })}</div>`);
     },
     init(it) { it.n = $(".dv-half.n", it.el); it.sEl = $(".dv-half.s", it.el); it.crack = $(".dv-crack", it.el); },
@@ -609,7 +631,7 @@
       const s = it.s;
       const M = [["MENE", "God hath numbered thy kingdom, and finished it."], ["TEKEL", "Thou art weighed in the balances, and art found wanting."], ["PERES", "Thy kingdom is divided, and given to the Medes and Persians."]];
       return h(`<div class="fx wall">${bg(s.art, "")}<div class="wl-dark"></div>
-        <svg class="wl-svg" viewBox="0 0 1000 180" aria-label="MENE, MENE, TEKEL, UPHARSIN"><text class="wl-t" x="500" y="128" text-anchor="middle" direction="rtl">מנא מנא תקל ופרסין</text></svg>
+        <svg class="wl-svg" viewBox="0 0 1000 180" aria-label="MENE, MENE, TEKEL, UPHARSIN"><text class="wl-t" x="500" y="128" text-anchor="middle" direction="rtl" unicode-bidi="bidi-override">מנא מנא תקל ופרסין</text></svg>
         <p class="wl-latin">MENE, MENE, TEKEL, UPHARSIN <cite>Daniel 5:25</cite></p>
         <div class="wl-mean">${M.map(([w, t]) => `<p><b>${w}</b><span>${esc(t)}</span></p>`).join("")}</div>
         ${copyHTML(s, { cls: "bottom", noQuote: true })}</div>`);
@@ -672,16 +694,16 @@
     },
     init(it) { it.figs = $$(".tn-f", it.el); it.copy = $(".copy", it.el); it.endEl = $(".tn-end", it.el); },
     update(it, f) {
-      const n = it.figs.length, D = f.mobile ? 1300 : 1500, p = range(f.uMid, 0.12, 0.9), cam = p * (n + 0.6) * D;
+      const n = it.figs.length, D = f.mobile ? 1300 : 1500, p = range(f.uMid, 0.2, 0.9), cam = p * (n + 0.6) * D;
       it.figs.forEach((fig, i) => {
         const z = cam - (i + 1) * D;
         const op = clamp((z + 4200) / 1600) * clamp((420 - z) / 360);
         if (op <= 0.001) { css(fig, "visibility", "hidden"); return; }
         css(fig, "visibility", "visible");
-        css(fig, "transform", `translate(-50%, -50%) translate3d(var(--x), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
+        css(fig, "transform", `translate(-50%, -50%) translate3d(calc(var(--x) * var(--xs, 1)), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
         css(fig, "opacity", (op * f.fo).toFixed(3));
       });
-      cls(it.copy, "away", f.uMid > 0.12);
+      cls(it.copy, "away", f.uMid > 0.2);
       cls(it.endEl, "on", it.isIn && f.uMid > 0.9);
     },
     gl: () => ({ opacity: 0.6, scale: 1.4, thread: 0.4, dust: 1 })
@@ -773,7 +795,9 @@
     },
     init(it) { it.cards = $$(".lt-card", it.el); it.count = $(".lt-count b", it.el); it.ring = $(".lt-ring", it.el); it.stepBooks = it.s.b.map((b) => [b]); },
     update(it, f) {
-      const n = it.n, p = range(f.uMid, 0.1, 0.94) * (n - 1), go = f.uMid > 0.05 && it.isIn;
+      // each letter settles in the centre and holds for a moment before the ring turns to the next
+      const n = it.n, raw = range(f.uMid, 0.1, 0.94) * (n - 1), i0 = Math.min(n - 1, Math.floor(raw));
+      const p = Math.min(n - 1, i0 + easeIO(clamp((raw - i0 - 0.3) / 0.4))), go = f.uMid > 0.05 && it.isIn;
       const cw = f.mobile ? Math.min(f.vw * 0.8, 400) : 400, Rr = (cw * n) / (2 * Math.PI) * 1.12;
       const step = 360 / n;
       cls(it.el, "go", go);
@@ -807,7 +831,7 @@
       cls(it.el, "go", go);
       it.cards.forEach((c, j) => {
         const a = (j / n) * Math.PI * 2 - Math.PI / 2;
-        const rx = Math.cos(a) * (f.mobile ? 34 : 40), ry = Math.sin(a) * (f.mobile ? 36 : 34);
+        const rx = Math.cos(a) * (f.mobile ? 30 : 40), ry = Math.sin(a) * (f.mobile ? 30 : 34);
         let x, y, z, s, op, cap;
         const local = p - j;
         if (local < 0) { x = 0; y = 4; z = -1800; s = 1; op = clamp(1 + local * 1.2) * 0.6; cap = 0; }
@@ -837,7 +861,7 @@
       ];
       return h(`<div class="fx new">${bg(s.art, "")}
         ${copyHTML(s, { cls: "bottom", noQuote: true })}
-        <div class="nw-cube"><p>“The city lieth foursquare … The length and the breadth and the height of it are equal.”<cite>Revelation 21:16</cite></p><span>Like the Most Holy Place, where God dwelt. Now the whole city is His dwelling.</span></div>
+        <div class="nw-cube"><p>“The city lieth foursquare … The length and the breadth and the height of it are equal.”<cite>Revelation 21:16</cite></p><span>Like the Most Holy Place, where God once dwelt; now the whole city is His dwelling.</span></div>
         <div class="nw-book"><p class="nw-h"><span>Genesis</span><span>Revelation</span></p>${P.map(([a, ar, b, br]) => `<div class="nw-row"><p>“${esc(a)}”<cite>${ar}</cite></p><i></i><p>“${esc(b)}”<cite>${br}</cite></p></div>`).join("")}</div>
         <div class="nw-end"><h3>Behold, I make all things new.</h3><cite>Revelation 21:5</cite><blockquote><p>“${esc(s.q)}”</p><cite>${esc(s.r)}</cite></blockquote></div>
       </div>`);
@@ -865,7 +889,7 @@
       return h(`<div class="fx amen">
         <p class="am-l am-1">“He which testifieth these things saith, Surely I come quickly.”</p>
         <p class="am-l am-2"><span>Amen.</span> <span>Even so, come, Lord Jesus.</span></p>
-        <p class="am-l am-3">“The grace of our Lord Jesus Christ be with you all. Amen.”<cite>Revelation 22:20–21</cite></p>
+        <p class="am-l am-3">“The grace of our Lord Jesus Christ be with you all. Amen.”<cite>Revelation 22:21</cite></p>
         <div class="am-end"><p class="am-k">The end of the story</p><h3>From the garden<br />to the city.</h3><p class="am-x">${esc(s.x)}</p><div class="am-stats"></div></div>
       </div>`);
     },

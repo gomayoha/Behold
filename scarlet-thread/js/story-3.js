@@ -15,7 +15,7 @@ window.AGES.push(
   scenes: [
     {
       id: "annunciation", t: "Be it unto me according to thy word.", k: "Luke 1", pl: "Nazareth", y: -6, b: ["luk"],
-      x: "In Nazareth, the angel Gabriel came to a young virgin named Mary. You shall conceive, and bear a son, and call His name Jesus. The Lord God shall give unto Him the throne of His father David, and of His kingdom there shall be no end. Mary gave her answer, and every promise began to come true.",
+      x: "In Nazareth, the angel Gabriel came to a young virgin named Mary: she would conceive and bear a son, and call His name Jesus, and the Lord God would give unto Him the throne of His father David, and of His kingdom there would be no end. Mary gave her answer, and every promise began to come true.",
       q: "Behold the handmaid of the Lord; be it unto me according to thy word.", r: "Luke 1:38",
       cast: [["Mary", "The Mother of Jesus"], ["Gabriel", "The angel who stands in the presence of God"], ["Zacharias and Elisabeth", "The parents of John the Baptist"], ["Joseph", "Of the house of David, the husband of Mary"]],
       art: "annunciation", lay: "full", kept: ["virgin", "throne"], sh: "star", link: { href: "../mary.html", label: "Mother Mary, on Behold" }
@@ -36,7 +36,7 @@ window.AGES.push(
     },
     {
       id: "baptism", t: "Behold the Lamb of God.", k: "Matthew 3 · John 1", pl: "The river Jordan", y: 27, b: ["mat", "mrk", "jhn"],
-      x: "John the Baptist, the messenger Malachi had promised, preached in the wilderness: prepare ye the way of the Lord. When Jesus came to be baptised, the heavens opened, the Spirit descended like a dove, and the Father spoke. The next day John saw Jesus coming, and pointed, with the words Abraham had waited two thousand years to hear.",
+      x: "John the Baptist, the messenger Malachi had promised, preached in the wilderness: prepare ye the way of the Lord. When Jesus came to be baptised, the heavens opened, the Spirit descended like a dove, and the Father spoke. The next day John saw Jesus coming and pointed Him out, with the words Abraham had waited two thousand years to hear.",
       q: "Behold the Lamb of God, which taketh away the sin of the world.", r: "John 1:29",
       cast: [["John the Baptist", "The voice crying in the wilderness"]],
       art: "baptism", lay: "full", pos: "50% 30%", kept: ["messenger", "lamb"], sh: "dome"
@@ -81,7 +81,7 @@ window.AGES.push(
     },
     {
       id: "cross", t: "It is finished.", k: "Matthew 27 · Mark 15 · Luke 23 · John 19", pl: "Golgotha", y: 30, b: ["mat", "mrk", "luk", "jhn"],
-      x: "He was scourged, crowned with thorns, and led out bearing His cross to Golgotha. They pierced His hands and His feet, and soldiers cast lots for His coat. Darkness covered the land from the sixth hour to the ninth. My God, my God, why hast thou forsaken me? Then a loud cry, and the veil of the temple was rent in twain from the top to the bottom.",
+      x: "He was scourged, crowned with thorns, and led out bearing His cross to Golgotha. They pierced His hands and His feet, and soldiers cast lots for His coat. Darkness covered the land from the sixth hour to the ninth, when He cried, “My God, my God, why hast thou forsaken me?” Then He cried out with a loud voice, and the veil of the temple was rent in twain from the top to the bottom.",
       q: "When Jesus therefore had received the vinegar, he said, It is finished: and he bowed his head, and gave up the ghost.", r: "John 19:30",
       cast: [["Simon of Cyrene", "Who carried the cross"], ["The thief on the cross", "To whom He promised paradise"], ["The centurion", "Truly this was the Son of God"], ["Joseph of Arimathaea", "Who gave his own tomb"]],
       art: "crucified", fx: { type: "cross" }, kept: ["seed", "passover", "atonement", "serpent", "kinsman", "psalm22", "servant", "pierced"], sh: "cross", h: 5
@@ -118,7 +118,7 @@ window.AGES.push(
     },
     {
       id: "lame", t: "Such as I have give I thee.", k: "Acts 3–5", pl: "The Beautiful gate of the temple", y: 31, b: ["act"],
-      x: "At the gate of the temple called Beautiful, a man lame from birth asked Peter and John for money. Peter took him by the right hand, and he went into the temple walking, and leaping, and praising God. Arrested and threatened, the apostles answered that they could not but speak.",
+      x: "At the gate of the temple called Beautiful, a man lame from birth asked Peter and John for money. Peter took him by the right hand, and he went into the temple walking, and leaping, and praising God. Arrested and threatened, the apostles answered: “We cannot but speak the things which we have seen and heard.”",
       q: "Silver and gold have I none; but such as I have give I thee: In the name of Jesus Christ of Nazareth rise up and walk.", r: "Acts 3:6",
       cast: [["Peter", "The rock, first among the apostles"], ["John", "The beloved disciple"], ["Gamaliel", "The Pharisee who counselled caution"]],
       art: "lame-man", lay: "plate", side: "r", sh: "flames"
@@ -132,14 +132,14 @@ window.AGES.push(
     },
     {
       id: "ethiopian", t: "Understandest thou what thou readest?", k: "Acts 8", pl: "The road to Gaza", y: 34, b: ["act"],
-      x: "Persecution scattered the believers, and they preached wherever they went. On a desert road, Philip met an Ethiopian official riding in his chariot, reading the prophet Isaiah aloud: he was led as a sheep to the slaughter. Philip began at the same scripture, and preached unto him Jesus.",
+      x: "Persecution scattered the believers, and they preached wherever they went. On a desert road, Philip met an Ethiopian official riding in his chariot, reading the prophet Isaiah aloud: “He was led as a sheep to the slaughter.” Philip began at the same scripture, and preached unto him Jesus.",
       q: "See, here is water; what doth hinder me to be baptized?", r: "Acts 8:36",
       cast: [["Philip", "The evangelist, one of the seven"], ["The Ethiopian", "Treasurer of Candace, queen of the Ethiopians"]],
       art: "eunuch", lay: "plate", side: "r", sh: "sea"
     },
     {
       id: "damascus", t: "Why persecutest thou me?", k: "Acts 9", pl: "The road to Damascus", y: 35, b: ["act"],
-      x: "Saul, yet breathing out threatenings, was on his way to Damascus to arrest believers when a light from heaven shone round about him. He fell to the earth and heard a voice: Saul, Saul, why persecutest thou me? Blind for three days, he was baptised by Ananias, and the persecutor became the apostle Paul.",
+      x: "Saul, yet breathing out threatenings, was on his way to Damascus to arrest believers when a light from heaven shone round about him. He fell to the earth and heard a voice: “Saul, Saul, why persecutest thou me?” Blind for three days, he was baptised by Ananias, and the persecutor became the apostle Paul.",
       q: "And he said, Who art thou, Lord? And the Lord said, I am Jesus whom thou persecutest.", r: "Acts 9:5",
       cast: [["Paul", "Born Saul of Tarsus; the apostle to the nations"], ["Ananias", "The disciple at Damascus who laid hands on him"]],
       art: "paul-conv", lay: "full", sh: "sphere"
@@ -170,12 +170,12 @@ window.AGES.push(
   scenes: [
     {
       id: "epistles", t: "Twenty-one letters.", k: "Romans – Jude", y: 57, b: ["rom", "1co", "2co", "gal", "eph", "php", "col", "1th", "2th", "1ti", "2ti", "tit", "phm", "heb", "jas", "1pe", "2pe", "1jn", "2jn", "3jn", "jud"],
-      x: "Paul wrote thirteen of them, many from prison. Others came from James and Jude, the brothers of the Lord, from Peter, and from John. Scroll to open each one.",
+      x: "Paul wrote thirteen of them, many from prison. The rest came from James and Jude, the brothers of the Lord, from Peter and John, and, in Hebrews, from a writer whose name we do not know. Scroll to open each one.",
       fx: { type: "letters" }, sh: "scroll", h: 8
     },
     {
       id: "faith", t: "So great a cloud of witnesses.", k: "Hebrews 11–12", y: 66, b: ["heb"],
-      x: "The letter to the Hebrews looks back over the whole story you have just walked through, and names its heroes one by one. They all died waiting for a promise. We have seen it kept.",
+      x: "The letter to the Hebrews looks back over the whole story you have just walked through and names its heroes one by one. They all died waiting for a promise. We have seen it kept.",
       fx: { type: "faith", items: [
         ["cain-abel", "By faith Abel offered unto God a more excellent sacrifice than Cain.", "11:4"],
         ["noah-ark", "By faith Noah … prepared an ark to the saving of his house.", "11:7"],
@@ -206,11 +206,11 @@ window.AGES.push(
       x: "John, the last of the apostles, was exiled to Patmos for the word of God. On the Lord’s day he heard behind him a great voice, as of a trumpet, and turned to see the risen Christ among seven golden candlesticks, His eyes as a flame of fire. He fell at His feet as dead.",
       q: "Fear not; I am the first and the last: I am he that liveth, and was dead; and, behold, I am alive for evermore.", r: "Revelation 1:17–18",
       cast: [["John", "Apostle and seer, exiled on Patmos"]],
-      art: "john-patmos", lay: "full", kept: ["redeemer"], sh: "rings"
+      art: "john-patmos", lay: "full", pos: "50% 14%", kept: ["redeemer"], sh: "rings"
     },
     {
       id: "door", t: "Behold, I stand at the door.", k: "Revelation 2–3", pl: "The seven churches of Asia", y: 95, b: ["rev"],
-      x: "Christ sent a letter to each of seven churches. Every one ended the same way: to him that overcometh. To the last, the lukewarm church of Laodicea, rich and self-satisfied, He spoke the tenderest words in the book. He does not break the door down. He knocks.",
+      x: "Christ sent a letter to each of the seven churches. Every one ended with a promise to him that overcometh. To the last, the lukewarm church of Laodicea, rich and self-satisfied, He spoke the tenderest words in the book. He does not break the door down. He knocks.",
       q: "Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me.", r: "Revelation 3:20",
       art: "light-world", lay: "portal", sh: "ring"
     },
@@ -241,7 +241,7 @@ window.AGES.push(
     },
     {
       id: "new", t: "Behold, I make all things new.", k: "Revelation 21–22", pl: "The new Jerusalem", y: 95, b: ["rev"],
-      x: "Then a new heaven and a new earth, and the holy city, new Jerusalem, coming down from God out of heaven, prepared as a bride. The city lieth foursquare, its length and breadth and height all equal: a perfect cube, like the Most Holy Place, for now God dwells with His people everywhere. A river of water of life flows from the throne, and on either side of it grows the tree of life, last seen in Eden.",
+      x: "Then John saw a new heaven and a new earth, and the holy city, new Jerusalem, coming down from God out of heaven, prepared as a bride. The city lies foursquare, its length and breadth and height all equal: a perfect cube, like the Most Holy Place, for now God dwells with His people everywhere. A river of water of life flows from the throne, and on either side of it grows the tree of life, last seen in Eden.",
       q: "And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain.", r: "Revelation 21:4",
       art: "plains-heaven", fx: { type: "new" }, sh: "cube", h: 5
     },

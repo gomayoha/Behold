@@ -326,7 +326,7 @@ window.AGES.push(
       x: "In the Persian capital, a Jewish orphan named Esther became queen to King Ahasuerus, keeping her people secret. When the king’s favourite, Haman, plotted to destroy every Jew in the empire, her cousin Mordecai sent her word. To go in to the king unsummoned meant death. If I perish, I perish, said Esther, and went. God’s name is never spoken in the book; His hand is everywhere in it.",
       q: "And who knoweth whether thou art come to the kingdom for such a time as this?", r: "Esther 4:14",
       cast: [["Esther", "The orphan who became queen"], ["Mordecai", "Her cousin, who would not bow"], ["Haman", "The Agagite, who plotted genocide"], ["Ahasuerus", "King of Persia"]],
-      art: "esther", lay: "full", pos: "50% 25%", sh: "crown"
+      art: "esther", lay: "full", zoom: "46% 34%", pos: "50% 25%", sh: "crown"
     },
     {
       id: "nehemiah", t: "The joy of the LORD is your strength.", k: "Ezra 7–10 · Nehemiah", pl: "Jerusalem", y: -445, b: ["ezr", "neh"],

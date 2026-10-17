@@ -88,7 +88,7 @@ window.ST = (function () {
         ${s.x && !o.noText ? `<p class="x rv">${esc(s.x)}</p>` : ""}
         ${s.q && !o.noQuote ? `<blockquote class="q rv"><p>“${esc(s.q)}”</p><cite>${esc(s.r)}</cite></blockquote>` : ""}
         ${o.after || ""}
-        ${ths.map((id) => knotHTML(id, false)).join("")}
+        ${ths.length > 1 ? `<div class="kepts row planted">${ths.map((id) => knotHTML(id, false)).join("")}</div>` : ths.map((id) => knotHTML(id, false)).join("")}
         ${keptHTML(s, o)}
         ${castHTML(s.cast)}
         ${linkHTML(s.link)}
@@ -152,7 +152,7 @@ window.ST = (function () {
     items.forEach((it) => { it.top = y; it.bottom = y + Math.round(it.h * vh); y = it.bottom; });
     endY = y;
     items.forEach((it) => it.def.measure && it.def.measure(it));
-    items.forEach((it) => { if (it.shown) { tidyKickers(it.el); fitPhone(it); } });
+    items.forEach((it) => { if (it.shown) { tidyKickers(it.el); fitPhone(it); fitCopy(it); } });
     return true;
   }
 
@@ -319,9 +319,20 @@ window.ST = (function () {
     stage.style.height = sh + "px";
     stage.style.setProperty("--sh", sh + "px");
   }
+  /** A scene's words must fit between the top bar and the HUD. If they would not, step down to a denser style
+   *  (smaller title, cast without roles, no repeated verses), and then, if needed, a denser one still. */
+  function fitCopy(it) {
+    const copy = it.el.querySelector(":scope > .copy, :scope > .fx > .copy, :scope .nv-copy, :scope .dw-copy");
+    if (!copy) return;
+    it.el.classList.remove("dense", "denser");
+    const top = () => copy.getBoundingClientRect().top;
+    if (copy.offsetHeight === 0) return;
+    if (top() < 64) it.el.classList.add("dense");
+    if (top() < 64) it.el.classList.add("denser");
+  }
   function show(it) {
     it.shown = true; it.el.classList.add("on"); it.el.removeAttribute("aria-hidden");
-    tidyKickers(it.el); fitPhone(it);
+    tidyKickers(it.el); fitPhone(it); fitCopy(it);
     if (it.def.show) it.def.show(it);
   }
   function hide(it) {
@@ -360,6 +371,7 @@ window.ST = (function () {
           if (fr.parentElement) fr.parentElement.style.setProperty("--ar", ar);
           const it = items.find((x) => x.el === img.closest(".sc"));
           if (it && it.shown) fitPhone(it);
+          if (fr.classList.contains("pl")) glowFrom(img, fr.parentElement.querySelector(".pl-glow canvas"));
         }
       });
     }
@@ -369,6 +381,17 @@ window.ST = (function () {
         if (cr) { const c = window.Paint.credit(key, found); cr.innerHTML = `<i>${esc(c.t)}</i> · ${esc(c.a)}${c.y ? ", " + esc(c.y) : ""}`; }
       }
     });
+  }
+  /** The coloured glow behind a plate: the painting shrunk to 6×6 pixels and smoothly enlarged. Drawn once; no blur filter at all. */
+  function glowFrom(img, c) {
+    if (!c) return;
+    try {
+      const t = document.createElement("canvas"); t.width = t.height = 6;
+      t.getContext("2d").drawImage(img, 0, 0, 6, 6);
+      const g = c.getContext("2d"); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high";
+      g.clearRect(0, 0, c.width, c.height); g.drawImage(t, 0, 0, c.width, c.height);
+      c.classList.add("loaded");
+    } catch (e) { /* a glow is a nicety */ }
   }
   const imgTag = (key, o = {}) => key ? `<img data-art="${key}" alt="${esc(ART[key] ? ART[key].t + " by " + ART[key].a : "")}" ${o.big ? "data-big" : ""} class="${o.cls || "im"}" decoding="async" draggable="false" />` : "";
 

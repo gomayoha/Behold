@@ -19,19 +19,19 @@ window.AGES.push(
       id: "light", t: "Let there be light.", k: "Genesis 1:1–5", pl: "The face of the deep", yl: "The first day", b: ["gen"],
       x: "The earth was without form, and void, and darkness was upon the face of the deep. The Spirit of God moved upon the face of the waters. Then God spoke, and light broke into the darkness. He saw that it was good, and divided the light from the darkness.",
       q: "And God said, Let there be light: and there was light.", r: "Genesis 1:3",
-      art: "light", lay: "full", pos: "50% 30%", sh: "sphere"
+      art: "light", lay: "full", zoom: "36% 30%", pos: "50% 30%", sh: "sphere"
     },
     {
       id: "days", t: "Six days, and a seventh.", k: "Genesis 1:1 – 2:3", yl: "The week of creation", b: ["gen"],
-      x: "Each day, God speaks, and the world takes shape: first the spaces, then what fills them. And each day ends the same way: God saw that it was good.",
+      x: "Each day, God speaks, and the world takes shape: first the spaces, then what fills them. And again and again, God saw that it was good.",
       fx: { type: "steps", style: "days", steps: [
-        { n: "Day One", t: "Light", x: "And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.", r: "Genesis 1:5", sh: "sphere" },
-        { n: "Day Two", t: "The firmament", x: "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters.", r: "Genesis 1:6", sh: "sea" },
-        { n: "Day Three", t: "Land and life", x: "And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so.", r: "Genesis 1:9", sh: "globe" },
-        { n: "Day Four", t: "The lights", x: "And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also.", r: "Genesis 1:16", sh: "galaxy" },
-        { n: "Day Five", t: "Sea and sky", x: "And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind.", r: "Genesis 1:21", sh: "swirl" },
-        { n: "Day Six", t: "In His image", x: "So God created man in his own image, in the image of God created he him; male and female created he them.", r: "Genesis 1:27", sh: "figure" },
-        { n: "Day Seven", t: "Rest", x: "And on the seventh day God ended his work which he had made; and he rested on the seventh day from all his work which he had made.", r: "Genesis 2:2", sh: "ring" }
+        { n: "Day One", art: "day-light", t: "Light", x: "And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.", r: "Genesis 1:5", sh: "sphere" },
+        { n: "Day Two", art: "day-firmament", pos: "6% 52%", t: "The firmament", x: "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters.", r: "Genesis 1:6", sh: "sea" },
+        { n: "Day Three", art: "day-land", t: "Land and life", x: "And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so.", r: "Genesis 1:9", sh: "globe" },
+        { n: "Day Four", art: "day-lights", t: "The lights", x: "And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also.", r: "Genesis 1:16", sh: "galaxy" },
+        { n: "Day Five", art: "day-creatures", t: "Sea and sky", x: "And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind.", r: "Genesis 1:21", sh: "swirl" },
+        { n: "Day Six", art: "day-man", t: "In His image", x: "So God created man in his own image, in the image of God created he him; male and female created he them.", r: "Genesis 1:27", sh: "figure" },
+        { n: "Day Seven", art: "day-rest", t: "Rest", x: "And on the seventh day God ended his work which he had made; and he rested on the seventh day from all his work which he had made.", r: "Genesis 2:2", sh: "ring" }
       ] },
       h: 7
     },
@@ -40,7 +40,7 @@ window.AGES.push(
       x: "God shaped the first man from the dust of the ground and breathed into him His own breath. Of everything He made, only humankind bears His image: made to know Him, to love Him, and to care for His world.",
       q: "And the LORD God formed man of the dust of the ground, and breathed into his nostrils the breath of life; and man became a living soul.", r: "Genesis 2:7",
       cast: [["Adam", "The first man, formed from the dust"]],
-      art: "creation-adam", lay: "full", pos: "50% 50%", posm: "40% 50%", sh: "figure"
+      art: "creation-adam", lay: "full", zoom: "42% 47%", pos: "50% 50%", posm: "40% 50%", sh: "figure"
     },
     {
       id: "eden", t: "A garden eastward in Eden.", k: "Genesis 2:8–25", pl: "Eden", yl: "The beginning", b: ["gen"],
@@ -165,7 +165,7 @@ window.AGES.push(
       x: "Isaac was born, and his name means laughter. Years later God tested Abraham: take your son, your only son, whom you love, to Mount Moriah. Isaac carried the wood up the mountain. Father, where is the lamb? Abraham’s knife was raised when the angel called his name, and there was a ram, caught in a thicket by his horns.",
       q: "And Abraham said, My son, God will provide himself a lamb for a burnt offering.", r: "Genesis 22:8",
       cast: [["Isaac", "The son of promise"]],
-      art: "isaac", lay: "full", pos: "50% 40%", th: "lamb", sh: "flame"
+      art: "isaac", lay: "full", zoom: "42% 34%", pos: "50% 40%", th: "lamb", sh: "flame"
     },
     {
       id: "rebekah", t: "A bride at the well.", k: "Genesis 24", pl: "Nahor, in Mesopotamia", y: -2026, b: ["gen"],
@@ -351,7 +351,7 @@ window.AGES.push(
       id: "nebo", t: "Hear, O Israel.", k: "Deuteronomy", pl: "Mount Nebo", y: -1406, b: ["deu"],
       x: "On the plains of Moab, Moses gave his last words to a new generation: remember, obey, love. “I have set before you life and death … therefore choose life.” Then he climbed Mount Nebo, and God showed him all the land he would not enter. Moses died there, a hundred and twenty years old, and God buried him.",
       q: "Hear, O Israel: The LORD our God is one LORD: And thou shalt love the LORD thy God with all thine heart, and with all thy soul, and with all thy might.", r: "Deuteronomy 6:4–5",
-      art: "nebo", lay: "full", sh: "dome"
+      art: "nebo", lay: "full", zoom: "36% 42%", sh: "dome"
     }
   ]
 },

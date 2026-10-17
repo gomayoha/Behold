@@ -18,14 +18,30 @@ window.AGES.push(
       x: "In Nazareth, the angel Gabriel came to a young virgin named Mary: she would conceive and bear a son, and call His name Jesus, and the Lord God would give unto Him the throne of His father David, and of His kingdom there would be no end. Mary gave her answer, and every promise began to come true.",
       q: "Behold the handmaid of the Lord; be it unto me according to thy word.", r: "Luke 1:38",
       cast: [["Mary", "The Mother of Jesus"], ["Gabriel", "The angel who stands in the presence of God"], ["Zacharias and Elisabeth", "The parents of John the Baptist"], ["Joseph", "Of the house of David, the husband of Mary"]],
-      art: "annunciation", lay: "full", kept: ["virgin", "throne"], sh: "star", link: { href: "../mary.html", label: "Mother Mary, on Behold" }
+      art: "annunciation", lay: "full", zoom: "60% 36%", kept: ["virgin", "throne"], sh: "star", link: { href: "../mary.html", label: "Mother Mary, on Behold" }
     },
     {
       id: "nativity", t: "Unto you is born this day.", k: "Luke 2 · Matthew 1", pl: "Bethlehem", y: -5, b: ["luk", "mat"],
-      x: "A decree from Caesar Augustus brought Joseph and Mary to Bethlehem, the city of David, as Micah had foretold. There was no room for them in the inn. Shepherds keeping watch in the fields heard the angels sing, and came with haste, and found the baby lying in a manger. Matthew opens his Gospel with the family line: Abraham, Judah, Rahab, Ruth, David.",
+      x: "There was no room for them in the inn, so Mary laid her firstborn son in a manger. The shepherds came with haste and found Him there. Matthew opens his Gospel with His family line: Abraham, Judah, Rahab, Ruth, David.",
       q: "For unto you is born this day in the city of David a Saviour, which is Christ the Lord.", r: "Luke 2:11",
       cast: [["The shepherds", "Who came with haste to the manger"], ["Simeon and Anna", "Who waited in the temple for the consolation of Israel"]],
-      art: "shepherds", lay: "full", kept: ["child", "bethlehem", "cord"], sh: "star"
+      art: "shepherds", kept: ["child", "bethlehem", "cord"], sh: "star", h: 8,
+      // The most important night in the story gets its own set piece: the promises in the dark, the road to
+      // Bethlehem, the shepherds' field, then the light of the birth itself.
+      fx: {
+        type: "nativity",
+        lead: "Four thousand years of promises.",
+        prophecies: [
+          ["Behold, a virgin shall conceive, and bear a son, and shall call his name Immanuel.", "Isaiah 7:14"],
+          ["But thou, Beth-lehem Ephratah … out of thee shall he come forth unto me that is to be ruler in Israel.", "Micah 5:2"],
+          ["For unto us a child is born, unto us a son is given.", "Isaiah 9:6"]
+        ],
+        beats: [
+          { art: "census", k: "Luke 2:1 · Nazareth to Bethlehem", q: "And it came to pass in those days, that there went out a decree from Caesar Augustus, that all the world should be taxed.", x: "So Joseph went up from Nazareth to Bethlehem, the city of David, with Mary, who was expecting her child. A Roman census was about to fulfil a prophecy seven hundred years old." },
+          { art: "angels-shepherds", k: "Luke 2:8 · The fields of Bethlehem", q: "And there were in the same country shepherds abiding in the field, keeping watch over their flock by night.", x: "Then the angel of the Lord came upon them, and the glory of the Lord shone round about them." }
+        ],
+        glory: ["Glory to God in the highest, and on earth peace, good will toward men.", "Luke 2:14"]
+      }
     },
     {
       id: "magi", t: "We have seen his star.", k: "Matthew 2", pl: "Jerusalem · Bethlehem · Egypt", y: -5, b: ["mat"],
@@ -39,7 +55,7 @@ window.AGES.push(
       x: "John the Baptist, the messenger Malachi had promised, preached in the wilderness: prepare ye the way of the Lord. When Jesus came to be baptised, the heavens opened, the Spirit descended like a dove, and the Father spoke. The next day John saw Jesus coming and pointed Him out, with the words Abraham had waited two thousand years to hear.",
       q: "Behold the Lamb of God, which taketh away the sin of the world.", r: "John 1:29",
       cast: [["John the Baptist", "The voice crying in the wilderness"]],
-      art: "baptism", lay: "full", pos: "50% 30%", kept: ["messenger", "lamb"], sh: "dome"
+      art: "baptism", lay: "full", zoom: "50% 34%", pos: "50% 30%", kept: ["messenger", "lamb"], sh: "dome"
     },
     {
       id: "ministry", t: "He went about doing good.", k: "Matthew · Mark · Luke · John", pl: "Galilee · Judea", y: 28, b: ["mat", "mrk", "luk", "jhn"],
@@ -70,7 +86,7 @@ window.AGES.push(
       id: "supper", t: "This is my body.", k: "Luke 22 · John 13", pl: "The upper room", y: 30, b: ["luk", "jhn"],
       x: "On the night He was betrayed, Jesus kept the Passover with His disciples, and washed their feet. Then He took bread, gave thanks, and brake it: this is my body which is given for you. Likewise the cup after supper: the new covenant Jeremiah had promised, sealed in His own blood.",
       q: "This cup is the new testament in my blood, which is shed for you.", r: "Luke 22:20",
-      art: "supper", lay: "full", kept: ["newcov"], sh: "ring"
+      art: "supper", lay: "full", zoom: "50% 44%", kept: ["newcov"], sh: "ring"
     },
     {
       id: "gethsemane", t: "Not my will.", k: "Luke 22 · Matthew 26", pl: "Gethsemane · the house of Caiaphas", y: 30, b: ["luk", "mat"],
@@ -91,13 +107,14 @@ window.AGES.push(
       x: "On the first day of the week, very early, the women came with spices to the tomb, and found the stone rolled away. An angel sat upon it. Mary Magdalene stayed weeping in the garden, until a man she took for the gardener said her name. Three days, as Jonah had been in the fish.",
       q: "He is not here: for he is risen, as he said.", r: "Matthew 28:6",
       cast: [["Thomas", "My Lord and my God"], ["Cleopas", "Who walked to Emmaus with the risen Christ"]],
-      art: "resurrection", fx: { type: "dawn" }, kept: ["jonah"], sh: "sunrise", h: 3.4
+      art: "resurrection", kept: ["jonah"], sh: "sunrise", h: 5,
+      fx: { type: "dawn", tomb: "holy-women", word: ["Be not affrighted: Ye seek Jesus of Nazareth, which was crucified: he is risen; he is not here: behold the place where they laid him.", "Mark 16:6"] }
     },
     {
       id: "ascension", t: "I am with you alway.", k: "Luke 24 · Acts 1 · Matthew 28", pl: "The Mount of Olives", y: 30, b: ["luk", "act", "mat"],
       x: "For forty days the risen Jesus appeared to His followers: on the road to Emmaus, in a shut room, beside the Sea of Galilee. He sent them to make disciples of all nations, promised the Holy Spirit, and was taken up, and a cloud received Him out of their sight.",
       q: "And, lo, I am with you alway, even unto the end of the world.", r: "Matthew 28:20",
-      art: "ascension", lay: "full", sh: "sphere"
+      art: "ascension", lay: "full", zoom: "50% 30%", sh: "sphere"
     }
   ]
 },
@@ -142,14 +159,14 @@ window.AGES.push(
       x: "Saul, yet breathing out threatenings, was on his way to Damascus to arrest believers when a light from heaven shone round about him. He fell to the earth and heard a voice: “Saul, Saul, why persecutest thou me?” Blind for three days, he was baptised by Ananias, and the persecutor became the apostle Paul.",
       q: "And he said, Who art thou, Lord? And the Lord said, I am Jesus whom thou persecutest.", r: "Acts 9:5",
       cast: [["Paul", "Born Saul of Tarsus; the apostle to the nations"], ["Ananias", "The disciple at Damascus who laid hands on him"]],
-      art: "paul-conv", lay: "full", sh: "sphere"
+      art: "paul-conv", lay: "full", zoom: "46% 62%", sh: "sphere"
     },
     {
       id: "cornelius", t: "God is no respecter of persons.", k: "Acts 10–12", pl: "Joppa · Caesarea · Jerusalem", y: 40, b: ["act"],
       x: "Peter saw a vision of a great sheet let down from heaven, and was sent to the house of a Roman centurion, Cornelius. While he was still speaking, the Holy Ghost fell on the Gentiles too. When Herod threw Peter into prison, the church prayed through the night, and an angel struck the chains from his hands.",
       q: "Of a truth I perceive that God is no respecter of persons: But in every nation he that feareth him, and worketh righteousness, is accepted with him.", r: "Acts 10:34–35",
       cast: [["Cornelius", "A centurion of the Italian band"], ["Rhoda", "Who left Peter knocking at the gate"]],
-      art: "peter-deliverance", lay: "full", kept: ["blessing"], sh: "globe"
+      art: "peter-deliverance", lay: "full", zoom: "50% 46%", kept: ["blessing"], sh: "globe"
     },
     {
       id: "journeys", t: "Unto the uttermost part of the earth.", k: "Acts 13–28", pl: "The Roman world", y: 46, b: ["act"],
@@ -206,7 +223,7 @@ window.AGES.push(
       x: "John, the last of the apostles, was exiled to Patmos for the word of God. On the Lord’s day he heard behind him a great voice, as of a trumpet, and turned to see the risen Christ among seven golden candlesticks, His eyes as a flame of fire. He fell at His feet as dead.",
       q: "Fear not; I am the first and the last: I am he that liveth, and was dead; and, behold, I am alive for evermore.", r: "Revelation 1:17–18",
       cast: [["John", "Apostle and seer, exiled on Patmos"]],
-      art: "john-patmos", lay: "full", pos: "50% 14%", kept: ["redeemer"], sh: "rings"
+      art: "john-patmos", lay: "full", zoom: "50% 24%", pos: "50% 14%", kept: ["redeemer"], sh: "rings"
     },
     {
       id: "door", t: "Behold, I stand at the door.", k: "Revelation 2–3", pl: "The seven churches of Asia", y: 95, b: ["rev"],
@@ -218,13 +235,13 @@ window.AGES.push(
       id: "lamb", t: "Worthy is the Lamb.", k: "Revelation 4–5", pl: "The throne of heaven", y: 95, b: ["rev"],
       x: "A door was opened in heaven: a throne, and a rainbow round about the throne like an emerald, and living creatures crying Holy, holy, holy, as Isaiah heard. No one could open the sealed book, and John wept much, until an elder said: the Lion of the tribe of Juda hath prevailed. John turned to see the Lion, and saw a Lamb, as it had been slain.",
       q: "Worthy is the Lamb that was slain to receive power, and riches, and wisdom, and strength, and honour, and glory, and blessing.", r: "Revelation 5:12",
-      art: "mystic-lamb", lay: "full", kept: ["sceptre"], sh: "rings"
+      art: "mystic-lamb", lay: "full", zoom: "50% 48%", kept: ["sceptre"], sh: "rings"
     },
     {
       id: "horsemen", t: "Behold a pale horse.", k: "Revelation 6–11", y: 95, b: ["rev"],
       x: "As the Lamb opened the seals, four horsemen rode out: conquest, war, famine and death. Seven trumpets sounded over a world that would not repent. Yet between the judgements, John saw a great multitude, which no man could number, of all nations, standing before the throne, and God wiping away all tears from their eyes.",
       q: "And I looked, and behold a pale horse: and his name that sat on him was Death.", r: "Revelation 6:8",
-      art: "horsemen", lay: "full", sh: "whirlwind"
+      art: "horsemen", lay: "full", zoom: "40% 45%", sh: "whirlwind"
     },
     {
       id: "woman", t: "A woman clothed with the sun.", k: "Revelation 12", y: 95, b: ["rev"],

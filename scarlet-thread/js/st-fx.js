@@ -60,13 +60,23 @@
     });
   }
 
-  // The seven days of creation
+  // The seven days of creation: each day opens a window onto an image of what God made that day,
+  // paintings and photographs from space, with the particles of the sculpture drifting round its edge
   stepsType("days", {
     lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="dz-n">${esc(x.n)}</p><h4 class="dz-t">${esc(x.t)}</h4><p class="dz-x">${esc(x.x)}</p><cite>${esc(x.r)}</cite></article>`,
-    extra: () => `<div class="dz-big" aria-hidden="true"><span>1</span></div>`,
-    init(it) { it.big = $(".dz-big span", it.el); },
-    update(it, f, i) { if (it.bigI !== i) { it.big.textContent = i + 1; it.bigI = i; } },
+    extra: (it) => `<div class="dz-big" aria-hidden="true"><span>1</span></div><div class="dz-gal" aria-hidden="true">${it.s.fx.steps.map((x, i) => x.art ? `<div class="dz-im" data-i="${i}"${x.pos ? ` style="--pos:${esc(x.pos)}"` : ""}>${imgTag(x.art, { big: true })}</div>` : "").join("")}</div>${it.s.fx.steps.map((x) => x.art ? `<p class="cr dz-cr" data-credit="${x.art}">${creditHTML(x.art)}</p>` : "").join("")}`,
+    init(it) { it.big = $(".dz-big span", it.el); it.ims = $$(".dz-im", it.el); it.crs = $$(".dz-cr", it.el); },
+    update(it, f, i, l, go) {
+      if (it.bigI !== i) { it.big.textContent = i + 1; it.bigI = i; }
+      it.ims.forEach((im, k) => {
+        const on = go && k === i;
+        cls(im, "on", on);
+        // the image settles as the day is read: a slow push-in, transforms only
+        if (on || im.classList.contains("on")) css(im, "transform", `scale(${(1.1 - clamp(l) * 0.07).toFixed(4)})`);
+      });
+      it.crs.forEach((c, k) => cls(c, "on", go && k === i));
+    },
     gl: (it, f) => ({ opacity: 1, scale: f.mobile ? 0.9 : 1.05, x: f.mobile ? 0 : 2.4, y: f.mobile ? 1.2 : 0, thread: 0.5 })
   });
 
@@ -186,13 +196,12 @@
       const p = easeIO(range(f.uMid, 0.08, scatter ? 0.72 : 0.48));
       it.els.forEach((el, k) => {
         const x = it.spans[k];
-        let tx, ty, tz, rot, op, blur;
+        let tx, ty, tz, rot, op;
         const sk = f.mobile ? 0.42 : 1;
-        if (scatter) { tx = x.sx * p * sk; ty = x.sy * p * (f.mobile ? 0.5 : 1); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); blur = p * 3; }
-        else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); blur = q * 4; }
+        if (scatter) { tx = x.sx * p * sk; ty = x.sy * p * (f.mobile ? 0.5 : 1); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); }
+        else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); }
         css(el, "transform", `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotate(${rot.toFixed(2)}deg)`);
         css(el, "opacity", (op * f.fo).toFixed(3));
-        css(el, "filter", blur > 0.2 && !f.mobile ? `blur(${blur.toFixed(1)}px)` : "none");
       });
       css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0) * f.to).toFixed(3) : "0");
       css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * f.to : 0).toFixed(3));
@@ -709,6 +718,68 @@
     gl: () => ({ opacity: 0.6, scale: 1.4, thread: 0.4, dust: 1 })
   });
 
+  /* ════════════════ The Nativity: the promises in the dark, the road, the field, the light ════════════════ */
+  ST.type("nativity", {
+    build(it) {
+      const s = it.s, F = s.fx, B = F.beats;
+      const cap = (b, i) => `<div class="nv-cap" data-i="${i}"><p class="nv-ck">${esc(b.k)}</p><blockquote><p>“${esc(b.q)}”</p></blockquote>${b.x ? `<p class="nv-cx">${esc(b.x)}</p>` : ""}</div>`;
+      return h(`<div class="fx nativity">
+        ${B.map((b, i) => `<div class="nv-art" data-i="${i}">${imgTag(b.art, { big: true })}</div>`).join("")}
+        <div class="nv-art nv-birth">${imgTag(s.art, { big: true })}</div>
+        <div class="nv-shade"></div>
+        <div class="nv-bloom" aria-hidden="true"></div>
+        <div class="nv-pro"><p class="nv-lead">${esc(F.lead)}</p>${F.prophecies.map(([q, r]) => `<blockquote class="nv-pq"><p>“${esc(q)}”</p><cite>${esc(r)}</cite></blockquote>`).join("")}</div>
+        ${B.map(cap).join("")}
+        <blockquote class="nv-glory"><p>“${esc(F.glory[0])}”</p><cite>${esc(F.glory[1])}</cite></blockquote>
+        ${copyHTML(s, { cls: "bottom nv-copy" })}
+        ${B.map((b) => `<p class="cr nv-cr" data-credit="${b.art}">${creditHTML(b.art)}</p>`).join("")}
+        <p class="cr nv-cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
+      </div>`);
+    },
+    init(it) {
+      it.arts = $$(".nv-art", it.el); it.caps = $$(".nv-cap", it.el); it.pqs = $$(".nv-pq", it.el); it.pro = $(".nv-pro", it.el);
+      it.lead = $(".nv-lead", it.el); it.glory = $(".nv-glory", it.el); it.bloom = $(".nv-bloom", it.el); it.shade = $(".nv-shade", it.el);
+      it.crs = $$(".nv-cr", it.el);
+    },
+    update(it, f) {
+      const m = f.uMid, inn = it.isIn;
+      // 0 → .16  the promises, spoken into the dark
+      const pro = 1 - range(m, 0.13, 0.17);
+      css(it.pro, "opacity", (pro * f.ti).toFixed(3));
+      cls(it.lead, "on", inn && m < 0.16);
+      it.pqs.forEach((q, i) => cls(q, "on", inn && m > 0.025 + i * 0.03 && m < 0.16));
+      // .15 → .36  the road to Bethlehem   ·   .36 → .6  the shepherds' field   ·   .62 →  the birth
+      const win = [[0.15, 0.36], [0.36, 0.6]];
+      const vis = win.map(([a, b]) => range(m, a, a + 0.05) * (1 - range(m, b, b + 0.05)));
+      const birth = range(m, 0.62, 0.72);
+      it.arts.forEach((el, i) => {
+        const v = i < vis.length ? vis[i] : birth, w = i < vis.length ? win[i] : [0.62, 1];
+        const t = range(m, w[0], w[1]);
+        css(el, "opacity", (v * (i < vis.length ? 1 : f.fo)).toFixed(3));
+        // each painting drifts slowly while it is held, like a camera on a long lens
+        const sc = i < vis.length ? 1.14 - t * 0.08 : lerp(1.16, 1.02, ease(range(m, 0.62, 0.86)));
+        css(el, "transform", `translate3d(${(i === 0 ? (0.5 - t) * 4 : 0).toFixed(2)}%, 0, 0) scale(${sc.toFixed(4)})`);
+      });
+      // each caption leaves before the next words arrive; the angels' song gets the screen to itself
+      it.caps.forEach((c, i) => cls(c, "on", inn && m > win[i][0] + 0.04 && m < (i === win.length - 1 ? 0.48 : win[i][1] - 0.01)));
+      cls(it.glory, "on", inn && m > 0.5 && m < 0.63);
+      // the light of the birth: a warm bloom opens from the manger, then settles into the painting
+      const bl = range(m, 0.55, 0.64) * (1 - range(m, 0.67, 0.76));
+      css(it.bloom, "opacity", bl.toFixed(3));
+      css(it.bloom, "transform", `scale(${lerp(0.15, 1.5, ease(range(m, 0.55, 0.7))).toFixed(4)})`);
+      css(it.shade, "opacity", (m < 0.62 ? 0.75 : lerp(0.75, 1, range(m, 0.72, 0.8))).toFixed(3));
+      cls(it.el, "final", inn && m > 0.74);
+      // the credit follows the painting on screen
+      const show = m < 0.15 ? -1 : m < 0.38 ? 0 : m < 0.63 ? 1 : 2;
+      it.crs.forEach((c, i) => cls(c, "on", i === show));
+      it.light = bl; it.star = range(m, 0.02, 0.14);
+    },
+    gl: (it, f) => {
+      const m = f.uMid, dark = m < 0.17 || m > 0.88;
+      return { a: "chaos", b: "star", t: it.star || 0, in: "chaos", out: "star", opacity: dark ? 1 : 0.2, scale: 1 + (it.star || 0) * 0.1, color: "#fff1cf", dust: 0.6, thread: m > 0.88 ? 1 : 0.5, visible: dark || (it.light || 0) > 0.05 };
+    }
+  });
+
   /* ════════════════ The cross ════════════════ */
   ST.type("cross", {
     build(it) {
@@ -757,31 +828,52 @@
   });
 
   /* ════════════════ The first day of the week ════════════════ */
+  // Friday, Saturday, Sunday in the dark; dawn over the empty tomb; then the risen Christ in a column of light.
   ST.type("dawn", {
     build(it) {
-      const s = it.s;
-      return h(`<div class="fx dawn"><div class="dw-sky"></div><div class="dw-sun"></div>${bg(s.art, "late")}
+      const s = it.s, F = s.fx;
+      return h(`<div class="fx dawn"><div class="dw-sky"></div>
+        <div class="dw-art dw-tomb">${imgTag(F.tomb, { big: true })}</div>
+        <div class="dw-shade"></div>
         <div class="dw-days"><span>Friday.</span><span>Saturday.</span><span>Sunday.</span></div>
-        <div class="dw-tomb" aria-hidden="true"><div class="dw-rock"></div><div class="dw-mouth"><i></i></div><div class="dw-stone"></div></div>
-        ${copyHTML(s, { cls: "top center" })}</div>`);
+        <div class="dw-sun" aria-hidden="true"></div>
+        <figure class="dw-risen">${imgTag(s.art)}</figure>
+        <div class="nv-cap dw-cap"><p class="nv-ck">${esc(F.word[1])} · The garden tomb</p><blockquote><p>“${esc(F.word[0])}”</p></blockquote></div>
+        ${copyHTML(s, { cls: "bottom dw-copy" })}
+        <p class="cr dw-cr" data-credit="${F.tomb}">${creditHTML(F.tomb)}</p>
+        <p class="cr dw-cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
+      </div>`);
     },
-    init(it) { it.sky = $(".dw-sky", it.el); it.sun = $(".dw-sun", it.el); it.days = $$(".dw-days span", it.el); it.stone = $(".dw-stone", it.el); it.mouth = $(".dw-mouth i", it.el); it.tomb = $(".dw-tomb", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) {
+      it.sky = $(".dw-sky", it.el); it.sun = $(".dw-sun", it.el); it.days = $$(".dw-days span", it.el); it.daysEl = $(".dw-days", it.el); it.tomb = $(".dw-tomb", it.el);
+      it.shade = $(".dw-shade", it.el); it.risenArt = $(".dw-risen", it.el); it.cap = $(".dw-cap", it.el); it.crs = $$(".dw-cr", it.el);
+    },
     update(it, f) {
-      const m = f.uMid, day = m < 0.04 ? -1 : Math.min(2, Math.floor(range(m, 0.04, 0.3) * 3));
-      it.days.forEach((d, i) => { cls(d, "on", it.isIn && i === day && m < 0.32); });
-      const light = range(m, 0.28, 0.62);
+      const m = f.uMid, inn = it.isIn;
+      const day = m < 0.02 ? -1 : Math.min(2, Math.floor(range(m, 0.02, 0.27) * 3));
+      it.days.forEach((d, i) => cls(d, "on", inn && i === day && m < 0.29));
+      css(it.daysEl, "opacity", (1 - range(m, 0.27, 0.32)).toFixed(3));
+      // dawn: the sky warms, then the tomb in the first light
+      const light = range(m, 0.24, 0.46);
       it.light = light;
-      css(it.sky, "opacity", light.toFixed(3));
-      css(it.sun, "transform", `translate(-50%, ${lerp(60, 0, light).toFixed(2)}vh) scale(${lerp(0.6, 1.2, light).toFixed(3)})`);
-      css(it.sun, "opacity", light.toFixed(3));
-      const roll = ease(range(m, 0.34, 0.56));
-      css(it.stone, "transform", `translateX(${(roll * 120).toFixed(1)}%) rotate(${(roll * 160).toFixed(1)}deg)`);
-      css(it.mouth, "opacity", roll.toFixed(3));
-      css(it.tomb, "opacity", (1 - range(m, 0.7, 0.85)).toFixed(3));
-      css(it.bgEl, "opacity", (range(m, 0.62, 0.82) * 0.7).toFixed(3));
-      cls(it.el, "risen", m > 0.6);
+      css(it.sky, "opacity", (light * (1 - range(m, 0.62, 0.72) * 0.6)).toFixed(3));
+      const tv = range(m, 0.28, 0.36) * (1 - range(m, 0.6, 0.67));
+      css(it.tomb, "opacity", tv.toFixed(3));
+      css(it.tomb, "transform", `scale(${(1.14 - range(m, 0.28, 0.62) * 0.08).toFixed(4)})`);
+      cls(it.cap, "on", inn && m > 0.36 && m < 0.58);
+      // the light grows, and the risen Christ stands in it
+      const sun = range(m, 0.54, 0.7);
+      css(it.sun, "opacity", (sun * f.fo).toFixed(3));
+      css(it.sun, "transform", `translate3d(0, ${lerp(30, 0, ease(sun)).toFixed(2)}vh, 0) scale(${lerp(0.4, 1, ease(sun)).toFixed(4)})`);
+      const rv = ease(range(m, 0.6, 0.74));
+      css(it.risenArt, "opacity", (rv * f.fo).toFixed(3));
+      css(it.risenArt, "transform", `translate3d(0, ${lerp(8, 0, rv).toFixed(2)}vh, 0) scale(${lerp(0.94, 1, rv).toFixed(4)})`);
+      css(it.shade, "opacity", (m < 0.62 ? 0.7 : 0.9).toFixed(3));
+      cls(it.el, "risen", inn && m > 0.68);
+      const show = m < 0.3 ? -1 : m < 0.62 ? 0 : 1;
+      it.crs.forEach((c, i) => cls(c, "on", i === show));
     },
-    gl: (it, f) => ({ opacity: 0.2 + (it.light || 0) * 0.8, color: "#ffd9a0", thread: 0.4 + (it.light || 0) * 0.5 })
+    gl: (it, f) => ({ opacity: 0.2 + (it.light || 0) * 0.8, color: "#ffd9a0", thread: 0.4 + (it.light || 0) * 0.5, visible: f.uMid < 0.32 || f.uMid > 0.6 })
   });
 
   /* ════════════════ Twenty-one letters ════════════════ */

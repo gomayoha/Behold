@@ -106,9 +106,12 @@ window.Paint = (function () {
     get(key, big).then((r) => {
       if (img.dataset.key !== key + (big ? "@l" : "")) return;
       if (r) {
-        img.onload = () => img.classList.add("loaded");
+        // decode before showing, so a large painting never stalls a frame as it fades in
+        const done = () => { if (img.dataset.key === key + (big ? "@l" : "")) img.classList.add("loaded"); };
+        const ready = () => (img.decode ? img.decode().then(done, done) : done());
+        img.onload = ready;
         img.src = r.u;
-        if (img.complete && img.naturalWidth) img.classList.add("loaded");
+        if (img.complete && img.naturalWidth) ready();
       } else img.classList.add("missing");
       if (onDone) onDone(r);
     });

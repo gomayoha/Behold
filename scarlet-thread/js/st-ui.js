@@ -231,8 +231,7 @@
       // several books at once become one pill, so the pills never fall behind the story
       if (nb.length === 1) pop(`${IC.book}<span>${esc(ST.BOOK[nb[0]].n)}</span>`, "");
       else if (nb.length > 1) pop(`${IC.book}<span>${nb.length} books: ${esc(nb.slice(0, 2).map((b) => ST.BOOK[b].n).join(", "))}${nb.length > 2 ? "…" : ""}</span>`, "");
-      np.forEach((t) => pop(`${IC.knot}<span>${esc(THREADS[t].name)}</span>`, "scarlet"));
-      nk.slice(0, 3).forEach((t) => pop(`${IC.kept}<span>Kept: ${esc(THREADS[t].name)}</span>`, "gold"));
+      // promises planted and kept already show as cards in the scene, and the thread pulses: no extra pill
       if (np.length || nk.length) { window.GL && window.GL.pulse(); }
       if (nk.length && window.Ambient) window.Ambient.chime();
       if (nb.length || np.length || nk.length) { const hud = $("#hud"); hud.classList.remove("bump"); void hud.offsetWidth; hud.classList.add("bump"); }

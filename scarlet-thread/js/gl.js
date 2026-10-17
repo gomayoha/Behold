@@ -344,7 +344,7 @@ try {
   document.documentElement.classList.add("no-gl");
   throw e;
 }
-const PR = Math.min(window.devicePixelRatio || 1, MOBILE ? 2 : 1.75);
+const PR = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 1.75); // phones: soft particles look the same at 1.5x and cost half the pixels
 renderer.setPixelRatio(PR);
 renderer.setClearColor(0x000000, 1);
 const scene = new THREE.Scene();

@@ -14,12 +14,16 @@
   const focus = (im, s) => { if (s.pos) im.style.setProperty("--pos", s.pos); if (s.posm) im.style.setProperty("--posm", s.posm); };
   const NUM = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"];
 
+  /** The painting that opens an age, shown faintly behind its title card. */
+  const glimpse = (a) => { for (const s of a.scenes) { if (s.art) return s.art; const st = s.fx && s.fx.steps && s.fx.steps.find((x) => x.art); if (st) return st.art; } return null; };
+
   /* ---------- the title card of each age ---------- */
   ST.type("age", {
     build(it) {
       const a = it.age, first = it.ai === 0;
       return h(`
         <div class="age${first ? " first" : ""}">
+          ${glimpse(a) ? `<div class="age-bg" aria-hidden="true">${imgTag(glimpse(a), { big: true })}</div>` : ""}
           <div class="age-n" aria-hidden="true">${a.n}</div>
           <div class="age-in">
             <p class="age-k rv"><span>Chapter ${NUM[it.ai]}</span><i></i><span>${esc(a.s)}</span></p>
@@ -33,11 +37,12 @@
           </div>
         </div>`);
     },
-    init(it) { it.n = $(".age-n", it.el); it.inner = $(".age-in", it.el); },
+    init(it) { it.n = $(".age-n", it.el); it.inner = $(".age-in", it.el); it.bg = $(".age-bg", it.el); },
     update(it, f) {
       const { e, uMid: m, uOut: o } = f;
       css(it.n, "transform", `translate3d(-50%, calc(-50% + ${((0.5 - m) * 10).toFixed(2)}vh), 0) scale(${(lerp(0.7, 1, e) + o * 0.9).toFixed(3)})`);
       css(it.n, "opacity", (e * f.fo).toFixed(3));
+      if (it.bg) css(it.bg, "transform", `scale(${(1.14 - m * 0.06).toFixed(4)})`);
       // leaving: a quick, clean fade and a small step back (no blur: blurring a whole text block every frame stutters on phones)
       css(it.inner, "transform", `translate3d(0, ${(lerp(7, 0, e) - m * 5 - o * 8).toFixed(2)}vh, 0) scale(${(lerp(1.05, 1, e) - o * 0.06).toFixed(4)})`);
       css(it.inner, "opacity", f.to.toFixed(3));
@@ -58,14 +63,19 @@
         </div>`);
     },
     init(it) {
-      it.fr = $(".fr", it.el); it.im = $(".im", it.el); it.shade = $(".shade", it.el); it.blk = $(".blk", it.el);
+      it.fr = $(".fr", it.el); it.frIn = $(".fr-in", it.el); it.im = $(".im", it.el); it.shade = $(".shade", it.el); it.blk = $(".blk", it.el);
       focus(it.im, it.s);
+      // the slow push-in moves toward what matters in the painting, not just its middle
+      if (it.s.zoom) it.im.style.transformOrigin = it.s.zoom;
     },
     update(it, f) {
       const { e, uMid: m, uOut: o, mobile } = f;
-      const iy = lerp(mobile ? 20 : 15, 0, e), ix = lerp(mobile ? 9 : 25, 0, e), r = lerp(28, 0, e);
-      css(it.fr, "clipPath", `inset(${iy.toFixed(2)}% ${ix.toFixed(2)}% round ${r.toFixed(1)}px)`);
-      css(it.fr, "transform", `translate3d(0, ${lerp(5, 0, e).toFixed(2)}vh, 0) scale(${lerp(0.93, 1, e).toFixed(4)})`);
+      // The window opens by scaling the frame while the painting inside scales the other way, so the picture
+      // never stretches. Only transforms change, which the GPU composites without repainting. At rest the frame
+      // is slightly larger than the screen, so its rounded corners sit just outside it.
+      const sx = lerp(mobile ? 0.76 : 0.47, 1.05, e), sy = lerp(mobile ? 0.56 : 0.65, 1.05, e);
+      css(it.fr, "transform", `translate3d(0, ${lerp(5, 0, e).toFixed(2)}vh, 0) scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`);
+      css(it.frIn, "transform", `scale(${(1 / sx).toFixed(4)}, ${(1 / sy).toFixed(4)})`);
       css(it.im, "transform", `translate3d(${((0.5 - m) * 3).toFixed(2)}%, 0, 0) scale(${(1.34 - 0.22 * e - 0.06 * m + 0.2 * o).toFixed(4)})`);
       css(it.shade, "opacity", e.toFixed(3));
       css(it.blk, "opacity", (o * 0.92).toFixed(3));
@@ -81,7 +91,7 @@
       return h(`
         <div class="plate side-${side}">
           <div class="pl-stage">
-            <div class="pl-glow">${imgTag(s.art, { cls: "im-glow" })}</div>
+            <div class="pl-glow"><canvas width="48" height="48"></canvas></div>
             <figure class="pl"><div class="pl-in">${imgTag(s.art)}</div></figure>
             <p class="cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
           </div>
@@ -112,17 +122,19 @@
         <div class="portal${it.i % 2 ? " flip" : ""}">
           <div class="po-stage">
             <div class="po-halo"></div>
-            <div class="po"><div class="po-in">${imgTag(s.art)}</div></div>
+            <div class="po"><div class="po-in">${imgTag(s.art)}</div><i class="po-door l"></i><i class="po-door r"></i></div>
             <p class="cr" data-credit="${s.art}">${creditHTML(s.art)}</p>
           </div>
           ${copyHTML(s)}
         </div>`);
     },
-    init(it) { it.po = $(".po", it.el); it.im = $(".po .im", it.el); it.halo = $(".po-halo", it.el); it.stage = $(".po-stage", it.el); focus(it.im, it.s); },
+    init(it) { it.po = $(".po", it.el); it.im = $(".po .im", it.el); it.halo = $(".po-halo", it.el); it.stage = $(".po-stage", it.el); it.dl = $(".po-door.l", it.el); it.dr = $(".po-door.r", it.el); focus(it.im, it.s); },
     update(it, f) {
       const { e, uMid: m, uOut: o } = f;
-      const open = lerp(50, 0, ease(f.uIn * 1.1));
-      css(it.po, "clipPath", `inset(0% ${open.toFixed(2)}% 0% ${open.toFixed(2)}% round 999px 999px 0 0)`);
+      // two doors in the arch swing apart (transforms only)
+      const open = ease(f.uIn * 1.1);
+      css(it.dl, "transform", `translate3d(${(-open * 101).toFixed(2)}%, 0, 0)`);
+      css(it.dr, "transform", `translate3d(${(open * 101).toFixed(2)}%, 0, 0)`);
       css(it.im, "transform", `translate3d(0, ${((0.5 - m) * 6).toFixed(2)}%, 0) scale(${(1.5 - 0.32 * e - 0.08 * m + 0.25 * o).toFixed(4)})`);
       css(it.stage, "transform", `translate3d(0, ${(lerp(6, 0, e) - m * 3).toFixed(2)}vh, ${(lerp(-500, 0, e) + o * 700).toFixed(1)}px)`);
       css(it.stage, "opacity", f.fo.toFixed(3));

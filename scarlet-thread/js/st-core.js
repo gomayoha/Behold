@@ -152,7 +152,7 @@ window.ST = (function () {
     items.forEach((it) => { it.top = y; it.bottom = y + Math.round(it.h * vh); y = it.bottom; });
     endY = y;
     items.forEach((it) => it.def.measure && it.def.measure(it));
-    items.forEach((it) => { if (it.shown) { tidyKickers(it.el); fitPhone(it); fitCopy(it); } });
+    items.forEach((it) => { it.fitFor = null; if (it.shown) { it.fitFor = innerWidth + "x" + innerHeight; tidyKickers(it.el); fitPhone(it); fitCopy(it); } });
     return true;
   }
 
@@ -297,6 +297,7 @@ window.ST = (function () {
         if (!c.classList.contains("k-dot")) return;
         c.hidden = false; c.style.visibility = "";
       });
+      kids.forEach((c) => { if (c.tagName === "SPAN") c.style.whiteSpace = c.offsetWidth > k.clientWidth ? "normal" : ""; });
       // compare the middle of each line box: a 3px dot and a line of text share a line when their centres are close
       const mid = (el) => el.offsetTop + el.offsetHeight / 2;
       kids.forEach((c, i) => {
@@ -325,14 +326,20 @@ window.ST = (function () {
     const copy = it.el.querySelector(":scope > .copy, :scope > .fx > .copy, :scope .nv-copy, :scope .dw-copy");
     if (!copy) return;
     it.el.classList.remove("dense", "denser");
-    const top = () => copy.getBoundingClientRect().top;
     if (copy.offsetHeight === 0) return;
-    if (top() < 64) it.el.classList.add("dense");
-    if (top() < 64) it.el.classList.add("denser");
+    const hud = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hud-h")) || 84;
+    const kids = Array.from(copy.children).filter((c) => c.offsetHeight > 0);
+    if (!kids.length) return;
+    // the words, not the column: a plate's text column spans the whole screen height
+    const over = () => kids[0].getBoundingClientRect().top < 64 || kids[kids.length - 1].getBoundingClientRect().bottom > innerHeight - hud + 30;
+    if (over()) it.el.classList.add("dense");
+    if (over()) it.el.classList.add("denser");
   }
   function show(it) {
     it.shown = true; it.el.classList.add("on"); it.el.removeAttribute("aria-hidden");
-    tidyKickers(it.el); fitPhone(it); fitCopy(it);
+    // layout is measured once per screen size, not every time a scene comes back into view
+    const size = innerWidth + "x" + innerHeight;
+    if (it.fitFor !== size) { it.fitFor = size; tidyKickers(it.el); fitPhone(it); fitCopy(it); }
     if (it.def.show) it.def.show(it);
   }
   function hide(it) {

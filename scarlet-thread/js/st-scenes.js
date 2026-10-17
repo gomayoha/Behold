@@ -10,8 +10,8 @@
 (function () {
   "use strict";
   const { $, h, esc, css, lerp, clamp, ease, words, copyHTML, imgTag, creditHTML, linkHTML } = ST;
-  /** Where a painting is cropped: pos everywhere, posm on a phone. */
-  const focus = (im, s) => { if (s.pos) im.style.setProperty("--pos", s.pos); if (s.posm) im.style.setProperty("--posm", s.posm); };
+  /** Where a painting is cropped: pos everywhere, posm on a phone; zs crops tighter on wide screens (e.g. past an arched frame). */
+  const focus = (im, s) => { if (s.pos) im.style.setProperty("--pos", s.pos); if (s.posm) im.style.setProperty("--posm", s.posm); if (s.liftm) im.style.setProperty("--liftm", s.liftm); if (s.zs) im.style.setProperty("--zs", s.zs); };
   const NUM = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"];
 
   /** The painting that opens an age, shown faintly behind its title card. */
@@ -28,7 +28,7 @@
           <div class="age-in">
             <p class="age-k rv"><span>Chapter ${NUM[it.ai]}</span><i></i><span>${esc(a.s)}</span></p>
             <h2 class="age-t">${words(a.t)}</h2>
-            <p class="age-s rv">${esc(a.books)} <i>·</i> ${esc(a.yl)}</p>
+            <p class="age-s rv">${esc(a.books)} <i>·</i> <span class="nw">${esc(a.yl)}</span></p>
             <div class="age-rule rv"><i></i></div>
             <blockquote class="age-v rv"><p>“${esc(a.v)}”</p><cite>${esc(a.r)}</cite></blockquote>
             <p class="age-x rv">${esc(a.x)}</p>
@@ -78,7 +78,7 @@
       css(it.frIn, "transform", `scale(${(1 / sx).toFixed(4)}, ${(1 / sy).toFixed(4)})`);
       css(it.im, "transform", `translate3d(${((0.5 - m) * 3).toFixed(2)}%, 0, 0) scale(${(1.34 - 0.22 * e - 0.06 * m + 0.2 * o).toFixed(4)})`);
       css(it.shade, "opacity", e.toFixed(3));
-      css(it.blk, "opacity", (o * 0.92).toFixed(3));
+      css(it.blk, "opacity", (clamp(o * 2.6) * 0.96).toFixed(3));
     },
     gl() { return {}; }
   });

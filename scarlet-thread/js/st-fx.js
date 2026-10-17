@@ -65,7 +65,7 @@
   stepsType("days", {
     lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="dz-n">${esc(x.n)}</p><h4 class="dz-t">${esc(x.t)}</h4><p class="dz-x">${esc(x.x)}</p><cite>${esc(x.r)}</cite></article>`,
-    extra: (it) => `<div class="dz-big" aria-hidden="true"><span>1</span></div><div class="dz-gal" aria-hidden="true">${it.s.fx.steps.map((x, i) => x.art ? `<div class="dz-im" data-i="${i}"${x.pos ? ` style="--pos:${esc(x.pos)}"` : ""}>${imgTag(x.art, { big: true })}</div>` : "").join("")}</div>${it.s.fx.steps.map((x) => x.art ? `<p class="cr dz-cr" data-credit="${x.art}">${creditHTML(x.art)}</p>` : "").join("")}`,
+    extra: (it) => `<div class="dz-big" aria-hidden="true"><span>1</span></div><div class="dz-gal" aria-hidden="true">${it.s.fx.steps.map((x, i) => x.art ? `<div class="dz-im" data-i="${i}" style="${x.pos ? `--pos:${esc(x.pos)};` : ""}${x.z ? `--z:${x.z};` : ""}">${imgTag(x.art, { big: true })}</div>` : "").join("")}</div>${it.s.fx.steps.map((x) => x.art ? `<p class="cr dz-cr" data-credit="${x.art}">${creditHTML(x.art)}</p>` : "").join("")}`,
     init(it) { it.big = $(".dz-big span", it.el); it.ims = $$(".dz-im", it.el); it.crs = $$(".dz-cr", it.el); },
     update(it, f, i, l, go) {
       if (it.bigI !== i) { it.big.textContent = i + 1; it.bigI = i; }
@@ -125,9 +125,10 @@
     lead: 0.12,
     step: (x, i) => `<article class="st-step s-${x.t}" data-i="${i}"><p class="wh-word">${esc(x.t === "voice" ? "a still small voice" : x.t).split("").map((c, k) => `<span style="--k:${k}">${c === " " ? "&nbsp;" : esc(c)}</span>`).join("")}</p><p class="wh-x">${esc(x.x)}</p></article>`,
     foot: (it) => `<cite class="wh-ref">${esc(it.s.fx.r)}</cite>`,
-    init(it) { it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.bgEl = $(".fx-bg", it.el); it.cr = $(".cr", it.el); },
     update(it, f, i, l, go) {
       css(it.bgEl, "opacity", go && i === 3 ? (0.15 + l * 0.35).toFixed(3) : "0");
+      css(it.cr, "opacity", go && i === 3 ? (f.to * 0.9).toFixed(3) : "0");
       cls(it.el, "quake", go && i === 1);
     },
     gl: (it, f, i) => {
@@ -167,7 +168,7 @@
       const d = 1 + Math.floor(p * 39.999);
       if (d !== it.d) { it.num.textContent = d; it.unit.textContent = d === 1 ? "day" : "days"; it.d = d; }
       css(it.bgEl, "transform", `scale(${(1.25 - f.e * 0.15 - p * 0.05).toFixed(4)})`);
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ opacity: 1 - f.e, visible: f.e < 0.99 })
   });
@@ -186,7 +187,7 @@
       return h(`<div class="fx tongues ${mode}">${bg(s.art, "dim")}
         <div class="tg-field">${it.spans.map((x) => `<span lang="${x.lang}" dir="${x.lang === "he" || x.lang === "ar" ? "rtl" : "ltr"}"${x.lang === "en" ? ' class="en"' : ""}>${esc(x.t)}</span>`).join("")}</div>
         <p class="tg-center">${esc(center)}</p>
-        <p class="tg-note">${mode === "scatter" ? "At Babel, one language became many." : "At Pentecost, every language heard one message."}</p>
+        <p class="tg-note">${mode === "scatter" ? "At Babel, one language became many." : "At Pentecost, one message was heard in every language."}</p>
         ${copyHTML(s, { cls: "bottom" })}</div>`);
     },
     init(it) { it.els = $$(".tg-field span", it.el); it.center = $(".tg-center", it.el); it.note = $(".tg-note", it.el); it.bgEl = $(".fx-bg", it.el); },
@@ -198,14 +199,18 @@
         const x = it.spans[k];
         let tx, ty, tz, rot, op;
         const sk = f.mobile ? 0.42 : 1;
-        if (scatter) { tx = x.sx * p * sk; ty = x.sy * p * (f.mobile ? 0.5 : 1); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); }
-        else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); }
+        if (scatter) { tx = (f.mobile ? x.sx * sk : x.sx * 0.35 + 4) * p; ty = x.sy * p * (f.mobile ? 0.4 : 0.7); tz = x.sz * p; rot = x.rot * p * (f.mobile ? 0.5 : 1); op = clamp(p * 3) * (1 - p * 0.45); }
+        else {
+          // at Pentecost each tongue arrives in turn, like voices joining a choir
+          const q = 1 - easeIO(range(f.uMid, 0.06 + k * 0.022, 0.16 + k * 0.022)), ry = f.mobile ? x.ry * 0.55 : x.ry;
+          tx = lerp(x.rx, x.sx * 0.4, q); ty = lerp(ry, ry + x.sy * 0.3, q); tz = x.sz * q * 0.5; rot = x.rot * q * 0.5; op = clamp(1 - q * 1.6) * clamp(f.e * 2);
+        }
         css(el, "transform", `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotate(${rot.toFixed(2)}deg)`);
         css(el, "opacity", (op * f.fo).toFixed(3));
       });
       css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0) * f.to).toFixed(3) : "0");
       css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * f.to : 0).toFixed(3));
-      css(it.bgEl, "opacity", (f.e * (scatter ? 1 - p * 0.55 : 0.4 + p * 0.3)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (scatter ? 1 - p * 0.55 : 0.4 + p * 0.3) * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.2 - f.uMid * 0.12).toFixed(4)})`);
     },
     gl: (it, f) => ({ opacity: 0.9, thread: 0.5 })
@@ -318,11 +323,14 @@
   ST.type("stars", {
     build(it) {
       const r = rnd(41), s = it.s;
+      const taken = [[50, 12]]; // names keep their distance, so none sits on another
       const names = LINE.map((n, i) => {
         const last = i === LINE.length - 1;
-        let x, y;
-        do { x = 5 + r() * 90; y = 10 + r() * 44; } while (!last && x > 24 && x < 76 && y > 26);
+        let x, y, tries = 0;
+        do { x = 5 + r() * 90; y = 10 + r() * 44; tries++; }
+        while (!last && tries < 400 && ((x > 22 && x < 78 && y > 24) || taken.some((p) => Math.abs(p[0] - x) < 9 && Math.abs(p[1] - y) < 4.5)));
         if (last) { x = 50; y = 12; }
+        taken.push([x, y]);
         const key = last || ["Isaac", "Jacob", "Judas", "Booz", "David", "Solomon", "Josias", "Zorobabel", "Joseph"].includes(n) && !(n === "Jacob" && i > 30);
         return `<span class="${last ? "last" : key ? "key" : "minor"}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%">${esc(n)}</span>`;
       });
@@ -364,7 +372,7 @@
       css(it.svg, "transform", `translate(-50%, -50%) perspective(900px) rotateY(${lerp(-24, -8, f.e).toFixed(2)}deg) scale(${lerp(0.9, 1, f.e).toFixed(4)})`);
       css(it.svg, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.v, "on", it.isIn && f.uMid < 0.55);
-      css(it.bgEl, "opacity", (f.e * 0.9).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * 0.9 * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.3, visible: false })
   });
@@ -411,7 +419,7 @@
         <p class="jr-shout">“Shout; for the LORD hath given you the city.” <cite>Joshua 6:16</cite></p>
         ${copyHTML(s, { cls: "top" })}</div>`);
     },
-    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.lapN = $(".jr-n", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.bEls = $$(".jr-wall i", it.el); it.day = $(".jr-day b", it.el); it.laps = $$(".jr-laps i", it.el); it.dayBox = $(".jr-day", it.el); it.lapN = $(".jr-n", it.el); it.shout = $(".jr-shout", it.el); it.wall = $(".jr-wall", it.el); it.bgEl = $(".fx-bg", it.el); it.copy = $(".copy", it.el); },
     update(it, f) {
       const days = range(f.uMid, 0.04, 0.6) * 7, day = Math.min(7, Math.floor(days) + 1), laps = day === 7 ? Math.min(7, Math.floor((days - 6) * 7.999) + 1) : 1;
       if (day !== it.d) { it.day.textContent = day; it.d = day; }
@@ -421,7 +429,9 @@
       const fall = ease(range(f.uMid, 0.66, 0.88));
       it.fall = fall;
       cls(it.dayBox, "on", it.isIn && f.uMid < 0.7);
-      cls(it.shout, "on", it.isIn && f.uMid > 0.58 && f.uMid < 0.8);
+      const shout = it.isIn && f.uMid > 0.58 && f.uMid < 0.8;
+      cls(it.shout, "on", shout);
+      cls(it.copy, "away", shout); // the story steps aside while the shout fills the screen
       it.bEls.forEach((el, i) => {
         const b = it.bricks[i], q = clamp((fall - b.d) / 0.6);
         css(el, "transform", q > 0 ? `translate3d(${(b.rx * q * 10).toFixed(2)}vw, ${(q * q * (70 + b.ry * 40)).toFixed(2)}vh, ${(b.rz * q * 200).toFixed(1)}px) rotate(${(b.rot * q).toFixed(1)}deg)` : "none");
@@ -429,7 +439,7 @@
       css(it.wall, "transform", `perspective(1000px) rotateX(${lerp(30, 8, f.e).toFixed(2)}deg) translateY(${lerp(30, 0, f.e).toFixed(2)}vh)`);
       css(it.wall, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.el, "fallen", fall > 0.6);
-      css(it.bgEl, "opacity", (f.e * (0.45 + fall * 0.4)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.45 + fall * 0.4) * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ a: "walls", b: "rubble", t: it.fall || 0, in: "walls", out: "rubble", opacity: 0.8, scale: 1.2, y: -0.6, thread: 0.4 })
   });
@@ -490,7 +500,7 @@
       css(it.stone, "left", `calc(var(--sx) + (var(--ex) - var(--sx)) * ${x.toFixed(4)})`);
       css(it.stone, "bottom", `calc(var(--sy) + (var(--ey) - var(--sy)) * ${x.toFixed(4)} + ${(-y * 100).toFixed(2)}%)`);
       css(it.shade, "opacity", (0.35 + rise * 0.45).toFixed(3));
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.22 - f.e * 0.14 - m * 0.06).toFixed(4)})`);
     },
     gl: (it, f) => ({ opacity: 1 - f.e, visible: f.e < 0.99 })
@@ -522,7 +532,7 @@
         if (lit !== L.lit) { L.ws.forEach((w, k) => cls(w, "on", k < lit)); L.lit = lit; }
       });
       if (it.knotsEl) cls(it.knotsEl, "on", it.isIn && f.uMid > 0.86);
-      css(it.bgEl, "opacity", (f.e * 0.4).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * 0.4 * f.fo).toFixed(3));
     },
     gl: (it, f) => ({ opacity: 0.8, thread: it.s.fx.style === "scarlet" ? 1 : 0.6 })
   });
@@ -540,11 +550,12 @@
     init(it) { it.n = $(".dv-half.n", it.el); it.sEl = $(".dv-half.s", it.el); it.crack = $(".dv-crack", it.el); },
     update(it, f) {
       const p = easeIO(range(f.uMid, 0.25, 0.6));
-      css(it.n, "transform", `translate3d(${(-p * 6).toFixed(2)}vw, 0, 0) rotateY(${(p * 8).toFixed(2)}deg)`);
-      css(it.sEl, "transform", `translate3d(${(p * 6).toFixed(2)}vw, 0, 0) rotateY(${(-p * 8).toFixed(2)}deg)`);
+      const dx = f.mobile ? 0 : 6;
+      css(it.n, "transform", `translate3d(${(-p * dx).toFixed(2)}vw, 0, 0) rotateY(${(p * 8).toFixed(2)}deg)`);
+      css(it.sEl, "transform", `translate3d(${(p * dx).toFixed(2)}vw, 0, 0) rotateY(${(-p * 8).toFixed(2)}deg)`);
       css(it.n, "opacity", (p * f.fo).toFixed(3)); css(it.sEl, "opacity", (p * f.fo).toFixed(3));
       css(it.crack, "transform", `translateX(-50%) scaleY(${ease(range(f.uMid, 0.15, 0.45)).toFixed(4)})`);
-      cls(it.el, "split", p > 0.3);
+      cls(it.el, "split", f.uMid > 0.22);
     },
     gl: (it, f) => ({ opacity: 0.8, scale: 1.1, thread: 0.3 })
   });
@@ -564,7 +575,7 @@
       css(it.glow, "opacity", (burn * f.fo).toFixed(3));
       cls(it.pre, "on", it.isIn && m < 0.42);
       cls(it.el, "burnt", m > 0.47);
-      css(it.bgEl, "opacity", (f.e * (0.55 + burn * 0.35)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.55 + burn * 0.35) * f.fo).toFixed(3));
       it.burn = burn;
     },
     gl: (it, f) => ({ opacity: 0.5 + (it.burn || 0) * 0.5, scale: 1 + (it.burn || 0) * 0.5, color: "#ff7a2c", thread: 0.5 })
@@ -584,7 +595,7 @@
         <div class="dp-lines">${L.map(([t, r]) => `<p class="dp-l">“${esc(t)}”<cite>${r}</cite></p>`).join("")}</div>
         ${copyHTML(s, { cls: "bottom" })}</div>`);
     },
-    init(it) { it.water = $(".dp-water", it.el); it.rays = $(".dp-rays", it.el); it.meter = $(".dp-meter b", it.el); it.meterBox = $(".dp-meter", it.el); it.lines = $$(".dp-l", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.water = $(".dp-water", it.el); it.rays = $(".dp-rays", it.el); it.meter = $(".dp-meter b", it.el); it.meterBox = $(".dp-meter", it.el); it.lines = $$(".dp-l", it.el); it.bgEl = $(".fx-bg", it.el); it.cr = $(".cr", it.el); },
     update(it, f) {
       const m = f.uMid, down = range(m, 0.12, 0.62), up = range(m, 0.7, 0.86);
       it.depth = down * (1 - up);
@@ -595,7 +606,8 @@
       cls(it.meterBox, "on", it.isIn && m > 0.12 && m < 0.72);
       const li = m < 0.22 ? -1 : Math.min(2, Math.floor(range(m, 0.22, 0.7) * 3));
       it.lines.forEach((l, i) => cls(l, "on", it.isIn && i === li));
-      css(it.bgEl, "opacity", (up * 0.85).toFixed(3));
+      css(it.bgEl, "opacity", (up * 0.85 * f.fo).toFixed(3));
+      css(it.cr, "opacity", (up * f.to).toFixed(3));
       cls(it.el, "surface", up > 0.4);
       cls(it.el, "under", m > 0.14 && m < 0.74);
     },
@@ -627,7 +639,7 @@
       const m = f.uMid, li = m < 0.12 ? -1 : Math.min(3, Math.floor(range(m, 0.12, 0.72) * 4));
       it.lines.forEach((l, i) => cls(l, "on", it.isIn && i === li && m < 0.76));
       it.rise = ease(range(m, 0.3, 0.78));
-      css(it.bgEl, "opacity", (f.e * (0.5 - it.rise * 0.35)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (0.5 - it.rise * 0.35) * f.fo).toFixed(3));
       cls(it.el, "alive", m > 0.76);
       cls(it.el, "mid", m > 0.1 && m < 0.76);
     },
@@ -710,7 +722,8 @@
         if (op <= 0.001) { css(fig, "visibility", "hidden"); return; }
         css(fig, "visibility", "visible");
         css(fig, "transform", `translate(-50%, -50%) translate3d(calc(var(--x) * var(--xs, 1)), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
-        css(fig, "opacity", (op * f.fo).toFixed(3));
+        css(fig, "opacity", (op * f.fo * range(f.uMid, 0.17, 0.24)).toFixed(3));
+        cls(fig, "front", z > -1100);
       });
       cls(it.copy, "away", f.uMid > 0.2);
       cls(it.endEl, "on", it.isIn && f.uMid > 0.9);
@@ -746,7 +759,7 @@
       // 0 → .16  the promises, spoken into the dark
       const pro = 1 - range(m, 0.13, 0.17);
       css(it.pro, "opacity", (pro * f.ti).toFixed(3));
-      cls(it.lead, "on", inn && m < 0.16);
+      cls(it.lead, "on", f.ti > 0.3 && m < 0.16);
       it.pqs.forEach((q, i) => cls(q, "on", inn && m > 0.025 + i * 0.03 && m < 0.16));
       // .15 → .36  the road to Bethlehem   ·   .36 → .6  the shepherds' field   ·   .62 →  the birth
       const win = [[0.15, 0.36], [0.36, 0.6]];
@@ -929,8 +942,8 @@
         if (local < 0) { x = 0; y = 4; z = -1800; s = 1; op = clamp(1 + local * 1.2) * 0.6; cap = 0; }
         else if (local < 1) {
           const out = ease(range(local, 0.62, 1));
-          x = lerp(0, rx, out); y = lerp(0, ry, out); z = lerp(lerp(-900, 0, ease(range(local, 0, 0.3))), -420, out); s = lerp(1, 0.42, out); op = 1 - out * 0.4; cap = local < 0.7 ? 1 : 0;
-        } else { x = rx; y = ry; z = -420; s = 0.42; op = 0.6; cap = 0; }
+          x = lerp(0, rx, out); y = lerp(0, ry, out); z = lerp(lerp(-900, 0, ease(range(local, 0, 0.3))), -420, out); s = lerp(1, f.mobile ? 0.32 : 0.42, out); op = 1 - out * 0.4; cap = local < 0.7 ? 1 : 0;
+        } else { x = rx; y = ry; z = -420; s = f.mobile ? 0.32 : 0.42; op = 0.6; cap = 0; }
         css(c, "transform", `translate(-50%, -50%) translate3d(${x.toFixed(2)}vw, ${y.toFixed(2)}vh, ${z.toFixed(1)}px) scale(${s.toFixed(4)})`);
         css(c, "opacity", go ? (op * f.fo).toFixed(3) : "0");
         cls(c, "cap", cap && go);
@@ -961,7 +974,7 @@
     init(it) { it.bgEl = $(".fx-bg", it.el); it.copy = $(".copy", it.el); it.cube = $(".nw-cube", it.el); it.book = $(".nw-book", it.el); it.rows = $$(".nw-row", it.el); it.endEl = $(".nw-end", it.el); },
     update(it, f) {
       const m = f.uMid, inn = it.isIn;
-      css(it.bgEl, "opacity", (f.e * (1 - range(m, 0.22, 0.32) * 0.82)).toFixed(3));
+      css(it.bgEl, "opacity", (f.e * (1 - range(m, 0.22, 0.32) * 0.82) * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.25 - f.e * 0.15 - m * 0.08).toFixed(4)})`);
       cls(it.copy, "away", m > 0.24);
       cls(it.cube, "on", inn && m > 0.28 && m < 0.5);
@@ -998,6 +1011,6 @@
       cls(it.endEl, "on", inn && m > 0.66);
       it.loop = range(m, 0.6, 0.8);
     },
-    gl: (it, f) => ({ opacity: 1, scale: 1 + (it.loop || 0) * 0.12, color: "#ff3a4c", thread: 1, threadY: -2.6 })
+    gl: (it, f) => ({ opacity: 1, scale: (f.mobile ? 0.72 : 1) + (it.loop || 0) * 0.12, color: "#ff3a4c", thread: 1, threadY: -2.6 })
   });
 })();

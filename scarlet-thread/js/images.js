@@ -90,10 +90,12 @@ window.Paint = (function () {
     })());
   }
 
-  /** The credit line for a painting, corrected if a search found a different file. */
+  /** The credit line for a painting, corrected if a search found a different file.
+   *  Commons metadata is often raw Wikidata (multilingual labels, "QS:" codes, scan file names): use it only when it reads cleanly. */
+  const clean = (s, max) => s && s.length <= max && !/QS:|label|title|\(\d{6,}\)|https?:|\bdate\b|\.(jpe?g|png|tiff?)\b/i.test(s);
   function credit(key, found) {
     const a = ART[key] || {};
-    if (found && found.searched && found.t) return { t: found.t, a: found.a || a.a, y: found.y || "" };
+    if (found && found.searched && clean(found.t, 90) && clean(found.a || a.a, 60)) return { t: found.t, a: found.a || a.a, y: /^\d{4}$/.test(found.y) ? found.y : "" };
     return { t: a.t, a: a.a, y: a.y };
   }
 

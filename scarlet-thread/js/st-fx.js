@@ -20,6 +20,7 @@
   /* ════════════════ Steps: the days, the plagues, the tablets, wisdom, the voice ════════════════ */
   function stepsType(style, opts) {
     ST.type("steps-" + style, {
+      lead: opts.lead == null ? 0.1 : opts.lead,
       build(it) {
         const s = it.s, st = s.fx.steps;
         return h(`
@@ -39,7 +40,7 @@
       },
       update(it, f) {
         const lead = opts.lead == null ? 0.1 : opts.lead;
-        const p = range(f.uMid, lead, 0.96), go = f.uMid > lead * 0.7 && it.isIn;
+        const p = range(f.uMid, lead, 0.96), go = f.uMid > lead * 0.85 && it.isIn;
         const { i, l } = stepAt(p, it.n);
         cls(it.el, "go", go);
         if (go !== it.wasGo || i !== it.step) {
@@ -61,6 +62,7 @@
 
   // The seven days of creation
   stepsType("days", {
+    lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="dz-n">${esc(x.n)}</p><h4 class="dz-t">${esc(x.t)}</h4><p class="dz-x">${esc(x.x)}</p><cite>${esc(x.r)}</cite></article>`,
     extra: () => `<div class="dz-big" aria-hidden="true"><span>1</span></div>`,
     init(it) { it.big = $(".dz-big span", it.el); },
@@ -101,6 +103,7 @@
 
   // Words of the wise
   stepsType("wisdom", {
+    lead: 0.2,
     step: (x, i) => `<article class="st-step" data-i="${i}"><p class="wz-n">${esc(x.n)}</p><blockquote><p>“${esc(x.t)}”</p><cite>${esc(x.r)}</cite></blockquote></article>`,
     gl: (it, f) => ({ opacity: 0.85, scale: 1.1, thread: 0.6 })
   });
@@ -132,7 +135,7 @@
       it.steps.forEach((c, k) => {
         const d = k - p, a = clamp(Math.abs(d), 0, 2);
         css(c, "transform", `translate3d(${(d * (f.mobile ? 80 : 46)).toFixed(2)}vw, 0, ${(-a * 480).toFixed(1)}px) rotateY(${(-d * 34).toFixed(2)}deg)`);
-        css(c, "opacity", go ? clamp(1 - a * 0.85).toFixed(3) : "0");
+        css(c, "opacity", go ? (clamp(1 - a * 0.85) * f.to).toFixed(3) : "0");
       });
     },
     gl: () => ({ opacity: 0.9, thread: 0.6 })
@@ -186,11 +189,11 @@
         if (scatter) { tx = x.sx * p; ty = x.sy * p; tz = x.sz * p; rot = x.rot * p; op = clamp(p * 3) * (1 - p * 0.45); blur = p * 3; }
         else { const q = 1 - p, ry = f.mobile ? x.ry * 0.55 : x.ry; tx = lerp(x.rx, x.sx, q); ty = lerp(ry, x.sy, q); tz = x.sz * q; rot = x.rot * q; op = clamp(1 - q * 0.8) * clamp(f.e * 2); blur = q * 4; }
         css(el, "transform", `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotate(${rot.toFixed(2)}deg)`);
-        css(el, "opacity", op.toFixed(3));
+        css(el, "opacity", (op * f.fo).toFixed(3));
         css(el, "filter", blur > 0.2 && !f.mobile ? `blur(${blur.toFixed(1)}px)` : "none");
       });
-      css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0)).toFixed(3) : "0");
-      css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * (1 - f.uOut) : 0).toFixed(3));
+      css(it.center, "opacity", scatter ? (clamp(1 - p * 2.5) * (it.isIn ? 1 : 0) * f.to).toFixed(3) : "0");
+      css(it.note, "opacity", (it.isIn ? clamp((p - 0.5) * 3) * f.to : 0).toFixed(3));
       css(it.bgEl, "opacity", (f.e * (scatter ? 1 - p * 0.55 : 0.4 + p * 0.3)).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.2 - f.uMid * 0.12).toFixed(4)})`);
     },
@@ -277,7 +280,7 @@
       it.cities.forEach((c, i) => cls(c, "on", drawn >= it.cityAt[i] - 0.5));
       it.legsEl.forEach((li, i) => { cls(li, "on", drawn > 0 && i === active); cls(li, "past", i < active); });
       css(it.stage, "transform", `perspective(1400px) rotateX(${(lerp(56, 16, f.e) - p * 6).toFixed(2)}deg) scale(${(lerp(0.8, 1, f.e) + p * 0.04).toFixed(4)}) translateZ(${(f.uOut * 300).toFixed(1)}px)`);
-      css(it.stage, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.stage, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.45, scale: 1.4, thread: 0.3 })
   });
@@ -330,7 +333,7 @@
       const p = range(f.uMid, 0.05, 0.6);
       it.blood.forEach((b, i) => css(b, "strokeDashoffset", (1 - clamp(p * 3 - i)).toFixed(4)));
       css(it.svg, "transform", `translate(-50%, -50%) perspective(900px) rotateY(${lerp(-24, -8, f.e).toFixed(2)}deg) scale(${lerp(0.9, 1, f.e).toFixed(4)})`);
-      css(it.svg, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.svg, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.v, "on", it.isIn && f.uMid < 0.55);
       css(it.bgEl, "opacity", (f.e * 0.9).toFixed(3));
     },
@@ -393,7 +396,7 @@
         css(el, "transform", q > 0 ? `translate3d(${(b.rx * q * 10).toFixed(2)}vw, ${(q * q * (70 + b.ry * 40)).toFixed(2)}vh, ${(b.rz * q * 200).toFixed(1)}px) rotate(${(b.rot * q).toFixed(1)}deg)` : "none");
       });
       css(it.wall, "transform", `perspective(1000px) rotateX(${lerp(30, 8, f.e).toFixed(2)}deg) translateY(${lerp(30, 0, f.e).toFixed(2)}vh)`);
-      css(it.wall, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.wall, "opacity", (f.e * f.fo).toFixed(3));
       cls(it.el, "fallen", fall > 0.6);
       css(it.bgEl, "opacity", (f.e * (0.45 + fall * 0.4)).toFixed(3));
     },
@@ -424,7 +427,7 @@
       const j = Math.min(11, Math.floor(p * 12));
       if (j !== it.j) { it.cname.textContent = it.s.fx.judges[j]; it.cnum.textContent = `${j + 1} of 12`; it.names.forEach((n, k) => { cls(n, "on", k === j); cls(n, "past", k < j); }); it.j = j; }
       css(it.stage, "transform", `perspective(1200px) rotateX(${lerp(40, 0, f.e).toFixed(2)}deg) scale(${(lerp(0.8, 1, f.e) + f.uOut * 0.3).toFixed(4)})`);
-      css(it.stage, "opacity", (f.e * (1 - f.uOut)).toFixed(3));
+      css(it.stage, "opacity", (f.e * f.fo).toFixed(3));
     },
     gl: () => ({ opacity: 0.55, scale: 1.3, thread: 0.5 })
   });
@@ -446,7 +449,7 @@
     init(it) { it.scale = $(".go-scale", it.el); it.giant = $(".go-fig.giant", it.el); it.stone = $(".go-stone", it.el); it.shade = $(".go-shade", it.el); it.bgEl = $(".fx-bg", it.el); it.david = $(".go-fig.david", it.el); },
     update(it, f) {
       const m = f.uMid, rise = ease(range(m, 0.22, 0.42)), grow = ease(range(m, 0.3, 0.5)), fly = range(m, 0.52, 0.7), fall = ease(range(m, 0.7, 0.84));
-      css(it.scale, "opacity", (rise * (1 - f.uOut)).toFixed(3));
+      css(it.scale, "opacity", (rise * f.fo).toFixed(3));
       css(it.scale, "transform", `translateY(${lerp(8, 0, rise).toFixed(2)}vh)`);
       css(it.giant, "height", `${lerp(56, 97.5, grow).toFixed(2)}%`);
       css(it.giant, "transform", `rotate(${(fall * 72).toFixed(2)}deg)`);
@@ -483,7 +486,7 @@
       it.lines.forEach((L, j) => {
         const d = j - (p - 0.5);
         css(L.el, "transform", `translate3d(0, calc(-50% + ${(d * (f.mobile ? 30 : 24)).toFixed(2)}vh), ${(-Math.abs(d) * 160).toFixed(1)}px)`);
-        css(L.el, "opacity", go ? clamp(1 - Math.abs(d) * 1.15).toFixed(3) : "0");
+        css(L.el, "opacity", go ? (clamp(1 - Math.abs(d) * 1.15) * f.to).toFixed(3) : "0");
         const lit = Math.floor(clamp(p - j) * L.ws.length * 1.15);
         if (lit !== L.lit) { L.ws.forEach((w, k) => cls(w, "on", k < lit)); L.lit = lit; }
       });
@@ -508,7 +511,7 @@
       const p = easeIO(range(f.uMid, 0.25, 0.6));
       css(it.n, "transform", `translate3d(${(-p * 6).toFixed(2)}vw, 0, 0) rotateY(${(p * 8).toFixed(2)}deg)`);
       css(it.sEl, "transform", `translate3d(${(p * 6).toFixed(2)}vw, 0, 0) rotateY(${(-p * 8).toFixed(2)}deg)`);
-      css(it.n, "opacity", (p * (1 - f.uOut)).toFixed(3)); css(it.sEl, "opacity", (p * (1 - f.uOut)).toFixed(3));
+      css(it.n, "opacity", (p * f.fo).toFixed(3)); css(it.sEl, "opacity", (p * f.fo).toFixed(3));
       css(it.crack, "transform", `translateX(-50%) scaleY(${ease(range(f.uMid, 0.15, 0.45)).toFixed(4)})`);
       cls(it.el, "split", p > 0.3);
     },
@@ -527,7 +530,7 @@
     update(it, f) {
       const m = f.uMid, flash = Math.max(0, 1 - Math.abs(m - 0.45) / 0.06), burn = range(m, 0.42, 0.7);
       css(it.flash, "opacity", flash.toFixed(3));
-      css(it.glow, "opacity", (burn * (1 - f.uOut)).toFixed(3));
+      css(it.glow, "opacity", (burn * f.fo).toFixed(3));
       cls(it.pre, "on", it.isIn && m < 0.42);
       cls(it.el, "burnt", m > 0.47);
       css(it.bgEl, "opacity", (f.e * (0.55 + burn * 0.35)).toFixed(3));
@@ -676,7 +679,7 @@
         if (op <= 0.001) { css(fig, "visibility", "hidden"); return; }
         css(fig, "visibility", "visible");
         css(fig, "transform", `translate(-50%, -50%) translate3d(var(--x), var(--y), ${z.toFixed(1)}px) rotateY(${(i % 2 ? -1 : 1) * 10}deg)`);
-        css(fig, "opacity", op.toFixed(3));
+        css(fig, "opacity", (op * f.fo).toFixed(3));
       });
       cls(it.copy, "away", f.uMid > 0.12);
       cls(it.endEl, "on", it.isIn && f.uMid > 0.9);
@@ -778,7 +781,7 @@
         const a = (j - p) * step, rad = (a * Math.PI) / 180, front = Math.cos(rad);
         css(c, "transform", `translate(-50%, -50%) rotateY(${a.toFixed(2)}deg) translateZ(${Rr.toFixed(0)}px)`);
         const dd = Math.abs(j - p);
-        css(c, "opacity", go && front > 0 ? clamp(1 - dd * 0.55, 0, 1).toFixed(3) : "0");
+        css(c, "opacity", go && front > 0 ? (clamp(1 - dd * 0.55, 0, 1) * f.to).toFixed(3) : "0");
         cls(c, "front", Math.abs(j - p) < 0.5);
       });
       css(it.ring, "transform", `translateZ(${(-Rr).toFixed(0)}px) rotateX(${lerp(14, 2, f.e).toFixed(2)}deg)`);
@@ -813,7 +816,7 @@
           x = lerp(0, rx, out); y = lerp(0, ry, out); z = lerp(lerp(-900, 0, ease(range(local, 0, 0.3))), -420, out); s = lerp(1, 0.42, out); op = 1 - out * 0.4; cap = local < 0.7 ? 1 : 0;
         } else { x = rx; y = ry; z = -420; s = 0.42; op = 0.6; cap = 0; }
         css(c, "transform", `translate(-50%, -50%) translate3d(${x.toFixed(2)}vw, ${y.toFixed(2)}vh, ${z.toFixed(1)}px) scale(${s.toFixed(4)})`);
-        css(c, "opacity", go ? op.toFixed(3) : "0");
+        css(c, "opacity", go ? (op * f.fo).toFixed(3) : "0");
         cls(c, "cap", cap && go);
       });
       cls(it.endEl, "on", it.isIn && f.uMid > 0.88);

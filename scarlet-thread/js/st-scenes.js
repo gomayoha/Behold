@@ -94,9 +94,9 @@
       const tx = g * lerp(-10, 0, e) * k;
       const ty = lerp(7, 0, e) - m * 3;
       css(it.pl, "transform", `translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg)`);
-      css(it.pl, "opacity", (clamp(e * 1.25) * (1 - o)).toFixed(3));
+      css(it.pl, "opacity", (clamp(e * 1.25) * f.fo).toFixed(3));
       css(it.im, "transform", `scale(${(1.15 - 0.09 * m).toFixed(4)})`);
-      css(it.glow, "opacity", (0.6 * e * (1 - o)).toFixed(3));
+      css(it.glow, "opacity", (0.6 * e * f.fo).toFixed(3));
       css(it.glow, "transform", `translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, 0) scale(${(1.1 + o * 0.3).toFixed(3)})`);
     },
     gl() { return {}; }
@@ -123,7 +123,7 @@
       css(it.po, "clipPath", `inset(0% ${open.toFixed(2)}% 0% ${open.toFixed(2)}% round 999px 999px 0 0)`);
       css(it.im, "transform", `translate3d(0, ${((0.5 - m) * 6).toFixed(2)}%, 0) scale(${(1.5 - 0.32 * e - 0.08 * m + 0.25 * o).toFixed(4)})`);
       css(it.stage, "transform", `translate3d(0, ${(lerp(6, 0, e) - m * 3).toFixed(2)}vh, ${(lerp(-500, 0, e) + o * 700).toFixed(1)}px)`);
-      css(it.stage, "opacity", (1 - o).toFixed(3));
+      css(it.stage, "opacity", f.fo.toFixed(3));
       css(it.halo, "opacity", (e * (1 - o) * (0.7 + 0.3 * Math.sin(m * 6))).toFixed(3));
     },
     gl() { return {}; }

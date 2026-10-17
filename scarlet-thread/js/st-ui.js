@@ -241,10 +241,8 @@
   function pop(html, tone) {
     const el = h(`<p class="pop ${tone}">${html}</p>`);
     const box = $("#hudPops");
-    const cap = innerWidth <= 760 ? 0 : 3;
-    while (box.children.length > cap) box.firstElementChild.remove();
-    const slow = innerWidth <= 760 ? 900 : 380;
-    setTimeout(() => { if (innerWidth <= 760) [...box.children].forEach((c) => c.remove()); box.appendChild(el); setTimeout(() => el.classList.add("out"), 2400); setTimeout(() => el.remove(), 3100); }, popQ++ * slow);
+    const slow = 1100;
+    setTimeout(() => { [...box.children].forEach((c) => c.remove()); box.appendChild(el); setTimeout(() => el.classList.add("out"), 2400); setTimeout(() => el.remove(), 3100); }, popQ++ * slow);
     setTimeout(() => { popQ = Math.max(0, popQ - 1); }, 400);
   }
   ST.on("item", () => refreshCounts(true));
@@ -264,7 +262,7 @@
     else if (typeof it.s.y === "number") {
       let nx = null;
       for (let j = it.i + 1; j < items.length && j < it.i + 6; j++) if (typeof items[j].s.y === "number") { nx = items[j]; break; }
-      const p = clamp((y + ST.vh * 0.5 - it.top) / (it.bottom - it.top));
+      const p = clamp((y + ST.vh * 0.5 - (it.bottom - ST.T * 0.4)) / (ST.T * 0.4));
       const yr = nx && nx.s.y !== it.s.y ? Math.round(it.s.y + (nx.s.y - it.s.y) * p * 0.999) : it.s.y;
       label = yearLabel(yr);
     } else label = it.s.yl || it.age.yl;

@@ -640,21 +640,21 @@
       const s = it.s;
       const M = [["MENE", "God hath numbered thy kingdom, and finished it."], ["TEKEL", "Thou art weighed in the balances, and art found wanting."], ["PERES", "Thy kingdom is divided, and given to the Medes and Persians."]];
       return h(`<div class="fx wall">${bg(s.art, "")}<div class="wl-dark"></div>
-        <svg class="wl-svg" viewBox="0 0 1000 180" aria-label="MENE, MENE, TEKEL, UPHARSIN"><text class="wl-t" x="500" y="128" text-anchor="middle" direction="rtl" unicode-bidi="bidi-override">מנא מנא תקל ופרסין</text></svg>
+        <p class="wl-h" dir="rtl" lang="arc" aria-label="MENE, MENE, TEKEL, UPHARSIN">${"מנא מנא תקל ופרסין".split("").map((c) => (c === " " ? " " : `<span>${c}</span>`)).join("")}</p>
         <p class="wl-latin">MENE, MENE, TEKEL, UPHARSIN <cite>Daniel 5:25</cite></p>
         <div class="wl-mean">${M.map(([w, t]) => `<p><b>${w}</b><span>${esc(t)}</span></p>`).join("")}</div>
         ${copyHTML(s, { cls: "bottom", noQuote: true })}</div>`);
     },
-    init(it) { it.t = $(".wl-t", it.el); it.latin = $(".wl-latin", it.el); it.mean = $$(".wl-mean p", it.el); it.dark = $(".wl-dark", it.el); it.bgEl = $(".fx-bg", it.el); },
+    init(it) { it.letters = $$(".wl-h span", it.el); it.latin = $(".wl-latin", it.el); it.mean = $$(".wl-mean p", it.el); it.dark = $(".wl-dark", it.el); it.bgEl = $(".fx-bg", it.el); },
     update(it, f) {
-      const m = f.uMid, draw = range(m, 0.18, 0.5);
-      css(it.t, "strokeDashoffset", ((1 - draw) * 2400).toFixed(1));
-      css(it.t, "fillOpacity", range(m, 0.45, 0.55).toFixed(3));
+      // the hand writes the words letter by letter, right to left (HTML text, so every browser orders Aramaic correctly)
+      const m = f.uMid, n = it.letters.length, lit = Math.floor(range(m, 0.18, 0.5) * n + 0.001);
+      if (lit !== it.lit) { it.letters.forEach((s, i) => cls(s, "on", i < lit)); it.lit = lit; }
       cls(it.latin, "on", it.isIn && m > 0.5);
       const k = m < 0.58 ? -1 : Math.min(2, Math.floor(range(m, 0.58, 0.9) * 3));
       it.mean.forEach((p, i) => cls(p, "on", it.isIn && i <= k));
       css(it.dark, "opacity", (0.35 + range(m, 0.1, 0.3) * 0.4).toFixed(3));
-      css(it.bgEl, "opacity", f.e.toFixed(3));
+      css(it.bgEl, "opacity", (f.e * f.fo).toFixed(3));
       css(it.bgEl, "transform", `scale(${(1.2 - f.e * 0.12 - m * 0.05).toFixed(4)})`);
       cls(it.el, "late", m > 0.2);
     },

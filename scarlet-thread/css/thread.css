@@ -683,8 +683,9 @@ body.is-loading .nav { opacity: 0; pointer-events: none; }
 
 /* ---------- the writing on the wall ---------- */
 .wl-dark { position: absolute; inset: 0; background: radial-gradient(80% 70% at 50% 30%, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.9)); }
-.wl-svg { position: absolute; left: 50%; top: 13vh; width: min(1000px, 94vw); transform: translateX(-50%); overflow: visible; }
-.wl-t { font-family: "New York", "Times New Roman", "Noto Serif Hebrew", serif; font-size: 118px; fill: #ffe9b0; fill-opacity: 0; stroke: #ffdf9a; stroke-width: 1.3; stroke-dasharray: 2400; stroke-dashoffset: 2400; filter: drop-shadow(0 0 10px #ffb84a) drop-shadow(0 0 30px rgba(255, 150, 40, 0.6)); }
+.wl-h { position: absolute; left: 0; right: 0; top: 11vh; margin: 0; padding: 0 var(--gut); text-align: center; font-family: "New York", "Times New Roman", "Noto Serif Hebrew", serif; font-size: clamp(56px, 8.4vw, 124px); line-height: 1.2; color: #ffe9b0; opacity: var(--to, 1); }
+.wl-h span { display: inline-block; opacity: 0.05; transform: translate3d(0, 6px, 0); transition: opacity 0.5s var(--ease), transform 0.7s var(--ease), text-shadow 0.8s; }
+.wl-h span.on { opacity: 1; transform: none; text-shadow: 0 0 18px #ffb84a, 0 0 46px rgba(255, 150, 40, 0.65); }
 .wl-latin { position: absolute; left: 0; right: 0; top: calc(13vh + min(190px, 18vw)); margin: 0; text-align: center; font-size: clamp(15px, 1.9vw, 26px); font-weight: 500; letter-spacing: 0.32em; color: #ffe2a8; opacity: 0; transition: opacity 1s; }
 .wl-latin cite { display: block; margin-top: 10px; font-size: 11px; letter-spacing: 0.18em; color: var(--ink-3); }
 .wl-latin.on { opacity: var(--to, 1); }
@@ -1139,7 +1140,6 @@ body.after .nav.hide { transform: none; }
   .fi-pre { font-size: 28px; }
   .dp-l { font-size: 23px; }
   .bn-l { font-size: 23px; top: 14vh; }
-  .wl-t { font-size: 104px; }
   .wl-mean { top: 42vh; }
   .yr-num b { font-size: 34vw; }
   .yr-bar { left: var(--gut); right: var(--gut); }
